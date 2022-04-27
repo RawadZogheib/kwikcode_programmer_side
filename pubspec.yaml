@@ -39,6 +39,7 @@ dependencies:
   http: ^0.13.4
   motion_toast: ^2.1.6
   infinite_listview: ^1.1.0
+  flip_card: ^0.6.0
 
 dev_dependencies:
   flutter_test:

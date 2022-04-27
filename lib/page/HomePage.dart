@@ -7,8 +7,8 @@ import 'package:kwikcode_programmer_side/api/my_api.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
-import 'package:kwikcode_programmer_side/widgets/other/homeSquare.dart';
-import 'package:kwikcode_programmer_side/widgets/other/projectButton.dart';
+import 'package:kwikcode_programmer_side/widgets/other/projectSquare.dart';
+import 'package:kwikcode_programmer_side/widgets/other/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/other/widgetViewButton.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   bool _clickedRefresh = true;
   final InfiniteScrollController _infiniteController =
       InfiniteScrollController(initialScrollOffset: 0.0);
+  int _i = 0;
 
   @override
   void initState() {
@@ -111,55 +112,140 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 10),
                   Expanded(
-                    child: Column(
-                      children: [
-                        ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12.0)),
-                          child: SizedBox(
-                            height: 200,
-                            child: _isLoadingTasks == false
-                                ? ScrollConfiguration(
-                                    behavior: MyCustomScrollBehavior(),
-                                    child: InfiniteListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        controller: _infiniteController,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return ProjectSquare(
-                                            name: 'Project $index',
+                    child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12.0)),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 20),
+                            Text(
+                              'Projects',
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  color: globals.white2,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Row(
+                              children: [
+                                const SizedBox(height: 25),
+                                Expanded(
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12.0)),
+                                    child: Container(
+                                      margin: const EdgeInsets.all(8.0),
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ProjectSquare(
+                                            name: 'All',
                                             imgUrl:
-                                                'https://picsum.photos/100/100/?$index',
-                                          );
-                                        }),
+                                                'https://picsum.photos/100/100/?all',
+                                            onTap: () => debugPrint('All'),
+                                          ),
+                                          ProjectSquare(
+                                            name: 'Project 1',
+                                            imgUrl:
+                                                'https://picsum.photos/100/100/?1',
+                                            onTap: () =>
+                                                debugPrint('Project 1'),
+                                          ),
+                                          ProjectSquare(
+                                            name: 'Project 2',
+                                            imgUrl:
+                                                'https://picsum.photos/100/100/?2',
+                                            onTap: () =>
+                                                debugPrint('Project 2'),
+                                          ),
+                                          ProjectSquare(
+                                            name: 'Project 3',
+                                            imgUrl:
+                                                'https://picsum.photos/100/100/?3',
+                                            onTap: () =>
+                                                debugPrint('Project 3'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            _isLoadingTasks == false
+                                ? Expanded(
+                                    child: ScrollConfiguration(
+                                      behavior: MyCustomScrollBehavior(),
+                                      child: SingleChildScrollView(
+                                        controller: ScrollController(),
+                                        child: Wrap(
+                                          alignment: WrapAlignment.start,
+                                          children: [
+                                            TaskSquare(
+                                              taskName: 'Task Name 1',
+                                              projectManager: '@Samir',
+                                              description:
+                                                  'adsadsad asd  asd as d asd',
+                                              imgUrl:
+                                                  'https://picsum.photos/100/100/?1',
+                                            ),
+                                            TaskSquare(
+                                              taskName: 'Task Name 2',
+                                              projectManager: '@Samir',
+                                              description:
+                                                  'adsadsad asd  asd as d asd',
+                                              imgUrl:
+                                                  'https://picsum.photos/100/100/?2',
+                                            ),
+                                            TaskSquare(
+                                              taskName: 'Task Name 3',
+                                              projectManager: '@Samir',
+                                              description:
+                                                  'adsadsad asd  asd as d asd',
+                                              imgUrl:
+                                                  'https://picsum.photos/100/100/?3',
+                                            ),
+                                            TaskSquare(
+                                              taskName: 'Task Name 4',
+                                              projectManager: '@Samir',
+                                              description:
+                                                  'adsadsad asd  asd as d asd',
+                                              imgUrl:
+                                                  'https://picsum.photos/100/100/?4',
+                                            ),
+                                            TaskSquare(
+                                              taskName: 'Task Name 4',
+                                              projectManager: '@Samir',
+                                              description:
+                                                  'adsadsad asd  asd as d asd',
+                                              imgUrl:
+                                                  'https://picsum.photos/100/100/?4',
+                                            ),
+                                            TaskSquare(
+                                              taskName: 'Task Name 5',
+                                              projectManager: '@Samir',
+                                              description:
+                                                  'adsadsad asd  asd as d asd',
+                                              imgUrl:
+                                                  'https://picsum.photos/100/100/?5',
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   )
                                 : Container(),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12.0)),
-                            child: SizedBox(
-                              height: 200,
-                              child: ScrollConfiguration(
-                                behavior: MyCustomScrollBehavior(),
-                                child: ListView(
-                                  scrollDirection: Axis.vertical,
-                                  controller: ScrollController(),
-                                  children: const [],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                            const SizedBox(height: 20),
+                          ],
+                        )),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 10),
                   SizedBox(
                     width: 300,
                     child: ScrollConfiguration(
@@ -205,63 +291,15 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Container(
-                              height: _height * .8,
-                              width: 300,
-                              margin: const EdgeInsets.all(12.0),
-                              decoration: BoxDecoration(
-                                color: globals.darkBlue2,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(12.0)),
-                              ),
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 20),
-                                  Text(
-                                    'Projects',
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        color: globals.white2,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(height: 25),
-                                  Expanded(
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12.0)),
-                                      child: Container(
-                                        margin: const EdgeInsets.all(8.0),
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0)),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            ProjectButton(
-                                              text: 'All',
-                                              onTap: () => debugPrint('All'),
-                                            ),
-                                            ProjectButton(
-                                              text: 'Project 1',
-                                              onTap: () => debugPrint('v'),
-                                            ),
-                                            ProjectButton(
-                                              text: 'Project 2',
-                                              onTap: () =>
-                                                  debugPrint('Project 2'),
-                                            ),
-                                            ProjectButton(
-                                              text: 'Project 3',
-                                              onTap: () =>
-                                                  debugPrint('Project 3'),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                                height: _height * .8,
+                                width: 300,
+                                margin: const EdgeInsets.all(12.0),
+                                decoration: BoxDecoration(
+                                  color: globals.darkBlue2,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12.0)),
+                                ),
+                                child: Container()),
                           ],
                         ),
                       ),
