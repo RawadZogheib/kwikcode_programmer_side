@@ -12,7 +12,6 @@ const String myIP = "http://127.0.0.1/gajoo_php";
 String currentPage =
     'HomePage'; //HomePage
 
-
 //Colors
 final Color blue = Colors.blue.shade50;
 final Color blue_1 = Colors.blue.shade900;

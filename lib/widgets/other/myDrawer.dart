@@ -1,11 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:kwikcode_programmer_side/api/my_api.dart';
-import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/hexColor/hexColor.dart';
-import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -16,11 +11,6 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  int? _freeCoupon;
-  int? _redCoupon;
-  int? _yellowCoupon;
-  int? _blueCoupon;
-  int? _greenCoupon;
 
   @override
   void initState() {

@@ -13,11 +13,14 @@ class ProjectSquare extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,
       onTap: () => onTap(),
       child: Container(
         height: 100,
-        width: 100,
-        margin: const EdgeInsets.all(4.0),
+        width: 150,
+        margin: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
           color: globals.darkBlue2,
           borderRadius: const BorderRadius.all(Radius.circular(12.0)),
@@ -29,8 +32,9 @@ class ProjectSquare extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(12.0)),
               child: Image.network(
                 imgUrl,
-                height: 50,
-                width: 50,
+                height: 66,
+                width: 150,
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 15),
