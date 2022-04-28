@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);
@@ -23,20 +22,11 @@ class _FirstPage extends State<FirstPage> {
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: globals.darkBlue1,
-      body: Container(
-        alignment: Alignment.center,
-        child: Wrap(
-          children: [
-            Icon(
-              Icons.flutter_dash,
-              color: globals.white1,
-            ),
-          ],
+      body: const Center(
+        child: Image(
+          image: AssetImage('Assets/Other/KwikCodeLogo.png'),
+          fit: BoxFit.cover,
         ),
-        // const Image(
-        //   image: AssetImage('Assets/HomePage/logo.png'),
-        //   fit: BoxFit.cover,
-        // ),
       ),
     );
   }
