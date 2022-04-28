@@ -64,7 +64,16 @@ class MiddleView extends StatelessWidget {
                         ),
                       ),
                     )
-                  : Container(),
+                  : Expanded(
+                      child: Container(
+                        height: 42.0,
+                        width: 42.0,
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(
+                          color: globals.white2,
+                        ),
+                      ),
+                    ),
               const SizedBox(height: 20),
             ],
           )),

@@ -48,8 +48,15 @@ class _HomePageState extends State<HomePage> {
             WindowTitleBarBox(
               child: Row(
                 children: [
+                  const SizedBox(width: 5.0),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
+                    padding: const EdgeInsets.all(3.0),
+                    child: Image.asset(
+                      'Assets/Other/KwikCodeLogo.png',
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
                     child: Text(
                       'KwikCode',
                       style: TextStyle(fontSize: 14, color: globals.white2),
@@ -74,6 +81,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(width: 10),
                   RightView(
+                    isLoadingProjects: _isLoadingTasks,
                     childrenProjectList: _childrenProjectList,
                   )
                 ],

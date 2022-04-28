@@ -22,7 +22,7 @@ class _MyDrawerState extends State<MyDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Material(
-        color: HexColor('#222222'), //globals.blue1,
+        color: globals.darkBlue1,//HexColor('#222222'), //globals.blue1,
         child: ScrollConfiguration(
           behavior: MyCustomScrollBehavior(),
           child: Container(),
