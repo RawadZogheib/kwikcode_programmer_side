@@ -148,7 +148,7 @@ class _TaskSquareState extends State<TaskSquare> {
                   color: globals.white2,
                   fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 35),
+            const SizedBox(height: 20),
             Expanded(
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(12.0)),
