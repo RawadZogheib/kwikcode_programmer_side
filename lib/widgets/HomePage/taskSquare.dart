@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
+import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 
 class TaskSquare extends StatefulWidget {
   String taskName;
@@ -66,7 +67,7 @@ class _TaskSquareState extends State<TaskSquare> {
                   fontWeight: FontWeight.bold),
             ),
             Positioned(
-              bottom: 20,
+              bottom: 15,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -82,20 +83,45 @@ class _TaskSquareState extends State<TaskSquare> {
               ),
             ),
             Positioned(
-              top: 20,
-              right: 20,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              top: 10,
+              right: 15,
+              child: Column(
                 children: [
-                  Icon(
-                    Icons.timer_outlined,
-                    color: globals.white1,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.timer_outlined,
+                        color: globals.white2,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        _printDuration(Duration(seconds: widget.timeLeft)),
+                        style: TextStyle(fontSize: 12, color: globals.white2),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 5),
-                  Text(
-                    _printDuration(Duration(seconds: widget.timeLeft)),
-                    style: TextStyle(fontSize: 12, color: globals.white1),
-                  ),
+                  const SizedBox(height: 8.0),
+                  InkWell(
+                    onTap: () => _goToBid(),
+                    child: Container(
+                      height: 30,
+                      width: 75,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: globals.white2,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(4.0)),
+                      ),
+                      child: Text(
+                        'Bid',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: globals.darkBlue2,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -107,12 +133,14 @@ class _TaskSquareState extends State<TaskSquare> {
         width: 300,
         margin: const EdgeInsets.all(4.0),
         decoration: BoxDecoration(
-          color: globals.darkBlue2,
+          color: globals.darkBlue1,
+          border: Border.all(color: globals.darkBlue2).scale(4.0),
           borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const SizedBox(height: 45.0),
             Text(
               'Task Description:',
               style: TextStyle(
@@ -120,12 +148,28 @@ class _TaskSquareState extends State<TaskSquare> {
                   color: globals.white2,
                   fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 15),
-            ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-              child: Text(
-                widget.description,
-                style: TextStyle(fontSize: 16, color: globals.white1),
+            const SizedBox(height: 35),
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                child: Container(
+                  margin: const EdgeInsets.all(8.0),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                  ),
+                  child: ScrollConfiguration(
+                    behavior:
+                        MyCustomScrollBehavior().copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      child: Text(
+                        widget.description,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 16, color: globals.white1),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
@@ -155,5 +199,9 @@ class _TaskSquareState extends State<TaskSquare> {
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  _goToBid() {
+    print('Go to Bid');
   }
 }

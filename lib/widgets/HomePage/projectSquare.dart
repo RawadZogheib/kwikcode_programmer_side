@@ -18,7 +18,7 @@ class ProjectSquare extends StatelessWidget {
       hoverColor: Colors.transparent,
       onTap: () => onTap(),
       child: Container(
-        height: 100,
+        height: 110,
         width: 150,
         margin: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
@@ -42,6 +42,7 @@ class ProjectSquare extends StatelessWidget {
               name,
               style: const TextStyle(color: Colors.white),
             ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

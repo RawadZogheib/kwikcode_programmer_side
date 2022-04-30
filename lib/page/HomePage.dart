@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage> {
           key: const ValueKey('6'),
           taskName: 'Task Name 6',
           projectManager: '@Samir',
-          description: 'adsadsad asd  asd as d asd',
+          description: 'adsadsad asd   askdjsa jk hjajk jjkoj jkoasj kodjqwskoa jasko jkaskojk kjas okjasko jasko jkoas jokj askoj dkosajko sda okjas jkojas jojas jokasj ko jaskodjkoasj koas dokjas kljasdko j koxj jo ij j ojas jojsad joj iou j  joasjjo joj asj jo sa ioj as j jos as das bnhjsagh  hjnn jhjjis jj j jijo j jojio joij  oijoi jojjjko jk as g hhhji hjih jihjjd io 7uyc enqwmne  cyu8 hhjvbcsdf y678sdyfc7897sx8 7hjkz yy  uiy iou hji hjckj m,nhj h78as asd fd casdf s  f  d cvv v gvcb x gxc   oj kojko jiok  jokj  jdjoj jo jas jojdo u djuo s duioa  ioj oiasd as d asd',
           timeLeft: 86400,
           removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
         ),
