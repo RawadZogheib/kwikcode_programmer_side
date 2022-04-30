@@ -124,77 +124,97 @@ class _HomePageState extends State<HomePage> {
       ];
       _childrenTaskList = [
         TaskSquare(
+          key: const ValueKey('1'),
           taskName: 'Task Name 1',
           projectManager: '@Samir',
           description: 'adsadsad asd  asd as d asd',
-          imgUrl: 'https://picsum.photos/100/100/?1',
+          timeLeft: 1000,
+          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
         ),
         TaskSquare(
+          key: const ValueKey('2'),
           taskName: 'Task Name 2',
           projectManager: '@Samir',
           description: 'adsadsad asd  asd as d asd',
-          imgUrl: 'https://picsum.photos/100/100/?2',
+          timeLeft: 100,
+          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
         ),
         TaskSquare(
+          key: const ValueKey('3'),
           taskName: 'Task Name 3',
           projectManager: '@Samir',
           description: 'adsadsad asd  asd as d asd',
-          imgUrl: 'https://picsum.photos/100/100/?3',
+          timeLeft: 10000,
+          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
         ),
         TaskSquare(
+          key: const ValueKey('4'),
           taskName: 'Task Name 4',
           projectManager: '@Samir',
           description: 'adsadsad asd  asd as d asd',
-          imgUrl: 'https://picsum.photos/100/100/?4',
+          timeLeft: 5600,
+          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
         ),
         TaskSquare(
-          taskName: 'Task Name 4',
-          projectManager: '@Samir',
-          description: 'adsadsad asd  asd as d asd',
-          imgUrl: 'https://picsum.photos/100/100/?4',
-        ),
-        TaskSquare(
+          key: const ValueKey('5'),
           taskName: 'Task Name 5',
           projectManager: '@Samir',
           description: 'adsadsad asd  asd as d asd',
-          imgUrl: 'https://picsum.photos/100/100/?5',
+          timeLeft: 3,
+          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
+        ),
+        TaskSquare(
+          key: const ValueKey('6'),
+          taskName: 'Task Name 6',
+          projectManager: '@Samir',
+          description: 'adsadsad asd  asd as d asd',
+          timeLeft: 86400,
+          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
         ),
       ];
       _isLoadingTasks = false;
       _isClickedRefresh = false;
     });
-    return;
-    if (_isClickedRefresh == false) {
-      try {
-        debugPrint(
-            '=========>>======================================================>>==================================================>>=========');
-        setState(() {
-          _isLoadingTasks = true;
-          _isClickedRefresh = true;
-        });
-        debugPrint('load Crypto');
+    // if (_isClickedRefresh == false) {
+    //   try {
+    //     debugPrint(
+    //         '=========>>======================================================>>==================================================>>=========');
+    //     setState(() {
+    //       _isLoadingTasks = true;
+    //       _isClickedRefresh = true;
+    //     });
+    //     debugPrint('load Crypto');
+    //
+    //     //globals.myCurrencies = crypto.getStringList('myCurrencies')!;
+    //     var res =
+    //         await CallApi().getDataAPI('https://kwikcode.net/kwikcodePhp/...');
+    //     //print(res.body);
+    //     List<dynamic> body = json.decode(res.body);
+    //
+    //     setState(() {
+    //       _isLoadingTasks = false;
+    //       _isClickedRefresh = false;
+    //     });
+    //   } catch (e) {
+    //     debugPrint(e.toString());
+    //     setState(() {
+    //       _isLoadingTasks = true;
+    //       _isClickedRefresh = false;
+    //     });
+    //     errorPopup(context, globals.errorException);
+    //   }
+    //   debugPrint('load crypto end!!!');
+    //   debugPrint(
+    //       '=========<<======================================================<<==================================================<<=========');
+    // }
+  }
 
-        //globals.myCurrencies = crypto.getStringList('myCurrencies')!;
-        var res =
-            await CallApi().getDataAPI('https://kwikcode.net/kwikcodePhp/...');
-        //print(res.body);
-        List<dynamic> body = json.decode(res.body);
-
-        setState(() {
-          _isLoadingTasks = false;
-          _isClickedRefresh = false;
-        });
-      } catch (e) {
-        debugPrint(e.toString());
-        setState(() {
-          _isLoadingTasks = true;
-          _isClickedRefresh = false;
-        });
-        errorPopup(context, globals.errorException);
-      }
-      debugPrint('load crypto end!!!');
-      debugPrint(
-          '=========<<======================================================<<==================================================<<=========');
+  _removeTask(ValueKey<String> taskId) {
+    if (mounted) {
+      setState(() {
+        _childrenTaskList.removeAt(_childrenTaskList
+            .indexWhere((element) => element.key == taskId));
+      });
     }
   }
 

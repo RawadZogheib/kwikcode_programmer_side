@@ -22,7 +22,7 @@ class MiddleView extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
               Text(
-                'Projects',
+                'Tasks',
                 style: TextStyle(
                     fontSize: 32,
                     color: globals.white2,

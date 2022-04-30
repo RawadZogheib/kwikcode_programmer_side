@@ -1,20 +1,46 @@
+import 'dart:async';
+
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 
-class TaskSquare extends StatelessWidget {
+class TaskSquare extends StatefulWidget {
   String taskName;
-  String description;
   String projectManager;
-  String imgUrl;
+  String description;
+  int timeLeft;
+
+  var removeTask;
 
   TaskSquare(
       {Key? key,
       required this.taskName,
-      required this.description,
       required this.projectManager,
-      required this.imgUrl})
+      required this.description,
+      required this.timeLeft,
+      required this.removeTask})
       : super(key: key);
+
+  @override
+  State<TaskSquare> createState() => _TaskSquareState();
+}
+
+class _TaskSquareState extends State<TaskSquare> {
+  Timer? timer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _timeLeftChrono();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +59,7 @@ class TaskSquare extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Text(
-              taskName,
+              widget.taskName,
               style: TextStyle(
                   fontSize: 22,
                   color: globals.white2,
@@ -49,7 +75,25 @@ class TaskSquare extends StatelessWidget {
                     style: TextStyle(fontSize: 14, color: globals.white1),
                   ),
                   Text(
-                    projectManager,
+                    widget.projectManager,
+                    style: TextStyle(fontSize: 12, color: globals.white1),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 20,
+              right: 20,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.timer_outlined,
+                    color: globals.white1,
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    _printDuration(Duration(seconds: widget.timeLeft)),
                     style: TextStyle(fontSize: 12, color: globals.white1),
                   ),
                 ],
@@ -80,7 +124,7 @@ class TaskSquare extends StatelessWidget {
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(12.0)),
               child: Text(
-                description,
+                widget.description,
                 style: TextStyle(fontSize: 16, color: globals.white1),
               ),
             ),
@@ -88,5 +132,28 @@ class TaskSquare extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _timeLeftChrono() {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      //  print("1sec gone!!");
+      if (widget.timeLeft > 0) {
+        if (mounted) {
+          setState(() {
+            widget.timeLeft--;
+          });
+        }
+      } else {
+        timer?.cancel();
+        widget.removeTask(widget.key);
+      }
+    });
+  }
+
+  String _printDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
   }
 }
