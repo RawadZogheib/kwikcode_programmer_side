@@ -193,7 +193,7 @@ class _HomePageState extends State<HomePage>
         TaskSquare(
           key: const ValueKey('2'),
           taskName: 'Task Name 2',
-          projectManager: '@Samir',
+          projectManager: '@Samira',
           description: 'adsadsad asd  asd as d asd',
           timeLeft: 100,
           iconList: [
@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage>
         TaskSquare(
           key: const ValueKey('3'),
           taskName: 'Task Name 3',
-          projectManager: '@Samir',
+          projectManager: '@Samira',
           description: 'adsadsad asd  asd as d asd',
           timeLeft: 10000,
           iconList: [
@@ -411,7 +411,7 @@ class _HomePageState extends State<HomePage>
         TaskSquare(
           key: const ValueKey('7'),
           taskName: 'Task Name 7',
-          projectManager: '@Samir',
+          projectManager: '@Andrea',
           description:
               'adsadsad asd  a fhg f fglk  fghjkljh gsjfh d j  zd f  dsj kjsdhhjk d fh  hjasd h  hjk  hjsdjkl h sdjhkl fhj jksdl jf jksdhj  jk jjk hj jk dfh hjsd f kj hjdsf jklh klfdsjkl j jklxcj jkgsdjgfjikl sdfjkl  sj kj gjk jfjkl  jfjkl jdjk  g j djkl  jjksdfg jfjzdkj  jkdfg jjk jjk  jefsdjkf jjkcv  jjfjk jiojgkj jko j jdf jdfgjk gjket j jkod f jkfsjk  dfjgf jkfdj j ji jk  rj   xh fd   ui fjk j  g iuofgzdu  uio jfjk sd  jkf d   k j jks j sfjkl j jkfjgjk d fjgjkl dfjjk bjsdkj b njdfl jkfj qweopr ewio uriosed  cjn sd as d asd',
           timeLeft: 43000,
