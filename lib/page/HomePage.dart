@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage>
   bool _isLoadingTasks = true;
   bool _isClickedRefresh = true;
 
-  double _size = 35;
+  final double _size = 35;
 
   //BidPopup
   bool _animationIsActive = false;

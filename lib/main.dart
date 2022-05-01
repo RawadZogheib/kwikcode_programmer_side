@@ -13,7 +13,7 @@ void main() {
     // win.maxSize = initialSize;
     win.size = initialSize;
     win.alignment = Alignment.center;
-    win.title = "MyWallet";
+    win.title = "KwikCode";
     win.show();
   });
 }
