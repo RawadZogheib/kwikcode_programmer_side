@@ -408,6 +408,88 @@ class _HomePageState extends State<HomePage>
           removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
           onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
         ),
+        TaskSquare(
+          key: const ValueKey('7'),
+          taskName: 'Task Name 7',
+          projectManager: '@Samir',
+          description:
+              'adsadsad asd  a fhg f fglk  fghjkljh gsjfh d j  zd f  dsj kjsdhhjk d fh  hjasd h  hjk  hjsdjkl h sdjhkl fhj jksdl jf jksdhj  jk jjk hj jk dfh hjsd f kj hjdsf jklh klfdsjkl j jklxcj jkgsdjgfjikl sdfjkl  sj kj gjk jfjkl  jfjkl jdjk  g j djkl  jjksdfg jfjzdkj  jkdfg jjk jjk  jefsdjkf jjkcv  jjfjk jiojgkj jko j jdf jdfgjk gjket j jkod f jkfsjk  dfjgf jkfdj j ji jk  rj   xh fd   ui fjk j  g iuofgzdu  uio jfjk sd  jkf d   k j jks j sfjkl j jkfjgjk d fjgjkl dfjjk bjsdkj b njdfl jkfj qweopr ewio uriosed  cjn sd as d asd',
+          timeLeft: 43000,
+          iconList: [
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: FlutterLogo(
+                size: _size,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(
+                NewIcons.php,
+                size: _size,
+                color: globals.white1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(
+                NewIcons.js,
+                size: _size,
+                color: globals.white1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(
+                NewIcons.react,
+                size: _size,
+                color: globals.white1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(
+                NewIcons.css3,
+                size: _size,
+                color: globals.white1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(
+                NewIcons.css3_alt,
+                size: _size,
+                color: globals.white1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(
+                NewIcons.html5,
+                size: _size,
+                color: globals.white1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(
+                NewIcons.swift,
+                size: _size,
+                color: globals.white1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(
+                NewIcons.java,
+                size: _size,
+                color: globals.white1,
+              ),
+            ),
+          ],
+          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
+          onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
+        ),
       ];
       _isLoadingTasks = false;
       _isClickedRefresh = false;
