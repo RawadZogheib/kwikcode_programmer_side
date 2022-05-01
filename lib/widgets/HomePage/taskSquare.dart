@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 
@@ -10,8 +11,9 @@ class TaskSquare extends StatefulWidget {
   String projectManager;
   String description;
   int timeLeft;
-
+  List<Widget> iconList;
   var removeTask;
+  var onBidTap;
 
   TaskSquare(
       {Key? key,
@@ -19,7 +21,9 @@ class TaskSquare extends StatefulWidget {
       required this.projectManager,
       required this.description,
       required this.timeLeft,
-      required this.removeTask})
+      required this.iconList,
+      required this.removeTask,
+      required this.onBidTap})
       : super(key: key);
 
   @override
@@ -103,6 +107,9 @@ class _TaskSquareState extends State<TaskSquare> {
                   ),
                   const SizedBox(height: 8.0),
                   InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
                     onTap: () => _goToBid(),
                     child: Container(
                       height: 30,
@@ -121,8 +128,32 @@ class _TaskSquareState extends State<TaskSquare> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                  )
+                  ),
                 ],
+              ),
+            ),
+            Positioned(
+              left: 0,
+              child: Container(
+                height: 300,
+                width: 70,
+                padding: const EdgeInsets.all(8.0),
+                // decoration: BoxDecoration(
+                //   color: globals.darkBlue2,
+                //   borderRadius:
+                //   const BorderRadius.all(Radius.circular(4.0)),
+                // ),
+                child: ScrollConfiguration(
+                  behavior:
+                      MyCustomScrollBehavior().copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: widget.iconList,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
@@ -202,6 +233,7 @@ class _TaskSquareState extends State<TaskSquare> {
   }
 
   _goToBid() {
+    widget.onBidTap(widget.key);
     print('Go to Bid');
   }
 }

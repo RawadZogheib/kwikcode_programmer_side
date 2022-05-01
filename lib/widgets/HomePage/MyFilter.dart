@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/RefreshViewButton.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/widgetViewButton.dart';
@@ -91,7 +92,7 @@ class MyFilter extends StatelessWidget {
             width: 169,
             child: RefreshViewButton(
                 text: 'Refresh',
-                icon: Icons.refresh,
+                icon: NewIcons.sync_alt,
                 colorIcon: Colors.green.shade700,
                 colorText: Colors.green.shade700,
                 isClickedRefresh: isClickedRefresh,
