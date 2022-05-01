@@ -7,16 +7,18 @@ import 'package:motion_toast/resources/arrays.dart';
 errorPopup(BuildContext context, String? text) {
   MotionToast(
     icon: Icons.error,
-    primaryColor: globals.red2,
+    primaryColor: globals.darkBlue2,
     secondaryColor: globals.red1,
+    barrierColor: Colors.transparent.withOpacity(0.6),
     toastDuration: const Duration(seconds: 3),
     backgroundType: BACKGROUND_TYPE.solid,
-    title: const Text(
+    title: Text(
       'Error',
-      style: TextStyle(fontWeight: FontWeight.bold),
+      style: TextStyle(color: globals.red1, fontWeight: FontWeight.bold),
     ),
     description: Text(
       text ?? 'Unexpected Error.',
+      style: TextStyle(color:globals.whiteBlue),
     ),
     position: MOTION_TOAST_POSITION.bottom,
     animationType: ANIMATION.fromRight,
@@ -27,16 +29,18 @@ errorPopup(BuildContext context, String? text) {
 warningPopup(BuildContext context, String? text) {
   MotionToast(
     icon: Icons.warning,
-    primaryColor: globals.yellow2,
+    primaryColor: globals.darkBlue2,
     secondaryColor: globals.yellow1,
+    barrierColor: Colors.transparent.withOpacity(0.6),
     toastDuration: const Duration(seconds: 3),
     backgroundType: BACKGROUND_TYPE.solid,
-    title: const Text(
+    title: Text(
       'Warning',
-      style: TextStyle(fontWeight: FontWeight.bold),
+      style: TextStyle(color:globals.yellow1,fontWeight: FontWeight.bold),
     ),
     description: Text(
       text ?? 'Unexpected Warning.',
+      style: TextStyle(color:globals.whiteBlue),
     ),
     position: MOTION_TOAST_POSITION.bottom,
     animationType: ANIMATION.fromRight,
@@ -47,16 +51,18 @@ warningPopup(BuildContext context, String? text) {
 successPopup(BuildContext context, String? text) {
   MotionToast(
     icon: CupertinoIcons.checkmark_alt_circle,
-    primaryColor: globals.green2,
+    primaryColor: globals.darkBlue2,
     secondaryColor: globals.green1,
+    barrierColor: Colors.transparent.withOpacity(0.6),
     toastDuration: const Duration(seconds: 3),
     backgroundType: BACKGROUND_TYPE.solid,
-    title: const Text(
+    title: Text(
       'Success',
-      style: TextStyle(fontWeight: FontWeight.bold),
+      style: TextStyle(color:globals.green1,fontWeight: FontWeight.bold),
     ),
     description: Text(
       text ?? 'Unexpected Success.',
+      style: TextStyle(color:globals.whiteBlue),
     ),
     position: MOTION_TOAST_POSITION.bottom,
     animationType: ANIMATION.fromRight,

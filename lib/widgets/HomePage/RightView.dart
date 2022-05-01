@@ -37,7 +37,7 @@ class RightView extends StatelessWidget {
                   Icons.person,
                   color: globals.white1,
                 ),
-                const SizedBox(width: 25),
+                const SizedBox(width: 15),
                 Text(
                   'Rawad',
                   style: TextStyle(
@@ -45,13 +45,13 @@ class RightView extends StatelessWidget {
                       color: globals.white1,
                       fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(width: 25),
+                const SizedBox(width: 35),
                 Expanded(
                   child: InkWell(
                     onTap: () => Scaffold.of(context).openEndDrawer(),
                     child: Icon(
                       Icons.menu,
-                      color: globals.white1,
+                      color: globals.whiteBlue,
                     ),
                   ),
                 ),
