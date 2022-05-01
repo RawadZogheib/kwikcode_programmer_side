@@ -63,7 +63,7 @@ class BidPopup extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                   ),
                   child: Text(
-                    'Mak a bid ${(childTaIsActive.taskName).toString()}',
+                    'Mak a bid',
                     style: TextStyle(
                         fontSize: 14,
                         color: globals.darkBlue1,
