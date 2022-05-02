@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
+import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
+import 'package:kwikcode_programmer_side/widgets/other/NewsContainer.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -12,160 +14,635 @@ class MyDrawer extends StatefulWidget {
   State<MyDrawer> createState() => _MyDrawerState();
 }
 
-class _MyDrawerState extends State<MyDrawer> {
+class _MyDrawerState extends State<MyDrawer>
+    with SingleTickerProviderStateMixin {
   bool _isLoggedIn = false;
+
+  String _statut = '-9999';
+
+  Animation? _animation, _animation1, _animation2;
+  AnimationController? _animationController;
+
+  final double _drawerLeftSize = 324;
+  final double _drawerRightSize = 324;
+  final double _drawerDividerSize = 24;
+  final double _iconSize = 35;
+  Widget _currentWidget = Container();
 
   @override
   void initState() {
     // TODO: implement initState
+    _loadAnimation();
     _loadIsLoggedIn();
     super.initState();
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    _animationController!.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Material(
-        color: globals.darkBlue1, //HexColor('#222222'), //globals.blue1,
-        child: ScrollConfiguration(
-          behavior: MyCustomScrollBehavior(),
-          child: ListView(
-            controller: ScrollController(),
-            children: <Widget>[
-              Column(
-                children: [
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    height: 250,
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.asset(
-                      'Assets/Other/KwikCodeLogo.png',
-                      fit: BoxFit.cover,
-                    ),
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
+    return AnimatedBuilder(
+        animation: _animationController!,
+        builder: (BuildContext context, widget) {
+          return SizedBox(
+            width: _drawerLeftSize + _animation!.value,
+            child: Drawer(
+              child: Material(
+                color: globals.darkBlue1,
+                //HexColor('#222222'), //globals.blue1,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  controller: ScrollController(),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: _drawerLeftSize,
+                        child: ScrollConfiguration(
+                          behavior: MyCustomScrollBehavior()
+                              .copyWith(scrollbars: false),
+                          child: ListView(
+                            controller: ScrollController(),
+                            children: <Widget>[
+                              Column(
+                                children: [
+                                  const SizedBox(height: 12),
+                                  SizedBox(
+                                    height: 250,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Image.asset(
+                                      'Assets/Other/KwikCodeLogo.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(height: 12),
+                                        // const SizedBox(height: 22),
+                                        const SearchFieldDrawer(),
+                                        const SizedBox(height: 12),
+                                        MenuItem(
+                                          text: 'My Tasks',
+                                          icon: NewIcons.tasks,
+                                          color: globals.whiteBlue,
+                                          onClicked: () =>
+                                              selectedItem(context, 0),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        MenuItem(
+                                          text: 'My Bids',
+                                          icon: Icons.timer_outlined,
+                                          color: globals.whiteBlue,
+                                          onClicked: () =>
+                                              selectedItem(context, 1),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        MenuItem(
+                                          text: 'My Wallet',
+                                          icon: NewIcons.wallet,
+                                          color: globals.whiteBlue,
+                                          onClicked: () =>
+                                              selectedItem(context, 2),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        MenuItem(
+                                          text: 'Chat',
+                                          icon: NewIcons.comments,
+                                          color: globals.whiteBlue,
+                                          onClicked: () =>
+                                              selectedItem(context, 3),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        MenuItem(
+                                          text: 'News',
+                                          icon: NewIcons.newspaper,
+                                          color: globals.whiteBlue,
+                                          onClicked: () =>
+                                              selectedItem(context, 4),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        MenuItem(
+                                          text: 'Updates',
+                                          icon: Icons.update,
+                                          color: globals.whiteBlue,
+                                          onClicked: () =>
+                                              selectedItem(context, 5),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        const Divider(color: Colors.white70),
+                                        const SizedBox(height: 8),
+                                        MenuItem(
+                                          text: 'Notifications',
+                                          icon: Icons.notifications_outlined,
+                                          color: globals.white1,
+                                          onClicked: () =>
+                                              selectedItem(context, 6),
+                                        ),
+                                        MenuItem(
+                                          text: 'Settings',
+                                          icon: NewIcons.cogs,
+                                          color: globals.white1,
+                                          onClicked: () =>
+                                              selectedItem(context, 7),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        MenuItem(
+                                          text: 'Logout',
+                                          icon: Icons.logout,
+                                          color: globals.red1,
+                                          onClicked: () =>
+                                              selectedItem(context, 8),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      _statut != '-9999'
+                          ? const VerticalDivider(color: Colors.white70)
+                          : const SizedBox(),
+                      _statut != '-9999'
+                          ? Column(
+                              children: [
+                                const SizedBox(height: 20),
+                                Transform(
+                                  transform: Matrix4.translationValues(
+                                      0.0, _animation1?.value * _height, 0.0),
+                                  child: SizedBox(
+                                    width: _drawerRightSize,
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(width: 10),
+                                        InkWell(
+                                          onTap: () => _onBackTap(),
+                                          child: Icon(
+                                            Icons.arrow_back_ios,
+                                            color: globals.white2,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                _statut,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 26,
+                                                  color: globals.white2,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 40),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 30),
+                                Transform(
+                                  transform: Matrix4.translationValues(
+                                      0.0, _animation2?.value * _height, 0.0),
+                                  child: _currentWidget,
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
+                      _statut != '-9999'
+                          ? const SizedBox(width: 8.0)
+                          : const SizedBox(),
+                    ],
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 12),
-                        // const SizedBox(height: 22),
-                        const SearchFieldDrawer(),
-                        const SizedBox(height: 12),
-                        MenuItem(
-                          text: 'My Tasks',
-                          icon: NewIcons.tasks,
-                          color: globals.whiteBlue,
-                          onClicked: () => selectedItem(context, 0),
-                        ),
-                        const SizedBox(height: 5),
-                        MenuItem(
-                          text: 'My Bids',
-                          icon: Icons.timer_outlined,
-                          color: globals.whiteBlue,
-                          onClicked: () => selectedItem(context, 1),
-                        ),
-                        const SizedBox(height: 5),
-                        MenuItem(
-                          text: 'My Wallet',
-                          icon: NewIcons.wallet,
-                          color: globals.whiteBlue,
-                          onClicked: () => selectedItem(context, 2),
-                        ),
-                        const SizedBox(height: 5),
-                        MenuItem(
-                          text: 'News',
-                          icon: NewIcons.newspaper,
-                          color: globals.whiteBlue,
-                          onClicked: () => selectedItem(context, 3),
-                        ),
-                        const SizedBox(height: 5),
-                        MenuItem(
-                          text: 'Updates',
-                          icon: Icons.update,
-                          color: globals.whiteBlue,
-                          onClicked: () => selectedItem(context, 4),
-                        ),
-                        const SizedBox(height: 8),
-                        const Divider(color: Colors.white70),
-                        const SizedBox(height: 8),
-                        MenuItem(
-                          text: 'Notifications',
-                          icon: Icons.notifications_outlined,
-                          color: globals.white1,
-                          onClicked: () => selectedItem(context, 5),
-                        ),
-                        MenuItem(
-                          text: 'Settings',
-                          icon: Icons.settings,
-                          color: globals.white1,
-                          onClicked: () => selectedItem(context, 6),
-                        ),
-                        const SizedBox(height: 8),
-                        MenuItem(
-                          text: 'Logout',
-                          icon: Icons.logout,
-                          color: globals.red1,
-                          onClicked: () => selectedItem(context, 7),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 
   Future<void> selectedItem(BuildContext context, int index) async {
     //Navigator.of(context).pop();
     switch (index) {
       case 0: // My Tasks
-
-        warningPopup(context, 'Coming Soon!!');
+        _case0();
         break;
       case 1: // My Bids
-
-        warningPopup(context, 'Coming Soon!!');
+        _case1();
         break;
       case 2: // My Wallet
-
-        warningPopup(context, 'Coming Soon!!');
+        _case2();
         break;
-      case 3: // News
-
-        warningPopup(context, 'Coming Soon!!');
+      case 3: // Chat
+        _case3();
         break;
-      case 4: // Updates
-
-        warningPopup(context, 'Coming Soon!!');
+      case 4: // News
+        _case4();
         break;
-      case 5: // Notifications
-
-        warningPopup(context, 'Coming Soon!!');
+      case 5: // Updates
+        _case5();
         break;
-      case 6: // Settings
-
-        warningPopup(context, 'Coming Soon!!');
+      case 6: // Notifications
+        _case6();
         break;
-
-      case 7: // Logout
-        SessionManager session = SessionManager();
-        await session.destroy();
-
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/LoginPage', (route) => false);
-
+      case 7: // Settings
+        _case7();
+        break;
+      case 8: // Logout
+        _case8();
         break;
     }
   }
 
+  Future<void> _case0() async {
+    if (_statut != 'My Tasks') {
+      debugPrint('My Tasks');
+      if (_statut != '-9999') {
+        await _animationController!.reverse();
+      }
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = SizedBox(
+          width: _drawerRightSize,
+          child: ScrollConfiguration(
+            behavior: MyCustomScrollBehavior().copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              controller: ScrollController(),
+              child: Column(children: <Widget>[
+                TaskSquare(
+                  key: const ValueKey('4'),
+                  taskName: 'Task Name 4',
+                  projectManager: '@Samir',
+                  description: 'adsadsad asd  asd as d asd',
+                  timeLeft: 5600,
+                  iconList: [
+                    Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: FlutterLogo(
+                        size: _iconSize,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Icon(
+                        NewIcons.php,
+                        size: _iconSize,
+                        color: globals.white1,
+                      ),
+                    ),
+                  ],
+                  removeTask: (ValueKey<String> taskId) =>
+                      debugPrint(taskId.value),
+                  onBidTap: (ValueKey<String> taskId) =>
+                      debugPrint(taskId.value),
+                ),
+              ]),
+            ),
+          ),
+        );
+      });
+      _statut = 'My Tasks';
+    }
+  }
+
+  Future<void> _case1() async {
+    if (_statut != 'My Bids') {
+      debugPrint('My Bids');
+      if (_statut != '-9999') {
+        await _animationController!.reverse();
+      }
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = SizedBox(
+          width: _drawerRightSize,
+          child: ScrollConfiguration(
+            behavior: MyCustomScrollBehavior().copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              controller: ScrollController(),
+              child: Column(children: <Widget>[
+                TaskSquare(
+                  key: const ValueKey('3'),
+                  taskName: 'Task Name 3',
+                  projectManager: '@Samir',
+                  description: 'adsadsad asd  asd as d asd',
+                  timeLeft: 5600,
+                  iconList: [
+                    Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: FlutterLogo(
+                        size: _iconSize,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Icon(
+                        NewIcons.php,
+                        size: _iconSize,
+                        color: globals.white1,
+                      ),
+                    ),
+                  ],
+                  removeTask: (ValueKey<String> taskId) =>
+                      debugPrint(taskId.value),
+                  onBidTap: (ValueKey<String> taskId) =>
+                      debugPrint(taskId.value),
+                ),
+              ]),
+            ),
+          ),
+        );
+      });
+      _statut = 'My Bids';
+    }
+  }
+
+  Future<void> _case2() async {
+    if (_statut != 'My Wallet') {
+      debugPrint('My Wallet');
+      if (_statut != '-9999') {
+        await _animationController!.reverse();
+      }
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = Container(
+          width: _drawerRightSize - 20,
+          margin: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  border: Border.all(color: globals.white1),
+                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 70,
+                      width: 120,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: globals.white1,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      child: Text(
+                        'US Dollar: ',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: globals.darkBlue1,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '\$ 1200',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: globals.white2,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 15.0),
+              Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  border: Border.all(color: globals.white1),
+                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 70,
+                      width: 120,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: globals.white1,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      child: Text(
+                        'KwikPoints: ',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: globals.darkBlue1,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          StrikeThroughWidget2(
+                            child: Text(
+                              'KP',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: globals.white2,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            ' 1200',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: globals.white2,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      });
+      _statut = 'My Wallet';
+    }
+  }
+
+  Future<void> _case3() async {
+    if (_statut != 'Chat') {
+      debugPrint('Chat');
+      if (_statut != '-9999') {
+        await _animationController!.reverse();
+      }
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = SizedBox(
+          width: _drawerRightSize,
+        );
+      });
+      _statut = 'Chat';
+    }
+    Navigator.of(context).pop();
+    warningPopup(context, 'Coming Soon!!');
+  }
+
+  Future<void> _case4() async {
+    if (_statut != 'News') {
+      List<NewsContainer> _newsContainerList = [];
+
+      ///New to Old//////////////////////////////////
+      _newsContainerList.add(NewsContainer(
+          text: 'New Courses are available.',
+          date: '28-05-2022 11:28',
+          drawerRightSize: _drawerRightSize));
+      _newsContainerList.add(NewsContainer(
+          text:
+              'The app wil be closed from tomorrow \n(22/5/2022 12:30 UTC +2) \nuntil \n(22/5/2022 16:30 UTC +2).',
+          date: '21-0-2022 18:22',
+          drawerRightSize: _drawerRightSize));
+      _newsContainerList.add(NewsContainer(
+        text: 'New Project is available.',
+        date: '17-05-2022 07:44',
+        drawerRightSize: _drawerRightSize,
+      ));
+
+      /// ///////////////////////////////////////////
+      debugPrint('News');
+      if (_statut != '-9999') {
+        await _animationController!.reverse();
+      }
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = Container(
+          width: _drawerRightSize - 20,
+          margin: const EdgeInsets.all(8.0),
+          child: ScrollConfiguration(
+            behavior: MyCustomScrollBehavior(),
+            child: SingleChildScrollView(
+              controller: ScrollController(),
+              child: Column(
+                children: _newsContainerList,
+              ),
+            ),
+          ),
+        );
+      });
+      _statut = 'News';
+    }
+  }
+
+  Future<void> _case5() async {
+    if (_statut != 'Updates') {
+      List<NewsContainer> _updatesContainerList = [];
+
+      ///New to Old//////////////////////////////////
+      _updatesContainerList.add(NewsContainer(
+          text: 'Version 1.0.1 is available.',
+          date: '07-05-2022 18:58',
+          drawerRightSize: _drawerRightSize));
+      _updatesContainerList.add(NewsContainer(
+          text: 'Version 1.0.0 is available.',
+          date: '02-05-2022 17:01',
+          drawerRightSize: _drawerRightSize));
+
+      /// ///////////////////////////////////////////
+      debugPrint('Updates');
+      if (_statut != '-9999') {
+        await _animationController!.reverse();
+      }
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = Container(
+          width: _drawerRightSize - 20,
+          margin: const EdgeInsets.all(8.0),
+          child: ScrollConfiguration(
+            behavior: MyCustomScrollBehavior(),
+            child: SingleChildScrollView(
+              controller: ScrollController(),
+              child: Column(
+                children: _updatesContainerList,
+              ),
+            ),
+          ),
+        );
+      });
+      _statut = 'Updates';
+    }
+  }
+
+  Future<void> _case6() async {
+    if (_statut != 'Notifications') {
+      debugPrint('Notifications');
+      if (_statut != '-9999') {
+        await _animationController!.reverse();
+      }
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = SizedBox(
+          width: _drawerRightSize,
+        );
+      });
+      _statut = 'Notifications';
+    }
+    Navigator.of(context).pop();
+    warningPopup(context, 'Coming Soon!!');
+  }
+
+  Future<void> _case7() async {
+    if (_statut != 'Settings') {
+      debugPrint('Settings');
+      if (_statut != '-9999') {
+        await _animationController!.reverse();
+      }
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = SizedBox(
+          width: _drawerRightSize,
+        );
+      });
+      _statut = 'Settings';
+    }
+    Navigator.of(context).pop();
+    warningPopup(context, 'Coming Soon!!');
+  }
+
+  Future<void> _case8() async {
+    Navigator.of(context).pop();
+    await SessionManager().destroy();
+
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/LoginPage', (route) => false);
+  }
+
   Future<void> _loadIsLoggedIn() async {
-    SessionManager session = SessionManager();
-    if (await session.containsKey('isLoggedIn')) {
-      _isLoggedIn = await session.get('isLoggedIn');
+    if (await SessionManager().containsKey('isLoggedIn')) {
+      _isLoggedIn = await SessionManager().get('isLoggedIn');
       setState(() {
         _isLoggedIn;
       });
@@ -174,6 +651,28 @@ class _MyDrawerState extends State<MyDrawer> {
         _isLoggedIn = false;
       });
     }
+  }
+
+  void _loadAnimation() {
+    _animationController =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    _animation = Tween(begin: 0, end: _drawerRightSize + _drawerDividerSize)
+        .animate(CurvedAnimation(
+            parent: _animationController!, curve: Curves.fastOutSlowIn));
+    _animation1 = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
+        parent: _animationController!,
+        curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
+    _animation2 = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
+        parent: _animationController!,
+        curve: const Interval(0.15, 1.0, curve: Curves.fastOutSlowIn)));
+  }
+
+  _onBackTap() async {
+    //Navigator.of(context).pop();
+    await _animationController!.reverse().then((value) => setState(() {
+          _statut = '-9999';
+          _currentWidget = const SizedBox();
+        }));
   }
 }
 
@@ -235,6 +734,43 @@ class SearchFieldDrawer extends StatelessWidget {
           borderSide: BorderSide(color: color.withOpacity(0.7)),
         ),
       ),
+    );
+  }
+}
+
+class StrikeThroughWidget2 extends StatelessWidget {
+  final Widget _child;
+
+  const StrikeThroughWidget2({Key? key, required Widget child})
+      : _child = child,
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Center(child: _child),
+        //Center(child: Image.asset('Assets/HomePage/graphics/strikethrough2.png',width: 40,)),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 3),
+              Container(
+                height: 2,
+                width: 32,
+                color: globals.white2,
+              ),
+              const SizedBox(height: 2),
+              Container(
+                height: 2,
+                width: 32,
+                color: globals.white2,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

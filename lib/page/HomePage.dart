@@ -19,8 +19,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  Animation? animation;
-  AnimationController? animationController;
+  Animation? _animation;
+  AnimationController? _animationController;
 
   List<ProjectSquare> _childrenProjectList = [];
   List<TaskSquare> _childrenTaskList = [];
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage>
   bool _isLoadingTasks = true;
   bool _isClickedRefresh = true;
 
-  final double _size = 35;
+  final double _iconSize = 35;
 
   //BidPopup
   bool _animationIsActive = false;
@@ -53,12 +53,19 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    _animationController!.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
 
     return AnimatedBuilder(
-        animation: animationController!,
+        animation: _animationController!,
         builder: (BuildContext context, widget) {
           return WillPopScope(
             onWillPop: () async => _back(),
@@ -117,7 +124,7 @@ class _HomePageState extends State<HomePage>
                   ),
                   Transform(
                     transform: Matrix4.translationValues(
-                        0.0, animation?.value * _height, 0.0),
+                        0.0, _animation?.value * _height, 0.0),
                     child: BidPopup(
                       childTaIsActive: _childTaIsActive,
                       onBackTap: () => _endAnimation(),
@@ -170,7 +177,7 @@ class _HomePageState extends State<HomePage>
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: FlutterLogo(
-                size: _size,
+                size: _iconSize,
               ),
             ),
             Padding(
@@ -182,7 +189,7 @@ class _HomePageState extends State<HomePage>
                 //   fontFamily: 'NewIcons',
                 //   fontPackage: null,
                 // ),
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -200,14 +207,14 @@ class _HomePageState extends State<HomePage>
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: FlutterLogo(
-                size: _size,
+                size: _iconSize,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.php,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -226,7 +233,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.html5,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -234,7 +241,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.css3_alt,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -242,7 +249,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.js,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -250,7 +257,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.php,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -268,14 +275,14 @@ class _HomePageState extends State<HomePage>
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: FlutterLogo(
-                size: _size,
+                size: _iconSize,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.php,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -293,14 +300,14 @@ class _HomePageState extends State<HomePage>
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: FlutterLogo(
-                size: _size,
+                size: _iconSize,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.php,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -308,7 +315,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.js,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -316,7 +323,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.react,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -324,7 +331,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.css3,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -332,7 +339,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.css3_alt,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -340,7 +347,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.html5,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -348,7 +355,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.swift,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -356,7 +363,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.java,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -376,7 +383,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.html5,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -384,7 +391,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.css3_alt,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -392,7 +399,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.js,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -400,7 +407,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.php,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -419,14 +426,14 @@ class _HomePageState extends State<HomePage>
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: FlutterLogo(
-                size: _size,
+                size: _iconSize,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.php,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -434,7 +441,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.js,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -442,7 +449,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.react,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -450,7 +457,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.css3,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -458,7 +465,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.css3_alt,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -466,7 +473,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.html5,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -474,7 +481,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.swift,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -482,7 +489,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: Icon(
                 NewIcons.java,
-                size: _size,
+                size: _iconSize,
                 color: globals.white1,
               ),
             ),
@@ -538,11 +545,11 @@ class _HomePageState extends State<HomePage>
   }
 
   void _loadAnimation() {
-    animationController =
+    _animationController =
         AnimationController(duration: const Duration(seconds: 2), vsync: this);
-    animation = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-        parent: animationController!,
-        curve: const Interval(0.5, 1.0, curve: Curves.fastOutSlowIn)));
+    _animation = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
+        parent: _animationController!,
+        curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
   }
 
   _startAnimation(ValueKey<String> taskId) {
@@ -550,14 +557,14 @@ class _HomePageState extends State<HomePage>
       _childTaIsActive = _childrenTaskList[
           _childrenTaskList.indexWhere((element) => element.key == taskId)];
       _animationIsActive = true;
-      animationController!.forward();
+      _animationController!.forward();
     }
   }
 
   _endAnimation() async {
     if (_animationIsActive == true) {
       _animationIsActive = false;
-      animationController!
+      _animationController!
           .reverse()
           .then((value) => _childTaIsActive = TaskSquare(
                 key: const ValueKey('null'),
