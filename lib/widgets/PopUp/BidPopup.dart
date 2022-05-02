@@ -8,7 +8,6 @@ import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.da
 class BidPopup extends StatelessWidget {
   TaskSquare childTaIsActive;
   var onBackTap;
-  double _size = 35;
 
   BidPopup({
     Key? key,

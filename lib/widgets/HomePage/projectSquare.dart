@@ -28,32 +28,34 @@ class _ProjectSquareState extends State<ProjectSquare> {
       hoverColor: Colors.transparent,
       onTap: () => _onTap(),
       child: Container(
-        height: 118,
-        width: 150,
+        height: 93,
+        width: 170,
         margin: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
           color: globals.darkBlue2,
           border: widget.isSelected == true
               ? Border.all(color: globals.logoColorPink).scale(4.0)
               : Border.all(color: globals.logoColorPink).scale(1.0),
-          borderRadius: const BorderRadius.all(Radius.circular(14.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-              child: Image.network(
-                widget.imgUrl,
-                height: 66,
-                width: 150,
-                fit: BoxFit.cover,
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                child: Image.network(
+                  widget.imgUrl,
+                  width: 170,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 10),
             Text(
               widget.name,
               style: const TextStyle(
+                fontSize: 13,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
