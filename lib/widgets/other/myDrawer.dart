@@ -524,7 +524,7 @@ class _MyDrawerState extends State<MyDrawer>
 
   Future<void> _case4() async {
     if (_statut != 'News') {
-      List<Color> colorList = [globals.logoColorPink, globals.logoColorBlue];
+      List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
       int _colorCounter = 0;
       List<NewsContainer> _newsContainerList = [];
 
@@ -532,18 +532,18 @@ class _MyDrawerState extends State<MyDrawer>
       _newsContainerList.add(NewsContainer(
           text: 'New Courses are available.',
           date: '28-05-2022 11:28',
-          color: colorList[(_colorCounter++)%colorList.length],
+          color: _colorList[(_colorCounter++)%_colorList.length],
           drawerRightSize: _drawerRightSize));
       _newsContainerList.add(NewsContainer(
           text:
           'The app wil be closed from tomorrow \n(22/5/2022 12:30 UTC +2) \nuntil \n(22/5/2022 16:30 UTC +2).',
           date: '21-0-2022 18:22',
-          color: colorList[(_colorCounter++)%colorList.length],
+          color: _colorList[(_colorCounter++)%_colorList.length],
           drawerRightSize: _drawerRightSize));
       _newsContainerList.add(NewsContainer(
         text: 'New Project is available.',
         date: '17-05-2022 07:44',
-        color: colorList[(_colorCounter++)%colorList.length],
+        color: _colorList[(_colorCounter++)%_colorList.length],
         drawerRightSize: _drawerRightSize,
       ));
 
@@ -574,7 +574,7 @@ class _MyDrawerState extends State<MyDrawer>
 
   Future<void> _case5() async {
     if (_statut != 'Updates') {
-      List<Color> colorList = [globals.logoColorPink, globals.logoColorBlue];
+      List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
       int _colorCounter = 0;
       List<NewsContainer> _updatesContainerList = [];
 
@@ -582,12 +582,12 @@ class _MyDrawerState extends State<MyDrawer>
       _updatesContainerList.add(NewsContainer(
           text: 'Version 1.0.1 is available.',
           date: '07-05-2022 18:58',
-          color: colorList[(_colorCounter++)%colorList.length],
+          color: _colorList[(_colorCounter++)%_colorList.length],
           drawerRightSize: _drawerRightSize));
       _updatesContainerList.add(NewsContainer(
           text: 'Version 1.0.0 is available.',
           date: '02-05-2022 17:01',
-          color: colorList[(_colorCounter++)%colorList.length],
+          color: _colorList[(_colorCounter++)%_colorList.length],
           drawerRightSize: _drawerRightSize));
 
       /// ///////////////////////////////////////////
