@@ -4,11 +4,16 @@ import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 class ProjectSquare extends StatelessWidget {
   String name;
   String imgUrl;
+  bool isSelected;
   var onTap;
 
-  ProjectSquare(
-      {Key? key, required this.name, required this.imgUrl, required this.onTap})
-      : super(key: key);
+  ProjectSquare({
+    Key? key,
+    required this.name,
+    required this.imgUrl,
+    required this.isSelected,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +23,15 @@ class ProjectSquare extends StatelessWidget {
       hoverColor: Colors.transparent,
       onTap: () => onTap(),
       child: Container(
-        height: 110,
+        height: 118,
         width: 150,
         margin: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
           color: globals.darkBlue2,
-          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+          border: isSelected == true
+              ? Border.all(color: globals.logoColorPink).scale(4.0)
+              : Border.all(color: globals.logoColorPink).scale(1.0),
+          borderRadius: const BorderRadius.all(Radius.circular(14.0)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

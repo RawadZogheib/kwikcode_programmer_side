@@ -37,7 +37,7 @@ class MyFilter extends StatelessWidget {
                     'Filters',
                     style: TextStyle(
                         fontSize: 22,
-                        color: globals.white2,
+                        color: globals.whiteBlue,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -93,8 +93,8 @@ class MyFilter extends StatelessWidget {
             child: RefreshViewButton(
                 text: 'Refresh',
                 icon: NewIcons.sync_alt,
-                colorIcon: Colors.green.shade700,
-                colorText: Colors.green.shade700,
+                colorIcon: globals.logoColorPink,
+                colorText: globals.logoColorPink,
                 isClickedRefresh: isClickedRefresh,
                 onTap: () => loadTasks()),
           ),

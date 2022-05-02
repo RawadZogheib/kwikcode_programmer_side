@@ -25,7 +25,7 @@ class MiddleView extends StatelessWidget {
                 'Tasks',
                 style: TextStyle(
                     fontSize: 32,
-                    color: globals.white2,
+                    color: globals.whiteBlue,
                     fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 25),
@@ -70,7 +70,7 @@ class MiddleView extends StatelessWidget {
                         width: 42.0,
                         alignment: Alignment.center,
                         child: CircularProgressIndicator(
-                          color: globals.white2,
+                          color: globals.logoColorPink,
                         ),
                       ),
                     ),

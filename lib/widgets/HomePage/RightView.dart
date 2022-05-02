@@ -35,14 +35,14 @@ class RightView extends StatelessWidget {
                 const SizedBox(width: 40),
                 Icon(
                   Icons.person,
-                  color: globals.white1,
+                  color: globals.whiteBlue,
                 ),
                 const SizedBox(width: 15),
                 Text(
                   'Rawad',
                   style: TextStyle(
                       fontSize: 18,
-                      color: globals.white1,
+                      color: globals.white2,
                       fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(width: 35),
@@ -99,7 +99,7 @@ class RightView extends StatelessWidget {
                           width: 42.0,
                           alignment: Alignment.center,
                           child: CircularProgressIndicator(
-                            color: globals.white2,
+                            color: globals.logoColorPink,
                           ),
                         ),
                       ),

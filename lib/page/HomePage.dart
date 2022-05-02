@@ -149,21 +149,25 @@ class _HomePageState extends State<HomePage>
         ProjectSquare(
           name: 'All',
           imgUrl: 'https://picsum.photos/100/100/?all',
+          isSelected: true,
           onTap: () => debugPrint('All'),
         ),
         ProjectSquare(
           name: 'Project 1',
           imgUrl: 'https://picsum.photos/100/100/?1',
+          isSelected: false,
           onTap: () => debugPrint('Project 1'),
         ),
         ProjectSquare(
           name: 'Project 2',
           imgUrl: 'https://picsum.photos/100/100/?2',
+          isSelected: false,
           onTap: () => debugPrint('Project 2'),
         ),
         ProjectSquare(
           name: 'Project 3',
           imgUrl: 'https://picsum.photos/100/100/?3',
+          isSelected: false,
           onTap: () => debugPrint('Project 3'),
         ),
       ];

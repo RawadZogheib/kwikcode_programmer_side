@@ -57,7 +57,7 @@ class _TaskSquareState extends State<TaskSquare> {
         margin: const EdgeInsets.all(4.0),
         decoration: BoxDecoration(
           color: globals.darkBlue2,
-          border: Border.all(color: globals.logoColorPink).scale(1.0),
+          border: Border.all(color: globals.logoColorBlue).scale(1.0),
           borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         ),
         child: Stack(
