@@ -4,12 +4,14 @@ import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 class NewsContainer extends StatelessWidget {
   String text;
   String date;
+  Color color;
   double drawerRightSize;
 
   NewsContainer({
     Key? key,
     required this.text,
     required this.date,
+    required this.color,
     required this.drawerRightSize,
   }) : super(key: key);
 
@@ -21,11 +23,12 @@ class NewsContainer extends StatelessWidget {
       margin: const EdgeInsets.all(4.0),
       constraints: const BoxConstraints(minHeight: 70),
       decoration: BoxDecoration(
-        border: Border.all(color: globals.white1),
+        border: Border.all(color: color),
         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
       ),
       child: Column(
         children: [
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -33,7 +36,7 @@ class NewsContainer extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
-                color: globals.white2,
+                color: globals.whiteBlue,
                 fontWeight: FontWeight.bold,
               ),
             ),

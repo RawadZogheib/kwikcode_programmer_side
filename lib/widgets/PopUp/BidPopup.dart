@@ -51,7 +51,7 @@ class BidPopup extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 28,
-                        color: globals.white2,
+                        color: globals.whiteBlue,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -100,7 +100,7 @@ class BidPopup extends StatelessWidget {
                       height: 220,
                       width: 220,
                       decoration: BoxDecoration(
-                        border: Border.all(color: globals.white2).scale(1.0),
+                        border: Border.all(color: globals.logoColorPink).scale(1.0),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(12.0)),
                       ),
@@ -197,7 +197,7 @@ class BidPopup extends StatelessWidget {
                       child: Container(
                         width: 220,
                         decoration: BoxDecoration(
-                          border: Border.all(color: globals.white2).scale(1.0),
+                          border: Border.all(color: globals.logoColorBlue).scale(1.0),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(12.0)),
                         ),

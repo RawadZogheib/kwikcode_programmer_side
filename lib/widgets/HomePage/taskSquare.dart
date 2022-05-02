@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 
@@ -58,6 +57,7 @@ class _TaskSquareState extends State<TaskSquare> {
         margin: const EdgeInsets.all(4.0),
         decoration: BoxDecoration(
           color: globals.darkBlue2,
+          border: Border.all(color: globals.logoColorPink).scale(1.0),
           borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         ),
         child: Stack(
@@ -67,7 +67,7 @@ class _TaskSquareState extends State<TaskSquare> {
               widget.taskName,
               style: TextStyle(
                   fontSize: 22,
-                  color: globals.white2,
+                  color: globals.whiteBlue,
                   fontWeight: FontWeight.bold),
             ),
             Positioned(
@@ -165,7 +165,7 @@ class _TaskSquareState extends State<TaskSquare> {
         margin: const EdgeInsets.all(4.0),
         decoration: BoxDecoration(
           color: globals.darkBlue1,
-          border: Border.all(color: globals.darkBlue2).scale(4.0),
+          border: Border.all(color: globals.logoColorBlue).scale(1.0),
           borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         ),
         child: Column(

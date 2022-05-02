@@ -8,6 +8,7 @@ import 'package:kwikcode_programmer_side/widgets/HomePage/RightView.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/projectSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/BidPopup.dart';
+import 'package:kwikcode_programmer_side/widgets/other/Flutter%20Logo.dart';
 import 'package:kwikcode_programmer_side/widgets/other/myDrawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -176,9 +177,7 @@ class _HomePageState extends State<HomePage>
           iconList: [
             Padding(
               padding: const EdgeInsets.all(6.0),
-              child: FlutterLogo(
-                size: _iconSize,
-              ),
+              child: MyFlutterLogo(size: _iconSize),
             ),
             Padding(
               padding: const EdgeInsets.all(6.0),
@@ -206,7 +205,7 @@ class _HomePageState extends State<HomePage>
           iconList: [
             Padding(
               padding: const EdgeInsets.all(6.0),
-              child: FlutterLogo(
+              child: MyFlutterLogo(
                 size: _iconSize,
               ),
             ),
@@ -274,7 +273,7 @@ class _HomePageState extends State<HomePage>
           iconList: [
             Padding(
               padding: const EdgeInsets.all(6.0),
-              child: FlutterLogo(
+              child: MyFlutterLogo(
                 size: _iconSize,
               ),
             ),
@@ -299,7 +298,7 @@ class _HomePageState extends State<HomePage>
           iconList: [
             Padding(
               padding: const EdgeInsets.all(6.0),
-              child: FlutterLogo(
+              child: MyFlutterLogo(
                 size: _iconSize,
               ),
             ),
@@ -425,7 +424,7 @@ class _HomePageState extends State<HomePage>
           iconList: [
             Padding(
               padding: const EdgeInsets.all(6.0),
-              child: FlutterLogo(
+              child: MyFlutterLogo(
                 size: _iconSize,
               ),
             ),
@@ -546,7 +545,7 @@ class _HomePageState extends State<HomePage>
 
   void _loadAnimation() {
     _animationController =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
     _animation = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
         parent: _animationController!,
         curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));

@@ -34,6 +34,9 @@ final Color darkBlue2 = HexColor("#242736");
 final Color white1 = HexColor("#616570");
 final Color white2 = HexColor("#bcbeca");
 
+final Color logoColorPink = HexColor('#cb156f');
+final Color logoColorBlue = HexColor('#302ca2');
+
 final Color whiteBlue = HexColor("#f2f3f8");
 final Color white = HexColor("#fdfdfd");
 
