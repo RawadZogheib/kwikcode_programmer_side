@@ -13,12 +13,12 @@ class btn extends StatelessWidget {
         width: 100,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Text(btnText),
+          child: Text(btnText,style: TextStyle(color: globals.whiteBlue),),
         ),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.0),
-          color: Colors.blue.shade200,
+          color: globals.logoColorBlue,
         ));
   }
 }

@@ -1,6 +1,8 @@
-
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/api/my_api.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
@@ -8,11 +10,11 @@ import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/PopUp/errorAlertDialog.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/button/myButton.dart';
+
 // import 'package:kwikcode_programmer_side/widgets/code/codeDialogLogin.dart';
 // import 'package:kwikcode_programmer_side/widgets/other/errorAlertDialog.dart';
 import 'package:kwikcode_programmer_side/widgets/textInput/myErrorText.dart';
 import 'package:kwikcode_programmer_side/widgets/textInput/myTextInput.dart';
-import 'package:dart_ipify/dart_ipify.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -22,17 +24,14 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   String? _userNameLogin;
   String? _passwordLogin;
 
-  Color _colUserName = globals.blue; //email
-  Color _colUserName_1 = globals.blue_1;
-  Color _colUserName_2 = globals.blue_2;
+  Color _colUserName = globals.white; //email
+  Color _colUserName_1 = globals.logoColorPink;
 
-  Color _colPass = globals.blue; //password
-  Color _colPass_1 = globals.blue_1;
-  Color _colPass_2 = globals.blue_2;
+  Color _colPass = globals.white; //password
+  Color _colPass_1 = globals.logoColorPink;
 
   String _errTxtUsername = ''; //email error
   Color _colErrTxtUsername = globals.transparent;
@@ -54,126 +53,134 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
+
     return WillPopScope(
       onWillPop: () async => _back(),
       child: Scaffold(
-        backgroundColor: globals.whiteBlue,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
-            child: Center(
-              child: Container(
-                width: 500,
-                height: 670,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white,
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 5,
-                      left: 5,
-                      child: IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/HomePage', (route) => false);
-                        },
-                      ),
+        backgroundColor: globals.darkBlue1,
+        body: Column(
+          children: [
+            WindowTitleBarBox(
+              child: Row(
+                children: [
+                  const SizedBox(width: 5.0),
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Image.asset(
+                      'Assets/Other/KwikCodeLogo.png',
                     ),
-                    Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                                fontSize: 40.0, color: Colors.black),
-                          ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Text(
+                      'KwikCode',
+                      style: TextStyle(fontSize: 14, color: globals.white2),
+                    ),
+                  ),
+                  Expanded(child: MoveWindow()),
+                  const WindowButtons()
+                ],
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: Container(
+                  height: 600,
+                  width: 480,
+                  margin: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: globals.darkBlue2,
+                  ),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'Assets/Other/KwikCodeLogo.png',
+                        height: 215,
+                        width: 215,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12.0),
+                        child: Text(
+                          "Login",
+                          style: TextStyle(fontSize: 40.0, color: globals.whiteBlue),
                         ),
-                        Padding(
-                            padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width * 0.05,
-                                top: 18.0,
-                                right: MediaQuery.of(context).size.width * 0.05,
-                                bottom: 8.0),
-                            child: SizedBox(
-                              width: 400,
-                              height: 55,
-                              child: MyTextInput(
-                                  textString: "Enter Your UserName",
-                                  labelText: 'Enter Your UserName',
-                                  colBlue: _colUserName,
-                                  colBlue_1: _colUserName_1,
-                                  colBlue_2: _colUserName_2,
-                                  textInputAction: TextInputAction.next,
-                                  spaceAllowed: false,
-                                  obscure: false,
-                                  onChange: (value) {
-                                    _userNameLogin = value;
-                                  }),
-                            )),
-                        myErrorText(
-                            errorText: _errTxtUsername, color: _colErrTxtUsername),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              top: 8.0,
-                              right: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(
+                              top: 18.0,
                               bottom: 8.0),
                           child: SizedBox(
-                            width: 500,
-                            height: 50,
+                            width: 400,
+                            height: 55,
                             child: MyTextInput(
-                              textString: "Enter Your Password",
-                              labelText: 'Enter Your Password',
-                              colBlue: _colPass,
-                              colBlue_1: _colPass_1,
-                              colBlue_2: _colPass_2,
-                              maxLines: 1,
-                              textInputAction: TextInputAction.none,
-                              spaceAllowed: false,
-                              obscure: true,
-                              onChange: (value) {
-                                _passwordLogin = value;
-                                //print(globals.Login);
-                              },
-                            ),
-                          ),
-                        ),
-                        myErrorText(
-                            errorText: _errTxtPass, color: _colErrTxtPass),
-                        Padding(
-                          padding: const EdgeInsets.all(28.0),
-                          child: InkWell(
-                            child: btn(btnText: "Submit"),
-                            onTap: () {
-                              try {
-                                if (_oneClick == 0) {
-                                  _loginCtrl();
-                                }
-                              } catch (e) {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        ErrorAlertDialog(
-                                            message: globals.errorException));
-                              }
+                                textString: "Enter Your UserName",
+                                labelText: 'Enter Your UserName',
+                                colBlue: _colUserName,
+                                colBlue_1: _colUserName_1,
+                                textInputAction: TextInputAction.next,
+                                spaceAllowed: false,
+                                obscure: false,
+                                onChange: (value) {
+                                  _userNameLogin = value;
+                                }),
+                          )),
+                      myErrorText(
+                          errorText: _errTxtUsername,
+                          color: _colErrTxtUsername),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0,
+                            bottom: 8.0),
+                        child: SizedBox(
+                          width: 400,
+                          height: 55,
+                          child: MyTextInput(
+                            textString: "Enter Your Password",
+                            labelText: 'Enter Your Password',
+                            colBlue: _colPass,
+                            colBlue_1: _colPass_1,
+                            maxLines: 1,
+                            textInputAction: TextInputAction.none,
+                            spaceAllowed: false,
+                            obscure: true,
+                            onChange: (value) {
+                              _passwordLogin = value;
+                              //print(globals.Login);
                             },
                           ),
                         ),
-                        myErrorText(errorText: _errTxt, color: _colErrTxt),
-                      ],
-                    ),
-                  ],
+                      ),
+                      myErrorText(
+                          errorText: _errTxtPass, color: _colErrTxtPass),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          child: btn(btnText: "Submit"),
+                          onTap: () {
+                            try {
+                              if (_oneClick == 0) {
+                                _loginCtrl();
+                              }
+                            } catch (e) {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      ErrorAlertDialog(
+                                          message: globals.errorException));
+                            }
+                          },
+                        ),
+                      ),
+                      myErrorText(errorText: _errTxt, color: _colErrTxt),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -193,9 +200,8 @@ class _LoginState extends State<Login> {
     if (_userNameLogin != null && _userNameLogin != '') {
       if (mounted) {
         setState(() {
-          _colUserName = Colors.blue.shade50;
-          _colUserName_1 = Colors.blue.shade900;
-          _colUserName_2 = Colors.blue.shade900.withOpacity(0.5);
+          _colUserName = globals.white;
+          _colUserName_1 = globals.logoColorPink;
         });
       }
     } else {
@@ -204,7 +210,6 @@ class _LoginState extends State<Login> {
         setState(() {
           _colUserName = Colors.red.shade50;
           _colUserName_1 = Colors.red.shade900;
-          _colUserName_2 = Colors.red.shade900.withOpacity(0.5);
           _errTxtUsername = globals.warning7;
           _colErrTxtUsername = globals.red_1;
           warningPopup(context, globals.warning7);
@@ -215,9 +220,8 @@ class _LoginState extends State<Login> {
     if (_passwordLogin != null && _passwordLogin != '') {
       if (mounted) {
         setState(() {
-          _colPass = Colors.blue.shade50;
-          _colPass_1 = Colors.blue.shade900;
-          _colPass_2 = Colors.blue.shade900.withOpacity(0.5);
+          _colPass = globals.white;
+          _colPass_1 = globals.logoColorPink;
         });
       }
     } else {
@@ -226,7 +230,6 @@ class _LoginState extends State<Login> {
         setState(() {
           _colPass = Colors.red.shade50;
           _colPass_1 = Colors.red.shade900;
-          _colPass_2 = Colors.red.shade900.withOpacity(0.5);
           _errTxtPass = globals.warning7;
           _colErrTxtPass = globals.red_1;
           warningPopup(context, globals.warning7);
@@ -246,17 +249,17 @@ class _LoginState extends State<Login> {
     _errTxt = '';
 
     final ipv4 = await Ipify.ipv4();
-    print(ipv4); // 98.207.254.136
-    print(globals.version);
-    print(_userNameLogin);
-    print(_passwordLogin);
+    debugPrint(ipv4); // 98.207.254.136
+    debugPrint(globals.version);
+    debugPrint(_userNameLogin);
+    debugPrint(_passwordLogin);
 
     try {
       var data = {
         'version': globals.version,
         'userName': _userNameLogin,
         'password': _passwordLogin,
-        'ip' : await ipv4,
+        'ip': ipv4,
       };
 
       var res =
@@ -265,22 +268,19 @@ class _LoginState extends State<Login> {
       List<dynamic> body = json.decode(res.body);
 
       if (body[0] == "success") {
-
-          SessionManager session = SessionManager();
-          await session.set('token', body[1]);
-          await session.set('Id', body[2][0]);
-          await session.set('fName', body[2][1]);
-          await session.set('lName', body[2][2]);
-          await session.set('email', body[2][3]);
-          await session.set('userName', _userNameLogin);
-          await session.set('phoneNumber', body[2][4]);
-          await session.set('gender', body[2][5]);
-          await session.set('dateOfBirth', body[2][6]);
-          await session.set('ip', ipv4);
-          //print(await session.get('isLoggedIn'));
-          Navigator.pushNamedAndRemoveUntil(
+        await SessionManager().set('token', body[1]);
+        await SessionManager().set('Id', body[2][0]);
+        await SessionManager().set('fName', body[2][1]);
+        await SessionManager().set('lName', body[2][2]);
+        await SessionManager().set('email', body[2][3]);
+        await SessionManager().set('userName', _userNameLogin);
+        await SessionManager().set('phoneNumber', body[2][4]);
+        await SessionManager().set('gender', body[2][5]);
+        await SessionManager().set('dateOfBirth', body[2][6]);
+        await SessionManager().set('ip', ipv4);
+        //print(await session.get('isLoggedIn'));
+        Navigator.pushNamedAndRemoveUntil(
             context, '/HomePage', (route) => false);
-
       } else if (body[0] == "errorVersion") {
         if (mounted) {
           setState(() {
@@ -295,10 +295,8 @@ class _LoginState extends State<Login> {
       } else if (body[0] == "error8") {
         _colUserName = Colors.red.shade50;
         _colUserName_1 = Colors.red.shade900;
-        _colUserName_2 = Colors.red.shade900.withOpacity(0.5);
         _colPass = Colors.red.shade50;
         _colPass_1 = Colors.red.shade900;
-        _colPass_2 = Colors.red.shade900.withOpacity(0.5);
         if (mounted) {
           setState(() {
             _errTxt = globals.warning8;
@@ -306,9 +304,9 @@ class _LoginState extends State<Login> {
             warningPopup(context, globals.warning8);
           });
         }
-      } else if(body[0] == "error4"){
+      } else if (body[0] == "error4") {
         warningPopup(context, globals.error4);
-      }else {
+      } else {
         if (mounted) {
           setState(() {
             _errTxt = globals.errorElse;
@@ -333,7 +331,7 @@ class _LoginState extends State<Login> {
     exit(0);
   }
 
-  _clearLogin(){
+  _clearLogin() {
     _userNameLogin = null;
     _passwordLogin = null;
   }
@@ -346,14 +344,47 @@ class _LoginState extends State<Login> {
         _errTxtUsername = '';
         _errTxtPass = '';
         _errTxt = '';
-        _colUserName = globals.blue; //email
-        _colUserName_1 = globals.blue_1;
-        _colUserName_2 = globals.blue_2;
-        _colPass = globals.blue; //password
-        _colPass_1 = globals.blue_1;
-        _colPass_2 = globals.blue_2;
+        _colUserName = globals.white; //email
+        _colUserName_1 = globals.logoColorPink;
+        _colPass = globals.white; //password
+        _colPass_1 = globals.logoColorPink;
       });
     }
   }
+}
 
+final buttonColors = WindowButtonColors(
+    iconNormal: globals.white1,
+    mouseOver: globals.white2,
+    mouseDown: globals.white2,
+    iconMouseOver: globals.white1,
+    iconMouseDown: globals.white1);
+
+final closeButtonColors = WindowButtonColors(
+    iconNormal: Colors.red,
+    mouseOver: Colors.red,
+    mouseDown: Colors.red,
+    iconMouseOver: globals.white);
+
+class WindowButtons extends StatelessWidget {
+  const WindowButtons({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        MinimizeWindowButton(colors: buttonColors),
+        MaximizeWindowButton(colors: buttonColors),
+        CloseWindowButton(
+          colors: closeButtonColors,
+          onPressed: () => _onClose(),
+        ),
+      ],
+    );
+  }
+
+  _onClose() {
+    debugPrint('bye');
+    appWindow.close();
+  }
 }
