@@ -36,7 +36,7 @@ class _FirstPage extends State<FirstPage> {
   _timer() async {
     try {
       await Future.delayed(const Duration(seconds: 3));
-      Navigator.pushNamedAndRemoveUntil(context, '/HomePage', (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, '/Login', (route) => false);
     } catch (e) {
       print(e);
     }

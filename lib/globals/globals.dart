@@ -7,7 +7,7 @@ import 'package:kwikcode_programmer_side/hexColor/hexColor.dart';
 const String version = "v1.0";
 
 //Server Ip  (page[/my_api.dart])
-const String myIP = "http://127.0.0.1/gajoo_php";
+const String myIP = "https://kwikcode.net/kwikcode_php";
 
 String currentPage =
     'HomePage'; //HomePage
@@ -19,6 +19,7 @@ final Color blue_2 = Colors.blue.shade900.withOpacity(0.5);
 final Color red = Colors.red.shade50;
 final Color red_1 = Colors.red.shade900;
 final Color red_2 = Colors.red.shade900.withOpacity(0.5);
+const Color transparent = Colors.transparent;
 
 Color blue1 = Colors.blue.shade900;
 Color blue2 = Colors.blue.shade50;

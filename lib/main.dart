@@ -2,6 +2,7 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/page/FirstPage.dart';
 import 'package:kwikcode_programmer_side/page/HomePage.dart';
+import 'package:kwikcode_programmer_side/page/Login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           routes: {
             '/FirstPage': (context) => const FirstPage(),
             '/HomePage': (context) => const HomePage(),
+            '/Login': (context) => const Login(),
           });
   }
 }
