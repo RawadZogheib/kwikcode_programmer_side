@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
   String _errTxt = ''; //else error
   Color _colErrTxt = globals.transparent;
 
-  var _oneClick = 0;
+  bool _isClicked = false;
 
   @override
   void initState() {
@@ -161,7 +161,7 @@ class _LoginState extends State<Login> {
                           child: btn(btnText: "Submit"),
                           onTap: () {
                             try {
-                              if (_oneClick == 0) {
+                              if (_isClicked == false) {
                                 _loginCtrl();
                               }
                             } catch (e) {
@@ -187,7 +187,7 @@ class _LoginState extends State<Login> {
   }
 
   _loginCtrl() async {
-    _oneClick = 1;
+    _isClicked = true;
     bool isEmpty = false;
 
     _errTxtUsername = '';
@@ -239,10 +239,8 @@ class _LoginState extends State<Login> {
 
     if (isEmpty == false) {
       await _verifc();
-    } else {
-      //do nothing
     }
-    _oneClick = 0;
+    _isClicked = false;
   }
 
   _verifc() async {
@@ -316,6 +314,7 @@ class _LoginState extends State<Login> {
         }
       }
     } catch (e) {
+      _isClicked = false;
       debugPrint(e.toString());
       if (mounted) {
         setState(() {
