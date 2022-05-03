@@ -656,7 +656,7 @@ class _MyDrawerState extends State<MyDrawer>
     await SessionManager().destroy();
 
     Navigator.of(context)
-        .pushNamedAndRemoveUntil('/LoginPage', (route) => false);
+        .pushNamedAndRemoveUntil('/Login', (route) => false);
   }
 
   Future<void> _loadIsLoggedIn() async {
