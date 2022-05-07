@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 
@@ -11,19 +12,21 @@ class TaskSquare extends StatefulWidget {
   String description;
   int timeLeft;
   List<Widget> iconList;
+  int status;
   var removeTask;
   var onBidTap;
 
-  TaskSquare(
-      {Key? key,
-      required this.taskName,
-      required this.projectManager,
-      required this.description,
-      required this.timeLeft,
-      required this.iconList,
-      required this.removeTask,
-      required this.onBidTap})
-      : super(key: key);
+  TaskSquare({
+    Key? key,
+    required this.taskName,
+    required this.projectManager,
+    required this.description,
+    required this.timeLeft,
+    required this.iconList,
+    required this.status,
+    required this.removeTask,
+    required this.onBidTap,
+  }) : super(key: key);
 
   @override
   State<TaskSquare> createState() => _TaskSquareState();
@@ -74,14 +77,24 @@ class _TaskSquareState extends State<TaskSquare> {
               bottom: 15,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Project Manager: ',
-                    style: TextStyle(fontSize: 14, color: globals.white1),
+                  SizedBox(
+                    height: 18,
+                    child: Text(
+                      'Project Manager: ',
+                      style: TextStyle(fontSize: 12, color: globals.white1),
+                    ),
                   ),
-                  Text(
-                    widget.projectManager,
-                    style: TextStyle(fontSize: 12, color: globals.white1),
+                  SizedBox(
+                    height: 18,
+                    child: Text(
+                      widget.projectManager,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: globals.white2,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),
@@ -90,45 +103,102 @@ class _TaskSquareState extends State<TaskSquare> {
               top: 10,
               right: 15,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.timer_outlined,
-                        color: globals.white2,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        _printDuration(Duration(seconds: widget.timeLeft)),
-                        style: TextStyle(fontSize: 12, color: globals.white2),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8.0),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    onTap: () => _goToBid(),
-                    child: Container(
-                      height: 30,
-                      width: 75,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: globals.white2,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4.0)),
-                      ),
-                      child: Text(
-                        'Bid',
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: globals.darkBlue2,
-                            fontWeight: FontWeight.bold),
-                      ),
+                  SizedBox(
+                    width: 75,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          widget.status == 3 || widget.status == 5
+                              ? Icons.warning
+                              : NewIcons.circle,
+                          size: 18.0,
+                          color: widget.status == 0 || widget.status == 5
+                              ? Colors.red
+                              : widget.status == 1 || widget.status == 3
+                                  ? Colors.orange
+                                  : widget.status == 2
+                                      ? Colors.blue
+                                      : widget.status == 4
+                                          ? Colors.green
+                                          : Colors.transparent.withOpacity(0.1),
+                        ),
+                      ],
                     ),
                   ),
+                  const SizedBox(height: 4.0),
+                  widget.status == 0 || widget.status == 1 || widget.status == 2
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.timer_outlined,
+                              color: globals.white2,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              _printDuration(
+                                  Duration(seconds: widget.timeLeft)),
+                              style: TextStyle(
+                                  fontSize: 12, color: globals.white2),
+                            ),
+                          ],
+                        )
+                      : const SizedBox(),
+                  widget.status == 0 || widget.status == 1 || widget.status == 2
+                      ? const SizedBox(height: 8.0)
+                      : const SizedBox(),
+                  widget.status == 0 || widget.status == 1
+                      ? InkWell(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          onTap: () => _goToBid(),
+                          child: Container(
+                            height: 30,
+                            width: 75,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: globals.white2,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(4.0)),
+                            ),
+                            child: Text(
+                              'Bid',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: globals.darkBlue2,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        )
+                      : widget.status == 2
+                          ? InkWell(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              onTap: () => _contactAdmin(),
+                              child: Container(
+                                height: 30,
+                                width: 75,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: globals.white2,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(4.0)),
+                                ),
+                                child: Text(
+                                  'Chat Admin',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: globals.darkBlue2,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
                 ],
               ),
             ),
@@ -210,19 +280,23 @@ class _TaskSquareState extends State<TaskSquare> {
   }
 
   void _timeLeftChrono() {
-    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
-      //  print("1sec gone!!");
-      if (widget.timeLeft > 0) {
-        if (mounted) {
-          setState(() {
-            widget.timeLeft--;
-          });
+    if (widget.status == 1 || widget.status == 2) {
+      timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+        //  print("1sec gone!!");
+        if (widget.timeLeft > 0) {
+          if (mounted) {
+            setState(() {
+              widget.timeLeft--;
+            });
+          }
+        } else {
+          timer?.cancel();
+          widget.removeTask(widget.key);
         }
-      } else {
-        timer?.cancel();
-        widget.removeTask(widget.key);
-      }
-    });
+      });
+    } else {
+      print(widget.key);
+    }
   }
 
   String _printDuration(Duration duration) {
@@ -230,6 +304,10 @@ class _TaskSquareState extends State<TaskSquare> {
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  _contactAdmin() {
+    print('Contact Admin.');
   }
 
   _goToBid() {

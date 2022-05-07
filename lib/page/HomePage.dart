@@ -29,6 +29,10 @@ class _HomePageState extends State<HomePage>
   bool _isLoadingTasks = true;
   bool _isClickedRefresh = true;
 
+  //Color iconColor = globals.logoColorPink;
+  //Color iconColor = globals.logoColorBlue;
+  Color iconColor = globals.white1;
+
   final double _iconSize = 35;
 
   //BidPopup
@@ -40,6 +44,7 @@ class _HomePageState extends State<HomePage>
     description: 'null',
     timeLeft: 0,
     iconList: [],
+    status: 0,
     removeTask: (ValueKey<String> taskId) => print('null'),
     onBidTap: (ValueKey<String> taskId) => print('null'),
   );
@@ -172,7 +177,10 @@ class _HomePageState extends State<HomePage>
           iconList: [
             Padding(
               padding: const EdgeInsets.all(6.0),
-              child: MyFlutterLogo(size: _iconSize),
+              child: MyFlutterLogo(
+                size: _iconSize,
+                color: iconColor,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(6.0),
@@ -184,10 +192,11 @@ class _HomePageState extends State<HomePage>
                 //   fontPackage: null,
                 // ),
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
           ],
+          status: 0,
           removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
           onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
         ),
@@ -202,6 +211,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: MyFlutterLogo(
                 size: _iconSize,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -209,10 +219,11 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.php,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
           ],
+          status: 1,
           removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
           onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
         ),
@@ -228,7 +239,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.html5,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -236,7 +247,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.css3_alt,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -244,7 +255,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.js,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -252,10 +263,11 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.php,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
           ],
+          status: 2,
           removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
           onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
         ),
@@ -270,6 +282,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: MyFlutterLogo(
                 size: _iconSize,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -277,10 +290,11 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.php,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
           ],
+          status: 3,
           removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
           onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
         ),
@@ -295,6 +309,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: MyFlutterLogo(
                 size: _iconSize,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -302,7 +317,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.php,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -310,7 +325,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.js,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -318,7 +333,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.react,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -326,7 +341,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.css3,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -334,7 +349,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.css3_alt,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -342,7 +357,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.html5,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -350,7 +365,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.swift,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -358,10 +373,11 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.java,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
           ],
+          status: 4,
           removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
           onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
         ),
@@ -378,7 +394,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.html5,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -386,7 +402,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.css3_alt,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -394,7 +410,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.js,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -402,10 +418,11 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.php,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
           ],
+          status: 5,
           removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
           onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
         ),
@@ -421,6 +438,7 @@ class _HomePageState extends State<HomePage>
               padding: const EdgeInsets.all(6.0),
               child: MyFlutterLogo(
                 size: _iconSize,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -428,7 +446,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.php,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -436,7 +454,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.js,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -444,7 +462,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.react,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -452,7 +470,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.css3,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -460,7 +478,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.css3_alt,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -468,7 +486,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.html5,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -476,7 +494,7 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.swift,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
             Padding(
@@ -484,10 +502,11 @@ class _HomePageState extends State<HomePage>
               child: Icon(
                 NewIcons.java,
                 size: _iconSize,
-                color: globals.white1,
+                color: iconColor,
               ),
             ),
           ],
+          status: 4 ,
           removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
           onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
         ),
@@ -567,6 +586,7 @@ class _HomePageState extends State<HomePage>
                 description: 'null',
                 timeLeft: 0,
                 iconList: [],
+                status: 0,
                 removeTask: (ValueKey<String> taskId) => print('null'),
                 onBidTap: (ValueKey<String> taskId) => print('null'),
               ));

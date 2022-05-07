@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
+import 'package:kwikcode_programmer_side/hexColor/hexColor.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/other/Flutter%20Logo.dart';
@@ -47,14 +48,8 @@ class _MyDrawerState extends State<MyDrawer>
 
   @override
   Widget build(BuildContext context) {
-    double _height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double _width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
     return AnimatedBuilder(
         animation: _animationController!,
         builder: (BuildContext context, widget) {
@@ -82,10 +77,7 @@ class _MyDrawerState extends State<MyDrawer>
                                   const SizedBox(height: 12),
                                   SizedBox(
                                     height: 250,
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width,
+                                    width: MediaQuery.of(context).size.width,
                                     child: Image.asset(
                                       'Assets/Other/KwikCodeLogo.png',
                                       fit: BoxFit.cover,
@@ -185,53 +177,53 @@ class _MyDrawerState extends State<MyDrawer>
                           : const SizedBox(),
                       _statut != '-9999'
                           ? Column(
-                        children: [
-                          const SizedBox(height: 20),
-                          Transform(
-                            transform: Matrix4.translationValues(
-                                0.0, _animation1?.value * _height, 0.0),
-                            child: SizedBox(
-                              width: _drawerRightSize,
-                              child: Row(
-                                children: [
-                                  const SizedBox(width: 10),
-                                  InkWell(
-                                    onTap: () => _onBackTap(),
-                                    child: Icon(
-                                      Icons.arrow_back_ios,
-                                      color: globals.white2,
-                                    ),
-                                  ),
-                                  Expanded(
+                              children: [
+                                const SizedBox(height: 20),
+                                Transform(
+                                  transform: Matrix4.translationValues(
+                                      0.0, _animation1?.value * _height, 0.0),
+                                  child: SizedBox(
+                                    width: _drawerRightSize,
                                     child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          _statut,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 26,
+                                        const SizedBox(width: 10),
+                                        InkWell(
+                                          onTap: () => _onBackTap(),
+                                          child: Icon(
+                                            Icons.arrow_back_ios,
                                             color: globals.white2,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        const SizedBox(width: 40),
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                _statut,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 26,
+                                                  color: globals.white2,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 40),
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 30),
-                          Transform(
-                            transform: Matrix4.translationValues(
-                                0.0, _animation2?.value * _height, 0.0),
-                            child: _currentWidget,
-                          ),
-                        ],
-                      )
+                                ),
+                                const SizedBox(height: 30),
+                                Transform(
+                                  transform: Matrix4.translationValues(
+                                      0.0, _animation2?.value * _height, 0.0),
+                                  child: _currentWidget,
+                                ),
+                              ],
+                            )
                           : const SizedBox(),
                       _statut != '-9999'
                           ? const SizedBox(width: 8.0)
@@ -304,6 +296,7 @@ class _MyDrawerState extends State<MyDrawer>
                       padding: const EdgeInsets.all(6.0),
                       child: MyFlutterLogo(
                         size: _iconSize,
+                        color: globals.white1,
                       ),
                     ),
                     Padding(
@@ -315,6 +308,7 @@ class _MyDrawerState extends State<MyDrawer>
                       ),
                     ),
                   ],
+                  status: 2,
                   removeTask: (ValueKey<String> taskId) =>
                       debugPrint(taskId.value),
                   onBidTap: (ValueKey<String> taskId) =>
@@ -355,6 +349,7 @@ class _MyDrawerState extends State<MyDrawer>
                       padding: const EdgeInsets.all(6.0),
                       child: MyFlutterLogo(
                         size: _iconSize,
+                        color: globals.white1,
                       ),
                     ),
                     Padding(
@@ -366,6 +361,7 @@ class _MyDrawerState extends State<MyDrawer>
                       ),
                     ),
                   ],
+                  status: 1,
                   removeTask: (ValueKey<String> taskId) =>
                       debugPrint(taskId.value),
                   onBidTap: (ValueKey<String> taskId) =>
@@ -410,7 +406,7 @@ class _MyDrawerState extends State<MyDrawer>
                       decoration: BoxDecoration(
                         color: globals.logoColorPink,
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(12.0)),
+                            const BorderRadius.all(Radius.circular(12.0)),
                       ),
                       child: Text(
                         'US Dollar: ',
@@ -454,7 +450,7 @@ class _MyDrawerState extends State<MyDrawer>
                       decoration: BoxDecoration(
                         color: globals.logoColorBlue,
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(12.0)),
+                            const BorderRadius.all(Radius.circular(12.0)),
                       ),
                       child: Text(
                         'KwikPoints: ',
@@ -532,18 +528,18 @@ class _MyDrawerState extends State<MyDrawer>
       _newsContainerList.add(NewsContainer(
           text: 'New Courses are available.',
           date: '28-05-2022 11:28',
-          color: _colorList[(_colorCounter++)%_colorList.length],
+          color: _colorList[(_colorCounter++) % _colorList.length],
           drawerRightSize: _drawerRightSize));
       _newsContainerList.add(NewsContainer(
           text:
-          'The app wil be closed from tomorrow \n(22/5/2022 12:30 UTC +2) \nuntil \n(22/5/2022 16:30 UTC +2).',
+              'The app wil be closed from tomorrow \n(22/5/2022 12:30 UTC +2) \nuntil \n(22/5/2022 16:30 UTC +2).',
           date: '21-0-2022 18:22',
-          color: _colorList[(_colorCounter++)%_colorList.length],
+          color: _colorList[(_colorCounter++) % _colorList.length],
           drawerRightSize: _drawerRightSize));
       _newsContainerList.add(NewsContainer(
         text: 'New Project is available.',
         date: '17-05-2022 07:44',
-        color: _colorList[(_colorCounter++)%_colorList.length],
+        color: _colorList[(_colorCounter++) % _colorList.length],
         drawerRightSize: _drawerRightSize,
       ));
 
@@ -582,12 +578,12 @@ class _MyDrawerState extends State<MyDrawer>
       _updatesContainerList.add(NewsContainer(
           text: 'Version 1.0.1 is available.',
           date: '07-05-2022 18:58',
-          color: _colorList[(_colorCounter++)%_colorList.length],
+          color: _colorList[(_colorCounter++) % _colorList.length],
           drawerRightSize: _drawerRightSize));
       _updatesContainerList.add(NewsContainer(
           text: 'Version 1.0.0 is available.',
           date: '02-05-2022 17:01',
-          color: _colorList[(_colorCounter++)%_colorList.length],
+          color: _colorList[(_colorCounter++) % _colorList.length],
           drawerRightSize: _drawerRightSize));
 
       /// ///////////////////////////////////////////
@@ -655,8 +651,7 @@ class _MyDrawerState extends State<MyDrawer>
     Navigator.of(context).pop();
     await SessionManager().destroy();
 
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/Login', (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil('/Login', (route) => false);
   }
 
   Future<void> _loadIsLoggedIn() async {
@@ -677,7 +672,7 @@ class _MyDrawerState extends State<MyDrawer>
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
     _animation = Tween(begin: 0, end: _drawerRightSize + _drawerDividerSize)
         .animate(CurvedAnimation(
-        parent: _animationController!, curve: Curves.fastOutSlowIn));
+            parent: _animationController!, curve: Curves.fastOutSlowIn));
     _animation1 = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
         parent: _animationController!,
         curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
@@ -688,8 +683,7 @@ class _MyDrawerState extends State<MyDrawer>
 
   _onBackTap() async {
     //Navigator.of(context).pop();
-    await _animationController!.reverse().then((value) =>
-        setState(() {
+    await _animationController!.reverse().then((value) => setState(() {
           _statut = '-9999';
           _currentWidget = const SizedBox();
         }));
