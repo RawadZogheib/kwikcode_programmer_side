@@ -56,7 +56,7 @@ class MiddleView extends StatelessWidget {
                         behavior: MyCustomScrollBehavior()
                             .copyWith(scrollbars: false),
                         child: SingleChildScrollView(
-                          controller: ScrollController(),
+                          controller: globals.controllerMiddlePage,
                           child: Wrap(
                             alignment: WrapAlignment.start,
                             children: childrenTaskList,

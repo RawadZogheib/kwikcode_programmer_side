@@ -8,6 +8,7 @@ import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/other/Flutter%20Logo.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 import 'package:kwikcode_programmer_side/widgets/other/NewsContainer.dart';
+import 'package:kwikcode_programmer_side/widgets/other/StrikeThroughWidget2.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -467,6 +468,7 @@ class _MyDrawerState extends State<MyDrawer>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           StrikeThroughWidget2(
+                            color: globals.white2,
                             child: Text(
                               'KP',
                               textAlign: TextAlign.center,
@@ -748,43 +750,6 @@ class SearchFieldDrawer extends StatelessWidget {
           borderSide: BorderSide(color: color.withOpacity(0.7)),
         ),
       ),
-    );
-  }
-}
-
-class StrikeThroughWidget2 extends StatelessWidget {
-  final Widget _child;
-
-  const StrikeThroughWidget2({Key? key, required Widget child})
-      : _child = child,
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Center(child: _child),
-        //Center(child: Image.asset('Assets/HomePage/graphics/strikethrough2.png',width: 40,)),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 3),
-              Container(
-                height: 2,
-                width: 32,
-                color: globals.white2,
-              ),
-              const SizedBox(height: 2),
-              Container(
-                height: 2,
-                width: 32,
-                color: globals.white2,
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

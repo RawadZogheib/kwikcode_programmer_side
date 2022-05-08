@@ -180,6 +180,7 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
+            const SizedBox(height: 6),
           ],
         ),
       ),
@@ -246,7 +247,7 @@ class _LoginState extends State<Login> {
   _verifc() async {
     _errTxt = '';
 
-    final ipv4 = await Ipify.ipv4();
+    final ipv4 = 'await Ipify.ipv4()';
     debugPrint(ipv4); // 98.207.254.136
     debugPrint(globals.version);
     debugPrint(_userNameLogin);

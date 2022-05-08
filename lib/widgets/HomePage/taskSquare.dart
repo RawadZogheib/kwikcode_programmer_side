@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
+import 'package:kwikcode_programmer_side/widgets/toolTip/toolTip.dart';
 
 class TaskSquare extends StatefulWidget {
   String taskName;
@@ -51,6 +52,8 @@ class _TaskSquareState extends State<TaskSquare> {
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
     return FlipCard(
       fill: Fill.fillBack,
       direction: FlipDirection.HORIZONTAL,
@@ -129,7 +132,10 @@ class _TaskSquareState extends State<TaskSquare> {
                     ),
                   ),
                   const SizedBox(height: 4.0),
-                  widget.status == 0 || widget.status == 1 || widget.status == 2
+                  widget.status == 0 ||
+                          widget.status == 1 ||
+                          widget.status == 2 ||
+                          widget.status == 3
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -225,6 +231,11 @@ class _TaskSquareState extends State<TaskSquare> {
                   ),
                 ),
               ),
+            ),
+            const Positioned(
+              bottom: 15,
+              right: 15,
+              child: TargetWidget(),
             ),
           ],
         ),

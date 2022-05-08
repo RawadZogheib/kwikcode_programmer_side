@@ -82,3 +82,7 @@ const String error406 = 'There is no courses available on this day.';
 const String warning407 = 'There is no teacehrs available.';
 const String success408 = "Payment Done Successfully."; ///////
 const String error409 = 'Coupon already claimed!';
+
+
+final ScrollController controllerMiddlePage = ScrollController();
+bool isLoadinTooltip = false;

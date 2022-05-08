@@ -506,7 +506,7 @@ class _HomePageState extends State<HomePage>
               ),
             ),
           ],
-          status: 4 ,
+          status: -1,
           removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
           onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
         ),
