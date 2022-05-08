@@ -25,7 +25,7 @@ class _TargetWidgetState extends State<TargetWidget> {
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
-    // if (tooltip != null && tooltip!.isOpen ) {//on screen change close not done
+    // if (tooltip != null && tooltip!.isOpen ) {// On screen change close not done
     //   tooltip!.close();
     // }
     return Stack(
