@@ -45,8 +45,8 @@ class _HomePageState extends State<HomePage>
     timeLeft: 0,
     iconList: [],
     status: 0,
-    removeTask: (ValueKey<String> taskId) => print('null'),
-    onBidTap: (ValueKey<String> taskId) => print('null'),
+    removeTask: (ValueKey<String> taskId) => debugPrint('null'),
+    onBidTap: (ValueKey<String> taskId) => debugPrint('null'),
   );
 
   @override
@@ -587,8 +587,8 @@ class _HomePageState extends State<HomePage>
                 timeLeft: 0,
                 iconList: [],
                 status: 0,
-                removeTask: (ValueKey<String> taskId) => print('null'),
-                onBidTap: (ValueKey<String> taskId) => print('null'),
+                removeTask: (ValueKey<String> taskId) => debugPrint('null'),
+                onBidTap: (ValueKey<String> taskId) => debugPrint('null'),
               ));
     }
   }

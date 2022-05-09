@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:http/http.dart' as http;
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
@@ -12,7 +13,7 @@ class CallApi{
   }
   postData(data, apiUrl) async {
     var fullUrl = _url + apiUrl + await _getToken() ;
-    print(fullUrl);
+    debugPrint(fullUrl);
     return await http.post(   //post request
         Uri.parse(fullUrl),
         body: jsonEncode(data),

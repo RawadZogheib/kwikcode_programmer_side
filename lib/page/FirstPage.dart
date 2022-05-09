@@ -38,7 +38,7 @@ class _FirstPage extends State<FirstPage> {
       await Future.delayed(const Duration(seconds: 3));
       Navigator.pushNamedAndRemoveUntil(context, '/Login', (route) => false);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 }

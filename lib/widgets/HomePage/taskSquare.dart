@@ -344,7 +344,7 @@ class _TaskSquareState extends State<TaskSquare> {
         }
       });
     } else {
-      print(widget.key);
+      debugPrint(widget.key.toString());
     }
   }
 
@@ -356,12 +356,12 @@ class _TaskSquareState extends State<TaskSquare> {
   }
 
   _contactAdmin() {
-    print('Contact Admin.');
+    debugPrint('Contact Admin.');
   }
 
   _goToBid() {
     widget.onBidTap(widget.key);
-    print('Go to Bid');
+    debugPrint('Go to Bid');
   }
 
   Future<void> _animate() async {
@@ -370,7 +370,7 @@ class _TaskSquareState extends State<TaskSquare> {
         setState(() {
           widget.status = (widget.status + 1) % 6;
         });
-        print(widget.status);
+        debugPrint(widget.status.toString());
       });
     }
   }
