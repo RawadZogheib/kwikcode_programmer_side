@@ -170,7 +170,7 @@ class ToolTipWidget extends StatelessWidget {
                     margin: const EdgeInsets.all(12.0),
                     alignment: Alignment.center,
                     child: Text(
-                      '$time Day${int.parse(time) > 1 ? 's' : ''}',
+                      '${index!=0?'+ ':''}$time Day${int.parse(time) > 1 ? 's' : ''}',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -186,7 +186,7 @@ class ToolTipWidget extends StatelessWidget {
                 margin: const EdgeInsets.all(12.0),
                 alignment: Alignment.center,
                 child: Text(
-                  '$time Day${int.parse(time) > 1 ? 's' : ''}',
+                  '${index!=0?'+ ':''}$time Day${int.parse(time) > 1 ? 's' : ''}',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,

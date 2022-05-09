@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
-import 'package:kwikcode_programmer_side/hexColor/hexColor.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/other/Flutter%20Logo.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 import 'package:kwikcode_programmer_side/widgets/other/NewsContainer.dart';
+import 'package:kwikcode_programmer_side/widgets/other/StatusMap.dart';
 import 'package:kwikcode_programmer_side/widgets/other/StrikeThroughWidget2.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -17,8 +17,7 @@ class MyDrawer extends StatefulWidget {
   State<MyDrawer> createState() => _MyDrawerState();
 }
 
-class _MyDrawerState extends State<MyDrawer>
-    with SingleTickerProviderStateMixin {
+class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   bool _isLoggedIn = false;
 
   String _statut = '-9999';
@@ -27,7 +26,9 @@ class _MyDrawerState extends State<MyDrawer>
   AnimationController? _animationController;
 
   final double _drawerLeftSize = 324;
-  final double _drawerRightSize = 324;
+  double _drawerRightSize = 324;
+  final double _drawerRightSize1 = 324;
+  final double _drawerRightSize2 = 648;
   final double _drawerDividerSize = 24;
   final double _iconSize = 35;
   Widget _currentWidget = Container();
@@ -156,13 +157,20 @@ class _MyDrawerState extends State<MyDrawer>
                                           onClicked: () =>
                                               selectedItem(context, 7),
                                         ),
+                                        MenuItem(
+                                          text: 'About',
+                                          icon: Icons.info,
+                                          color: globals.white1,
+                                          onClicked: () =>
+                                              selectedItem(context, 8),
+                                        ),
                                         const SizedBox(height: 8),
                                         MenuItem(
                                           text: 'Logout',
                                           icon: Icons.logout,
                                           color: globals.red1,
                                           onClicked: () =>
-                                              selectedItem(context, 8),
+                                              selectedItem(context, 9),
                                         ),
                                       ],
                                     ),
@@ -218,10 +226,12 @@ class _MyDrawerState extends State<MyDrawer>
                                   ),
                                 ),
                                 const SizedBox(height: 30),
-                                Transform(
-                                  transform: Matrix4.translationValues(
-                                      0.0, _animation2?.value * _height, 0.0),
-                                  child: _currentWidget,
+                                Expanded(
+                                  child: Transform(
+                                    transform: Matrix4.translationValues(
+                                        0.0, _animation2?.value * _height, 0.0),
+                                    child: _currentWidget,
+                                  ),
                                 ),
                               ],
                             )
@@ -265,8 +275,11 @@ class _MyDrawerState extends State<MyDrawer>
       case 7: // Settings
         _case7();
         break;
-      case 8: // Logout
+      case 8: // About
         _case8();
+        break;
+      case 9: // Logout
+        _case9();
         break;
     }
   }
@@ -277,6 +290,14 @@ class _MyDrawerState extends State<MyDrawer>
       if (_statut != '-9999') {
         await _animationController!.reverse();
       }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
       _animationController!.forward();
       setState(() {
         _currentWidget = SizedBox(
@@ -330,6 +351,14 @@ class _MyDrawerState extends State<MyDrawer>
       if (_statut != '-9999') {
         await _animationController!.reverse();
       }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
       _animationController!.forward();
       setState(() {
         _currentWidget = SizedBox(
@@ -383,6 +412,14 @@ class _MyDrawerState extends State<MyDrawer>
       if (_statut != '-9999') {
         await _animationController!.reverse();
       }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
       _animationController!.forward();
       setState(() {
         _currentWidget = Container(
@@ -508,6 +545,14 @@ class _MyDrawerState extends State<MyDrawer>
       if (_statut != '-9999') {
         await _animationController!.reverse();
       }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
       _animationController!.forward();
       setState(() {
         _currentWidget = SizedBox(
@@ -550,6 +595,14 @@ class _MyDrawerState extends State<MyDrawer>
       if (_statut != '-9999') {
         await _animationController!.reverse();
       }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
       _animationController!.forward();
       setState(() {
         _currentWidget = Container(
@@ -593,6 +646,14 @@ class _MyDrawerState extends State<MyDrawer>
       if (_statut != '-9999') {
         await _animationController!.reverse();
       }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
       _animationController!.forward();
       setState(() {
         _currentWidget = Container(
@@ -619,6 +680,14 @@ class _MyDrawerState extends State<MyDrawer>
       if (_statut != '-9999') {
         await _animationController!.reverse();
       }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
       _animationController!.forward();
       setState(() {
         _currentWidget = SizedBox(
@@ -637,6 +706,14 @@ class _MyDrawerState extends State<MyDrawer>
       if (_statut != '-9999') {
         await _animationController!.reverse();
       }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
       _animationController!.forward();
       setState(() {
         _currentWidget = SizedBox(
@@ -650,6 +727,33 @@ class _MyDrawerState extends State<MyDrawer>
   }
 
   Future<void> _case8() async {
+    if (_statut != 'About') {
+      debugPrint('About');
+      if (_statut != '-9999') {
+        await _animationController!.reverse();
+      }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize2) {
+        _drawerRightSize = _drawerRightSize2;
+        _loadAnimation();
+      }
+
+      ///
+      _animationController!.forward();
+      setState(() {
+        double _value = 0.99;
+        _currentWidget = Container(
+          width: _drawerRightSize - 20,
+          margin: const EdgeInsets.all(8.0),
+          child: const StatusMap(),
+        );
+      });
+      _statut = 'About';
+    }
+  }
+
+  Future<void> _case9() async {
     Navigator.of(context).pop();
     await SessionManager().destroy();
 

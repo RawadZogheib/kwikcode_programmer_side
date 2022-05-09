@@ -14,6 +14,8 @@ class TaskSquare extends StatefulWidget {
   int timeLeft;
   List<Widget> iconList;
   int status;
+  bool animate;
+  bool disableToolTip;
   var removeTask;
   var onBidTap;
 
@@ -25,6 +27,8 @@ class TaskSquare extends StatefulWidget {
     required this.timeLeft,
     required this.iconList,
     required this.status,
+    this.animate = false,
+    this.disableToolTip = false,
     required this.removeTask,
     required this.onBidTap,
   }) : super(key: key);
@@ -34,19 +38,23 @@ class TaskSquare extends StatefulWidget {
 }
 
 class _TaskSquareState extends State<TaskSquare> {
-  Timer? timer;
+  Timer? _timer1;
+  Timer? _timer2;
+  bool _isClickedTooltip = false;
 
   @override
   void initState() {
     // TODO: implement initState
     _timeLeftChrono();
+    _animate();
     super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    timer?.cancel();
+    _timer1?.cancel();
+    _timer2?.cancel();
     super.dispose();
   }
 
@@ -232,11 +240,41 @@ class _TaskSquareState extends State<TaskSquare> {
                 ),
               ),
             ),
-            const Positioned(
-              bottom: 15,
-              right: 15,
-              child: TargetWidget(),
-            ),
+            widget.disableToolTip == false
+                ? const Positioned(
+                    bottom: 15,
+                    right: 15,
+                    child: TargetWidget(),
+                  )
+                : Positioned(
+                    bottom: 15,
+                    right: 15,
+                    child: Stack(
+                      children: [
+                        InkWell(
+                          onTap: () => _ondisableToolTipTap(),
+                          child: SizedBox(
+                            width: 20.0,
+                            height: 20.0,
+                            child: Icon(
+                              Icons.info_outline,
+                              size: 20,
+                              color: globals.white1,
+                            ),
+                          ),
+                        ),
+                        _isClickedTooltip == true
+                            ? SizedBox(
+                                width: 20.0,
+                                height: 20.0,
+                                child: CircularProgressIndicator(
+                                  color: globals.white1,
+                                ),
+                              )
+                            : const SizedBox(),
+                      ],
+                    ),
+                  ),
           ],
         ),
       ),
@@ -292,7 +330,7 @@ class _TaskSquareState extends State<TaskSquare> {
 
   void _timeLeftChrono() {
     if (widget.status == 1 || widget.status == 2) {
-      timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      _timer1 = Timer.periodic(const Duration(seconds: 1), (Timer t) {
         //  print("1sec gone!!");
         if (widget.timeLeft > 0) {
           if (mounted) {
@@ -301,7 +339,7 @@ class _TaskSquareState extends State<TaskSquare> {
             });
           }
         } else {
-          timer?.cancel();
+          _timer1?.cancel();
           widget.removeTask(widget.key);
         }
       });
@@ -324,5 +362,26 @@ class _TaskSquareState extends State<TaskSquare> {
   _goToBid() {
     widget.onBidTap(widget.key);
     print('Go to Bid');
+  }
+
+  Future<void> _animate() async {
+    if (widget.animate == true) {
+      _timer2 = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+        setState(() {
+          widget.status = (widget.status + 1) % 6;
+        });
+        print(widget.status);
+      });
+    }
+  }
+
+  _ondisableToolTipTap() async {
+    setState(() {
+      _isClickedTooltip = true;
+    });
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      _isClickedTooltip = false;
+    });
   }
 }
