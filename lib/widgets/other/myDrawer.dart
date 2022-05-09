@@ -742,7 +742,6 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       ///
       _animationController!.forward();
       setState(() {
-        double _value = 0.99;
         _currentWidget = Container(
           width: _drawerRightSize - 20,
           margin: const EdgeInsets.all(8.0),

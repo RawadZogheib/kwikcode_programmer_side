@@ -16,8 +16,8 @@ class TaskSquare extends StatefulWidget {
   int status;
   bool animate;
   bool disableToolTip;
-  var removeTask;
-  var onBidTap;
+  Function removeTask;
+  Function onBidTap;
 
   TaskSquare({
     Key? key,
@@ -60,8 +60,8 @@ class _TaskSquareState extends State<TaskSquare> {
 
   @override
   Widget build(BuildContext context) {
-    double _height = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
+    // double _height = MediaQuery.of(context).size.height;
+    // double _width = MediaQuery.of(context).size.width;
     return FlipCard(
       fill: Fill.fillBack,
       direction: FlipDirection.HORIZONTAL,
@@ -252,7 +252,7 @@ class _TaskSquareState extends State<TaskSquare> {
                     child: Stack(
                       children: [
                         InkWell(
-                          onTap: () => _ondisableToolTipTap(),
+                          onTap: () => _onDisableToolTipTap(),
                           child: SizedBox(
                             width: 20.0,
                             height: 20.0,
@@ -344,7 +344,7 @@ class _TaskSquareState extends State<TaskSquare> {
         }
       });
     } else {
-      debugPrint(widget.key.toString());
+      //debugPrint(widget.key.toString());
     }
   }
 
@@ -375,7 +375,7 @@ class _TaskSquareState extends State<TaskSquare> {
     }
   }
 
-  _ondisableToolTipTap() async {
+  _onDisableToolTipTap() async {
     setState(() {
       _isClickedTooltip = true;
     });
