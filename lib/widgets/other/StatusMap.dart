@@ -55,7 +55,7 @@ class StatusMap extends StatelessWidget {
                     center: Icon(
                       NewIcons.circle,
                       size: 18.0,
-                      color: Colors.transparent.withOpacity(0.4),
+                      color: Colors.transparent.withOpacity(0.3),
                     ),
                   ),
                 ),
@@ -74,7 +74,7 @@ class StatusMap extends StatelessWidget {
                     center: Icon(
                       NewIcons.circle,
                       size: 18.0,
-                      color: Colors.transparent.withOpacity(0.4),
+                      color: Colors.transparent.withOpacity(0.3),
                     ),
                   ),
                 ),
