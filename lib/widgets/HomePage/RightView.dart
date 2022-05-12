@@ -32,10 +32,15 @@ class RightView extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(width: 40),
-                Icon(
-                  Icons.person,
-                  color: globals.whiteBlue,
+                const SizedBox(width: 20),
+                // Icon(
+                //   Icons.person,
+                //   color: globals.whiteBlue,
+                // ),
+                Image.asset(
+                  'Assets/Rank/KwikCodeLogoPlatinum.png',
+                  height: 54,
+                  width: 54,
                 ),
                 const SizedBox(width: 15),
                 Text(

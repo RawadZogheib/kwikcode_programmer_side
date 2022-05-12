@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
+import 'package:kwikcode_programmer_side/widgets/toolTip/toolTip.dart';
 
 class BidPopup extends StatelessWidget {
-  TaskSquare childTaIsActive;
-  var onBackTap;
+  TaskSquare childTaskIsActive;
+  Function onBackTap;
 
   BidPopup({
     Key? key,
-    required this.childTaIsActive,
+    required this.childTaskIsActive,
     required this.onBackTap,
   }) : super(key: key);
 
@@ -46,7 +47,7 @@ class BidPopup extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      childTaIsActive.taskName,
+                      childTaskIsActive.taskName,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 28,
@@ -95,108 +96,12 @@ class BidPopup extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Container(
-                      height: 220,
-                      width: 220,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: globals.logoColorPink).scale(1.0),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Task Price: ',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: globals.white2,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '1205',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: globals.white1,
-                                ),
-                              ),
-                              Text(
-                                ' (\$)',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: globals.white1,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Task Time: ',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: globals.white2,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '12',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: globals.white1,
-                                ),
-                              ),
-                              Text(
-                                ' (Days)',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: globals.white1,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'My Point: ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: globals.white2,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                '1205',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: globals.white1,
-                                ),
-                              ),
-                              Text(
-                                ' (KP)',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: globals.white1,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 8.0),
                     Expanded(
                       child: Container(
                         width: 220,
                         decoration: BoxDecoration(
-                          border: Border.all(color: globals.logoColorBlue).scale(1.0),
+                          border: Border.all(color: globals.logoColorBlue)
+                              .scale(1.0),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(12.0)),
                         ),
@@ -225,7 +130,7 @@ class BidPopup extends StatelessWidget {
                                     child: Wrap(
                                       spacing: 12.0,
                                       alignment: WrapAlignment.center,
-                                      children: childTaIsActive.iconList,
+                                      children: childTaskIsActive.iconList,
                                     ),
                                   ),
                                 ),
@@ -234,6 +139,21 @@ class BidPopup extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Task Info: ',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: globals.white2,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(width: 10),
+                        const TargetWidget(),
+                      ],
                     ),
                   ],
                 ),

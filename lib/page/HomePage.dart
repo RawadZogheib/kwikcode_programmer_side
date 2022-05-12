@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage>
 
   //BidPopup
   bool _animationIsActive = false;
-  TaskSquare _childTaIsActive = TaskSquare(
+  TaskSquare _childTaskIsActive = TaskSquare(
     key: const ValueKey('null'),
     taskName: 'null',
     projectManager: '@null',
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage>
                     transform: Matrix4.translationValues(
                         0.0, _animation?.value * _height, 0.0),
                     child: BidPopup(
-                      childTaIsActive: _childTaIsActive,
+                      childTaskIsActive: _childTaskIsActive,
                       onBackTap: () => _endAnimation(),
                     ),
                   ),
@@ -567,7 +567,7 @@ class _HomePageState extends State<HomePage>
 
   _startAnimation(ValueKey<String> taskId) {
     if (_animationIsActive == false) {
-      _childTaIsActive = _childrenTaskList[
+      _childTaskIsActive = _childrenTaskList[
           _childrenTaskList.indexWhere((element) => element.key == taskId)];
       _animationIsActive = true;
       _animationController!.forward();
@@ -579,7 +579,7 @@ class _HomePageState extends State<HomePage>
       _animationIsActive = false;
       _animationController!
           .reverse()
-          .then((value) => _childTaIsActive = TaskSquare(
+          .then((value) => _childTaskIsActive = TaskSquare(
                 key: const ValueKey('null'),
                 taskName: 'null',
                 projectManager: '@null',

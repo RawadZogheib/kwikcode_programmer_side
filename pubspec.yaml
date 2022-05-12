@@ -70,6 +70,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - Assets/Other/KwikCodeLogo.png
+    - Assets/Rank/KwikCodeLogoBronze.png
+    - Assets/Rank/KwikCodeLogoSilver.png
+    - Assets/Rank/KwikCodeLogoGold.png
+    - Assets/Rank/KwikCodeLogoPlatinum.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

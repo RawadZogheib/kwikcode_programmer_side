@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/RefreshViewButton.dart';
-import 'package:kwikcode_programmer_side/widgets/HomePage/widgetViewButton.dart';
 
 class MyFilter extends StatelessWidget {
   bool isClickedRefresh;
-  var loadTasks;
+  Function loadTasks;
 
   MyFilter({
     Key? key,
@@ -42,36 +41,9 @@ class MyFilter extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-                WidgetViewButton(
-                  text: 'OverView',
-                  icon: Icons.view_cozy,
-                  colorIcon: globals.white1,
-                  colorText: globals.white1,
-                  onTap: () => debugPrint('OverView'),
-                ),
-                const SizedBox(height: 10),
-                WidgetViewButton(
-                  text: 'Spot',
-                  icon: Icons.currency_exchange,
-                  colorIcon: globals.white1,
-                  colorText: globals.white1,
-                  onTap: () => debugPrint('Spot'),
-                ),
-                const SizedBox(height: 10),
-                WidgetViewButton(
-                  text: 'Future',
-                  icon: Icons.currency_franc,
-                  colorIcon: globals.white1,
-                  colorText: globals.white1,
-                  onTap: () => debugPrint('Future'),
-                ),
+
                 const SizedBox(height: 10),
                 const Expanded(child: SizedBox()),
-                // WidgetViewButton(
-                //     text: 'Refresh',
-                //     icon: Icons.refresh,
-                //     onTap: () => _loadTasks()),
-                // const SizedBox(height: 30),
               ],
             ),
           ),
