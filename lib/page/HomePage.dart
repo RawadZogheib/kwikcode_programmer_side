@@ -8,8 +8,8 @@ import 'package:kwikcode_programmer_side/widgets/HomePage/RightView.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/projectSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/BidPopup.dart';
-import 'package:kwikcode_programmer_side/widgets/other/Flutter%20Logo.dart';
 import 'package:kwikcode_programmer_side/widgets/other/myDrawer.dart';
+import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -31,9 +31,6 @@ class _HomePageState extends State<HomePage>
 
   //Color iconColor = globals.logoColorPink;
   //Color iconColor = globals.logoColorBlue;
-  Color iconColor = globals.white1;
-
-  final double _iconSize = 35;
 
   //BidPopup
   bool _animationIsActive = false;
@@ -44,7 +41,7 @@ class _HomePageState extends State<HomePage>
     projectManager: '@null',
     description: 'null',
     timeLeft: 0,
-    iconList: [],
+    iconList: const [],
     status: 0,
     removeTask: (String taskId) => debugPrint('null'),
     onBidTap: (String taskId) => debugPrint('null'),
@@ -113,12 +110,13 @@ class _HomePageState extends State<HomePage>
                           children: [
                             MyFilter(
                               isClickedRefresh: _isClickedRefresh,
-                              filterTasks: (String status, bool redRadio,
-                                      bool orangeRadio) =>
-                                  _filterTasks(status, redRadio, orangeRadio),
-                              loadTasks: (String status, bool redRadio,
-                                      bool orangeRadio) =>
-                                  _loadTasks(status, redRadio, orangeRadio),
+                              filterTasks: (String status,
+                                      bool redRadio,
+                                      bool orangeRadio,
+                                      List<String> notLanguagesNameList) =>
+                                  _filterTasks(status, redRadio, orangeRadio,
+                                      notLanguagesNameList),
+                              loadTasks: () => _loadTasks(),
                             ),
                             const SizedBox(width: 10),
                             MiddleView(
@@ -150,11 +148,7 @@ class _HomePageState extends State<HomePage>
         });
   }
 
-  _loadTasks([
-    String status = 'alphaDown',
-    bool redRadio = true,
-    bool orangeRadio = true,
-  ]) async {
+  _loadTasks() async {
     setState(() {
       _isLoadingTasks = true;
       _isClickedRefresh = true;
@@ -186,26 +180,8 @@ class _HomePageState extends State<HomePage>
         description: 'adsadsad asd  asd as d asd',
         timeLeft: 1000,
         iconList: [
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: MyFlutterLogo(
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.node,
-              // IconData(
-              //   int.parse(icon5),
-              //   fontFamily: 'NewIcons',
-              //   fontPackage: null,
-              // ),
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
+          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+          TaskProgrammingItem(name: 'Node JS', icon: NewIcons.node),
         ],
         status: 0,
         removeTask: (String taskId) => _removeTask(taskId),
@@ -219,21 +195,8 @@ class _HomePageState extends State<HomePage>
         description: 'adsadsad asd  asd as d asd',
         timeLeft: 100,
         iconList: [
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: MyFlutterLogo(
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.php,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
+          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
         ],
         status: 1,
         removeTask: (String taskId) => _removeTask(taskId),
@@ -247,40 +210,12 @@ class _HomePageState extends State<HomePage>
         description: 'adsadsad asd  asd as d asd',
         timeLeft: 10000,
         iconList: [
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.html5,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.css3_alt,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.js,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.php,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
+          TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
+          TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
+          TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
+          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
         ],
-        status: 2,
+        status: 0,
         removeTask: (String taskId) => _removeTask(taskId),
         onBidTap: (String taskId) => _startAnimation(taskId),
       ),
@@ -292,23 +227,10 @@ class _HomePageState extends State<HomePage>
         description: 'adsadsad asd  asd as d asd',
         timeLeft: 5600,
         iconList: [
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: MyFlutterLogo(
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.php,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
+          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
         ],
-        status: 3,
+        status: 1,
         removeTask: (String taskId) => _removeTask(taskId),
         onBidTap: (String taskId) => _startAnimation(taskId),
       ),
@@ -320,79 +242,17 @@ class _HomePageState extends State<HomePage>
         description: 'adsadsad asd  asd as d asd',
         timeLeft: 3,
         iconList: [
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: MyFlutterLogo(
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.php,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.js,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.react,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.css3,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.css3_alt,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.html5,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.swift,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.java,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
+          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
+          TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
+          TaskProgrammingItem(name: 'React Native', icon: NewIcons.react),
+          TaskProgrammingItem(name: 'Unity', icon: NewIcons.unity),
+          TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
+          TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
+          TaskProgrammingItem(name: 'Swift', icon: NewIcons.swift),
+          TaskProgrammingItem(name: 'Java', icon: NewIcons.java),
         ],
-        status: 4,
+        status: 1,
         removeTask: (String taskId) => _removeTask(taskId),
         onBidTap: (String taskId) => _startAnimation(taskId),
       ),
@@ -405,40 +265,12 @@ class _HomePageState extends State<HomePage>
             'adsadsad asd   askdjsa jk hjajk jjkoj jkoasj kodjqwskoa jasko jkaskojk kjas okjasko jasko jkoas jokj askoj dkosajko sda okjas jkojas jojas jokasj ko jaskodjkoasj koas dokjas kljasdko j koxj jo ij j ojas jojsad joj iou j  joasjjo joj asj jo sa ioj as j jos as das bnhjsagh  hjnn jhjjis jj j jijo j jojio joij  oijoi jojjjko jk as g hhhji hjih jihjjd io 7uyc enqwmne  cyu8 hhjvbcsdf y678sdyfc7897sx8 7hjkz yy  uiy iou hji hjckj m,nhj h78as asd fd casdf s  f  d cvv v gvcb x gxc   oj kojko jiok  jokj  jdjoj jo jas jojdo u djuo s duioa  ioj oiasd as d asd',
         timeLeft: 86400,
         iconList: [
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.html5,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.css3_alt,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.js,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.php,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
+          TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
+          TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
+          TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
+          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
         ],
-        status: 5,
+        status: 0,
         removeTask: (String taskId) => _removeTask(taskId),
         onBidTap: (String taskId) => _startAnimation(taskId),
       ),
@@ -451,89 +283,29 @@ class _HomePageState extends State<HomePage>
             'adsadsad asd  a fhg f fglk  fghjkljh gsjfh d j  zd f  dsj kjsdhhjk d fh  hjasd h  hjk  hjsdjkl h sdjhkl fhj jksdl jf jksdhj  jk jjk hj jk dfh hjsd f kj hjdsf jklh klfdsjkl j jklxcj jkgsdjgfjikl sdfjkl  sj kj gjk jfjkl  jfjkl jdjk  g j djkl  jjksdfg jfjzdkj  jkdfg jjk jjk  jefsdjkf jjkcv  jjfjk jiojgkj jko j jdf jdfgjk gjket j jkod f jkfsjk  dfjgf jkfdj j ji jk  rj   xh fd   ui fjk j  g iuofgzdu  uio jfjk sd  jkf d   k j jks j sfjkl j jkfjgjk d fjgjkl dfjjk bjsdkj b njdfl jkfj qweopr ewio uriosed  cjn sd as d asd',
         timeLeft: 43000,
         iconList: [
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: MyFlutterLogo(
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.php,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.js,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.react,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.css3,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.css3_alt,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.html5,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.swift,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              NewIcons.java,
-              size: _iconSize,
-              color: iconColor,
-            ),
-          ),
+          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
+          TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
+          TaskProgrammingItem(name: 'React Native', icon: NewIcons.react),
+          TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
+          TaskProgrammingItem(name: 'Unity', icon: NewIcons.unity),
+          TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
+          TaskProgrammingItem(name: 'Swift', icon: NewIcons.swift),
+          TaskProgrammingItem(name: 'Java', icon: NewIcons.java),
         ],
-        status: -1,
+        status: 1,
         removeTask: (String taskId) => _removeTask(taskId),
         onBidTap: (String taskId) => _startAnimation(taskId),
       ),
     ];
+
     setState(() {
       _isLoadingTasks = false;
       _isClickedRefresh = false;
     });
 
-    _filterTasks(status, redRadio, orangeRadio);
+    // _filterTasks(status, redRadio, orangeRadio,languagesNameList);
+
     // if (_isClickedRefresh == false) {
     //   try {
     //     debugPrint(
@@ -606,7 +378,7 @@ class _HomePageState extends State<HomePage>
                 projectManager: '@null',
                 description: 'null',
                 timeLeft: 0,
-                iconList: [],
+                iconList: const [],
                 status: 0,
                 removeTask: (String taskId) => debugPrint('null'),
                 onBidTap: (String taskId) => debugPrint('null'),
@@ -614,10 +386,38 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-  _filterTasks(String status, bool redRadio, bool orangeRadio) {
+  _filterTasks(String status, bool redRadio, bool orangeRadio,
+      List<String> notLanguagesNameList) {
     /// alphaUp alphaDown numUp numDown
     debugPrint(status);
 
+    ///Sort
+    switch (status) {
+      case 'alphaDown':
+        // A -> Z
+        _childrenTaskList.sort(
+            (TaskSquare a, TaskSquare b) => a.taskName.compareTo(b.taskName));
+
+        break;
+      case 'alphaUp':
+        // Z -> A
+        _childrenTaskList.sort(
+            (TaskSquare a, TaskSquare b) => b.taskName.compareTo(a.taskName));
+        break;
+      case 'numDown':
+        // 1 -> 9
+        _childrenTaskList
+            .sort((TaskSquare a, TaskSquare b) => a.timeLeft - b.timeLeft);
+        break;
+      case 'numUp':
+        // 9 -> 1
+        _childrenTaskList
+            .sort((TaskSquare a, TaskSquare b) => b.timeLeft - a.timeLeft);
+        ;
+        break;
+    }
+
+    ///Check Task Status
     if (redRadio == true) {
       for (TaskSquare element in _childrenTaskList) {
         if (element.status == 0) {
@@ -646,37 +446,24 @@ class _HomePageState extends State<HomePage>
       }
     }
 
-    switch (status) {
-      case 'alphaDown':
-        // A -> Z
-        setState(() {
-          _childrenTaskList.sort(
-              (TaskSquare a, TaskSquare b) => a.taskName.compareTo(b.taskName));
-        });
-        break;
-      case 'alphaUp':
-        // Z -> A
-        setState(() {
-          _childrenTaskList.sort(
-              (TaskSquare a, TaskSquare b) => b.taskName.compareTo(a.taskName));
-        });
-        break;
-      case 'numDown':
-        // 1 -> 9
-        setState(() {
-          _childrenTaskList
-              .sort((TaskSquare a, TaskSquare b) => a.timeLeft - b.timeLeft);
-        });
-        break;
-      case 'numUp':
-        // 9 -> 1
+    ///Check Task Languages
 
-        setState(() {
-          _childrenTaskList
-              .sort((TaskSquare a, TaskSquare b) => b.timeLeft - a.timeLeft);
-        });
-        break;
+    for (String lang in notLanguagesNameList) {
+      for (TaskSquare element in _childrenTaskList) {
+        for (TaskProgrammingItem iconItem in element.iconList) {
+          if (iconItem.name == lang) {
+            element.isVisible = false;
+            continue;
+          }
+        }
+      }
     }
+
+
+    ///SetState
+    setState(() {
+      _childrenTaskList;
+    });
   }
 }
 

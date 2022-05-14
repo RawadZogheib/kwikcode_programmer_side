@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
+import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
 import 'package:kwikcode_programmer_side/widgets/toolTip/toolTip.dart';
 
 class TaskSquare extends StatefulWidget {
@@ -13,7 +14,7 @@ class TaskSquare extends StatefulWidget {
   String projectManager;
   String description;
   int timeLeft;
-  List<Widget> iconList;
+  List<TaskProgrammingItem> iconList;
   int status;
   bool animate;
   bool disableToolTip;
@@ -77,7 +78,7 @@ class _TaskSquareState extends State<TaskSquare> {
           margin: const EdgeInsets.all(4.0),
           decoration: BoxDecoration(
             color: globals.darkBlue2,
-            border: Border.all(color: globals.logoColorBlue).scale(1.0),
+            border: Border.all(color: globals.logoColorBlue).scale(2.0),
             borderRadius: const BorderRadius.all(Radius.circular(12.0)),
           ),
           child: Stack(
@@ -293,7 +294,7 @@ class _TaskSquareState extends State<TaskSquare> {
           margin: const EdgeInsets.all(4.0),
           decoration: BoxDecoration(
             color: globals.darkBlue1,
-            border: Border.all(color: globals.logoColorBlue).scale(1.0),
+            border: Border.all(color: globals.logoColorBlue).scale(2.0),
             borderRadius: const BorderRadius.all(Radius.circular(12.0)),
           ),
           child: Column(

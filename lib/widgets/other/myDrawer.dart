@@ -9,6 +9,7 @@ import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.da
 import 'package:kwikcode_programmer_side/widgets/other/NewsContainer.dart';
 import 'package:kwikcode_programmer_side/widgets/other/StatusMap.dart';
 import 'package:kwikcode_programmer_side/widgets/other/StrikeThroughWidget2.dart';
+import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -315,21 +316,8 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                   description: 'adsadsad asd  asd as d asd',
                   timeLeft: 5600,
                   iconList: [
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: MyFlutterLogo(
-                        size: _iconSize,
-                        color: globals.white1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Icon(
-                        NewIcons.php,
-                        size: _iconSize,
-                        color: globals.white1,
-                      ),
-                    ),
+                    TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+                    TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
                   ],
                   status: 2,
                   removeTask: (String taskId) =>
@@ -377,21 +365,8 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                   description: 'adsadsad asd  asd as d asd',
                   timeLeft: 5600,
                   iconList: [
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: MyFlutterLogo(
-                        size: _iconSize,
-                        color: globals.white1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Icon(
-                        NewIcons.php,
-                        size: _iconSize,
-                        color: globals.white1,
-                      ),
-                    ),
+                    TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+                    TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
                   ],
                   status: 1,
                   removeTask: (String taskId) =>

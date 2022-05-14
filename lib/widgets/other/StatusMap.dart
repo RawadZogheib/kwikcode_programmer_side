@@ -4,6 +4,7 @@ import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/other/Flutter%20Logo.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
+import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class StatusMap extends StatelessWidget {
@@ -167,21 +168,8 @@ class StatusMap extends StatelessWidget {
                   'Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description ',
               timeLeft: 6000,
               iconList: [
-                Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: MyFlutterLogo(
-                    size: _iconSize,
-                    color: iconColor,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Icon(
-                    NewIcons.php,
-                    size: _iconSize,
-                    color: iconColor,
-                  ),
-                ),
+                TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+                TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
               ],
               status: 0,
               animate: true,
