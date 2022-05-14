@@ -1,16 +1,18 @@
 library my_wallet.globals;
 
 import 'package:flutter/material.dart';
+import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/hexColor/hexColor.dart';
+import 'package:kwikcode_programmer_side/widgets/other/Flutter%20Logo.dart';
 
 //Version
 const String version = "v1.0";
 
 //Server Ip  (page[/my_api.dart])
-const String myIP = "https://kwikcode.net/kwikcode_php";
+const String myIP = "http://147.78.44.3/kwikcode_php";
 
-String currentPage =
-    'HomePage'; //HomePage
+String currentPage = 'HomePage'; //HomePage
+
 
 //Colors
 final Color blue = Colors.blue.shade50;
@@ -83,6 +85,85 @@ const String warning407 = 'There is no teacehrs available.';
 const String success408 = "Payment Done Successfully."; ///////
 const String error409 = 'Coupon already claimed!';
 
-
 final ScrollController controllerMiddlePage = ScrollController();
 bool isLoadinTooltip = false;
+
+
+
+Color iconColor = white1;
+const double _iconSize = 35;
+
+List<Widget> languagesIconsList = [
+  Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: MyFlutterLogo(
+      size: _iconSize,
+      color: iconColor,
+    ),
+  ),
+  Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: Icon(
+      NewIcons.php,
+      size: _iconSize,
+      color: iconColor,
+    ),
+  ),
+  Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: Icon(
+      NewIcons.js,
+      size: _iconSize,
+      color: iconColor,
+    ),
+  ),
+  Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: Icon(
+      NewIcons.react,
+      size: _iconSize,
+      color: iconColor,
+    ),
+  ),
+  Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: Icon(
+      NewIcons.css3,
+      size: _iconSize,
+      color: iconColor,
+    ),
+  ),
+  Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: Icon(
+      NewIcons.css3_alt,
+      size: _iconSize,
+      color: iconColor,
+    ),
+  ),
+  Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: Icon(
+      NewIcons.html5,
+      size: _iconSize,
+      color: iconColor,
+    ),
+  ),
+  Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: Icon(
+      NewIcons.swift,
+      size: _iconSize,
+      color: iconColor,
+    ),
+  ),
+  Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: Icon(
+      NewIcons.java,
+      size: _iconSize,
+      color: iconColor,
+    ),
+  ),
+
+];

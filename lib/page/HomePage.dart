@@ -39,14 +39,15 @@ class _HomePageState extends State<HomePage>
   bool _animationIsActive = false;
   TaskSquare _childTaskIsActive = TaskSquare(
     key: const ValueKey('null'),
+    taskId: 'null',
     taskName: 'null',
     projectManager: '@null',
     description: 'null',
     timeLeft: 0,
     iconList: [],
     status: 0,
-    removeTask: (ValueKey<String> taskId) => debugPrint('null'),
-    onBidTap: (ValueKey<String> taskId) => debugPrint('null'),
+    removeTask: (String taskId) => debugPrint('null'),
+    onBidTap: (String taskId) => debugPrint('null'),
   );
 
   @override
@@ -111,8 +112,14 @@ class _HomePageState extends State<HomePage>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             MyFilter(
-                                isClickedRefresh: _isClickedRefresh,
-                                loadTasks: () => _loadTasks()),
+                              isClickedRefresh: _isClickedRefresh,
+                              filterTasks: (String status, bool redRadio,
+                                      bool orangeRadio) =>
+                                  _filterTasks(status, redRadio, orangeRadio),
+                              loadTasks: (String status, bool redRadio,
+                                      bool orangeRadio) =>
+                                  _loadTasks(status, redRadio, orangeRadio),
+                            ),
                             const SizedBox(width: 10),
                             MiddleView(
                               isLoadingTasks: _isLoadingTasks,
@@ -143,377 +150,390 @@ class _HomePageState extends State<HomePage>
         });
   }
 
-  _loadTasks() async {
+  _loadTasks([
+    String status = 'alphaDown',
+    bool redRadio = true,
+    bool orangeRadio = true,
+  ]) async {
     setState(() {
       _isLoadingTasks = true;
       _isClickedRefresh = true;
     });
     await Future.delayed(const Duration(seconds: 2));
+    _childrenProjectList = [
+      ProjectSquare(
+        name: 'Project 1',
+        imgUrl: 'https://picsum.photos/100/100/?1',
+        onTap: () => debugPrint('Project 1'),
+      ),
+      ProjectSquare(
+        name: 'Project 2',
+        imgUrl: 'https://picsum.photos/100/100/?2',
+        onTap: () => debugPrint('Project 2'),
+      ),
+      ProjectSquare(
+        name: 'Project 3',
+        imgUrl: 'https://picsum.photos/100/100/?3',
+        onTap: () => debugPrint('Project 3'),
+      ),
+    ];
+    _childrenTaskList = [
+      TaskSquare(
+        key: const ValueKey('1'),
+        taskId: '1',
+        taskName: 'Task Name 1',
+        projectManager: '@Samir',
+        description: 'adsadsad asd  asd as d asd',
+        timeLeft: 1000,
+        iconList: [
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: MyFlutterLogo(
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.node,
+              // IconData(
+              //   int.parse(icon5),
+              //   fontFamily: 'NewIcons',
+              //   fontPackage: null,
+              // ),
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+        ],
+        status: 0,
+        removeTask: (String taskId) => _removeTask(taskId),
+        onBidTap: (String taskId) => _startAnimation(taskId),
+      ),
+      TaskSquare(
+        key: const ValueKey('2'),
+        taskId: '2',
+        taskName: 'Task Name 2',
+        projectManager: '@Samira',
+        description: 'adsadsad asd  asd as d asd',
+        timeLeft: 100,
+        iconList: [
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: MyFlutterLogo(
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.php,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+        ],
+        status: 1,
+        removeTask: (String taskId) => _removeTask(taskId),
+        onBidTap: (String taskId) => _startAnimation(taskId),
+      ),
+      TaskSquare(
+        key: const ValueKey('3'),
+        taskId: '3',
+        taskName: 'Task Name 3',
+        projectManager: '@Samira',
+        description: 'adsadsad asd  asd as d asd',
+        timeLeft: 10000,
+        iconList: [
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.html5,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.css3_alt,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.js,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.php,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+        ],
+        status: 2,
+        removeTask: (String taskId) => _removeTask(taskId),
+        onBidTap: (String taskId) => _startAnimation(taskId),
+      ),
+      TaskSquare(
+        key: const ValueKey('4'),
+        taskId: '4',
+        taskName: 'Task Name 4',
+        projectManager: '@Samir',
+        description: 'adsadsad asd  asd as d asd',
+        timeLeft: 5600,
+        iconList: [
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: MyFlutterLogo(
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.php,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+        ],
+        status: 3,
+        removeTask: (String taskId) => _removeTask(taskId),
+        onBidTap: (String taskId) => _startAnimation(taskId),
+      ),
+      TaskSquare(
+        key: const ValueKey('5'),
+        taskId: '5',
+        taskName: 'Task Name 5',
+        projectManager: '@Samir',
+        description: 'adsadsad asd  asd as d asd',
+        timeLeft: 3,
+        iconList: [
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: MyFlutterLogo(
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.php,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.js,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.react,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.css3,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.css3_alt,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.html5,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.swift,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.java,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+        ],
+        status: 4,
+        removeTask: (String taskId) => _removeTask(taskId),
+        onBidTap: (String taskId) => _startAnimation(taskId),
+      ),
+      TaskSquare(
+        key: const ValueKey('6'),
+        taskId: '6',
+        taskName: 'Task Name 6',
+        projectManager: '@Samir',
+        description:
+            'adsadsad asd   askdjsa jk hjajk jjkoj jkoasj kodjqwskoa jasko jkaskojk kjas okjasko jasko jkoas jokj askoj dkosajko sda okjas jkojas jojas jokasj ko jaskodjkoasj koas dokjas kljasdko j koxj jo ij j ojas jojsad joj iou j  joasjjo joj asj jo sa ioj as j jos as das bnhjsagh  hjnn jhjjis jj j jijo j jojio joij  oijoi jojjjko jk as g hhhji hjih jihjjd io 7uyc enqwmne  cyu8 hhjvbcsdf y678sdyfc7897sx8 7hjkz yy  uiy iou hji hjckj m,nhj h78as asd fd casdf s  f  d cvv v gvcb x gxc   oj kojko jiok  jokj  jdjoj jo jas jojdo u djuo s duioa  ioj oiasd as d asd',
+        timeLeft: 86400,
+        iconList: [
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.html5,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.css3_alt,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.js,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.php,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+        ],
+        status: 5,
+        removeTask: (String taskId) => _removeTask(taskId),
+        onBidTap: (String taskId) => _startAnimation(taskId),
+      ),
+      TaskSquare(
+        key: const ValueKey('7'),
+        taskId: '7',
+        taskName: 'Task Name 7',
+        projectManager: '@Andrea',
+        description:
+            'adsadsad asd  a fhg f fglk  fghjkljh gsjfh d j  zd f  dsj kjsdhhjk d fh  hjasd h  hjk  hjsdjkl h sdjhkl fhj jksdl jf jksdhj  jk jjk hj jk dfh hjsd f kj hjdsf jklh klfdsjkl j jklxcj jkgsdjgfjikl sdfjkl  sj kj gjk jfjkl  jfjkl jdjk  g j djkl  jjksdfg jfjzdkj  jkdfg jjk jjk  jefsdjkf jjkcv  jjfjk jiojgkj jko j jdf jdfgjk gjket j jkod f jkfsjk  dfjgf jkfdj j ji jk  rj   xh fd   ui fjk j  g iuofgzdu  uio jfjk sd  jkf d   k j jks j sfjkl j jkfjgjk d fjgjkl dfjjk bjsdkj b njdfl jkfj qweopr ewio uriosed  cjn sd as d asd',
+        timeLeft: 43000,
+        iconList: [
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: MyFlutterLogo(
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.php,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.js,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.react,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.css3,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.css3_alt,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.html5,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.swift,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              NewIcons.java,
+              size: _iconSize,
+              color: iconColor,
+            ),
+          ),
+        ],
+        status: -1,
+        removeTask: (String taskId) => _removeTask(taskId),
+        onBidTap: (String taskId) => _startAnimation(taskId),
+      ),
+    ];
     setState(() {
-      _childrenProjectList = [
-        ProjectSquare(
-          name: 'Project 1',
-          imgUrl: 'https://picsum.photos/100/100/?1',
-          onTap: () => debugPrint('Project 1'),
-        ),
-        ProjectSquare(
-          name: 'Project 2',
-          imgUrl: 'https://picsum.photos/100/100/?2',
-          onTap: () => debugPrint('Project 2'),
-        ),
-        ProjectSquare(
-          name: 'Project 3',
-          imgUrl: 'https://picsum.photos/100/100/?3',
-          onTap: () => debugPrint('Project 3'),
-        ),
-      ];
-      _childrenTaskList = [
-        TaskSquare(
-          key: const ValueKey('1'),
-          taskName: 'Task Name 1',
-          projectManager: '@Samir',
-          description: 'adsadsad asd  asd as d asd',
-          timeLeft: 1000,
-          iconList: [
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: MyFlutterLogo(
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.node,
-                // IconData(
-                //   int.parse(icon5),
-                //   fontFamily: 'NewIcons',
-                //   fontPackage: null,
-                // ),
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-          ],
-          status: 0,
-          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
-          onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
-        ),
-        TaskSquare(
-          key: const ValueKey('2'),
-          taskName: 'Task Name 2',
-          projectManager: '@Samira',
-          description: 'adsadsad asd  asd as d asd',
-          timeLeft: 100,
-          iconList: [
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: MyFlutterLogo(
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.php,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-          ],
-          status: 1,
-          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
-          onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
-        ),
-        TaskSquare(
-          key: const ValueKey('3'),
-          taskName: 'Task Name 3',
-          projectManager: '@Samira',
-          description: 'adsadsad asd  asd as d asd',
-          timeLeft: 10000,
-          iconList: [
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.html5,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.css3_alt,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.js,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.php,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-          ],
-          status: 2,
-          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
-          onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
-        ),
-        TaskSquare(
-          key: const ValueKey('4'),
-          taskName: 'Task Name 4',
-          projectManager: '@Samir',
-          description: 'adsadsad asd  asd as d asd',
-          timeLeft: 5600,
-          iconList: [
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: MyFlutterLogo(
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.php,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-          ],
-          status: 3,
-          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
-          onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
-        ),
-        TaskSquare(
-          key: const ValueKey('5'),
-          taskName: 'Task Name 5',
-          projectManager: '@Samir',
-          description: 'adsadsad asd  asd as d asd',
-          timeLeft: 3,
-          iconList: [
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: MyFlutterLogo(
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.php,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.js,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.react,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.css3,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.css3_alt,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.html5,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.swift,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.java,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-          ],
-          status: 4,
-          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
-          onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
-        ),
-        TaskSquare(
-          key: const ValueKey('6'),
-          taskName: 'Task Name 6',
-          projectManager: '@Samir',
-          description:
-              'adsadsad asd   askdjsa jk hjajk jjkoj jkoasj kodjqwskoa jasko jkaskojk kjas okjasko jasko jkoas jokj askoj dkosajko sda okjas jkojas jojas jokasj ko jaskodjkoasj koas dokjas kljasdko j koxj jo ij j ojas jojsad joj iou j  joasjjo joj asj jo sa ioj as j jos as das bnhjsagh  hjnn jhjjis jj j jijo j jojio joij  oijoi jojjjko jk as g hhhji hjih jihjjd io 7uyc enqwmne  cyu8 hhjvbcsdf y678sdyfc7897sx8 7hjkz yy  uiy iou hji hjckj m,nhj h78as asd fd casdf s  f  d cvv v gvcb x gxc   oj kojko jiok  jokj  jdjoj jo jas jojdo u djuo s duioa  ioj oiasd as d asd',
-          timeLeft: 86400,
-          iconList: [
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.html5,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.css3_alt,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.js,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.php,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-          ],
-          status: 5,
-          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
-          onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
-        ),
-        TaskSquare(
-          key: const ValueKey('7'),
-          taskName: 'Task Name 7',
-          projectManager: '@Andrea',
-          description:
-              'adsadsad asd  a fhg f fglk  fghjkljh gsjfh d j  zd f  dsj kjsdhhjk d fh  hjasd h  hjk  hjsdjkl h sdjhkl fhj jksdl jf jksdhj  jk jjk hj jk dfh hjsd f kj hjdsf jklh klfdsjkl j jklxcj jkgsdjgfjikl sdfjkl  sj kj gjk jfjkl  jfjkl jdjk  g j djkl  jjksdfg jfjzdkj  jkdfg jjk jjk  jefsdjkf jjkcv  jjfjk jiojgkj jko j jdf jdfgjk gjket j jkod f jkfsjk  dfjgf jkfdj j ji jk  rj   xh fd   ui fjk j  g iuofgzdu  uio jfjk sd  jkf d   k j jks j sfjkl j jkfjgjk d fjgjkl dfjjk bjsdkj b njdfl jkfj qweopr ewio uriosed  cjn sd as d asd',
-          timeLeft: 43000,
-          iconList: [
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: MyFlutterLogo(
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.php,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.js,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.react,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.css3,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.css3_alt,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.html5,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.swift,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(
-                NewIcons.java,
-                size: _iconSize,
-                color: iconColor,
-              ),
-            ),
-          ],
-          status: -1,
-          removeTask: (ValueKey<String> taskId) => _removeTask(taskId),
-          onBidTap: (ValueKey<String> taskId) => _startAnimation(taskId),
-        ),
-      ];
       _isLoadingTasks = false;
       _isClickedRefresh = false;
     });
+
+    _filterTasks(status, redRadio, orangeRadio);
     // if (_isClickedRefresh == false) {
     //   try {
     //     debugPrint(
@@ -548,11 +568,11 @@ class _HomePageState extends State<HomePage>
     // }
   }
 
-  _removeTask(ValueKey<String> taskId) {
+  _removeTask(String taskId) {
     if (mounted) {
       setState(() {
-        _childrenTaskList.removeAt(
-            _childrenTaskList.indexWhere((element) => element.key == taskId));
+        _childrenTaskList.removeAt(_childrenTaskList
+            .indexWhere((element) => element.taskId == taskId));
       });
     }
   }
@@ -565,10 +585,10 @@ class _HomePageState extends State<HomePage>
         curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
   }
 
-  _startAnimation(ValueKey<String> taskId) {
+  _startAnimation(String taskId) {
     if (_animationIsActive == false) {
       _childTaskIsActive = _childrenTaskList[
-          _childrenTaskList.indexWhere((element) => element.key == taskId)];
+          _childrenTaskList.indexWhere((element) => element.taskId == taskId)];
       _animationIsActive = true;
       _animationController!.forward();
     }
@@ -581,21 +601,87 @@ class _HomePageState extends State<HomePage>
           .reverse()
           .then((value) => _childTaskIsActive = TaskSquare(
                 key: const ValueKey('null'),
+                taskId: 'null',
                 taskName: 'null',
                 projectManager: '@null',
                 description: 'null',
                 timeLeft: 0,
                 iconList: [],
                 status: 0,
-                removeTask: (ValueKey<String> taskId) => debugPrint('null'),
-                onBidTap: (ValueKey<String> taskId) => debugPrint('null'),
+                removeTask: (String taskId) => debugPrint('null'),
+                onBidTap: (String taskId) => debugPrint('null'),
               ));
     }
   }
 
-  _back() {
-    debugPrint('No back available.');
+  _filterTasks(String status, bool redRadio, bool orangeRadio) {
+    /// alphaUp alphaDown numUp numDown
+    debugPrint(status);
+
+    if (redRadio == true) {
+      for (TaskSquare element in _childrenTaskList) {
+        if (element.status == 0) {
+          element.isVisible = true;
+        }
+      }
+    } else {
+      for (TaskSquare element in _childrenTaskList) {
+        if (element.status == 0) {
+          element.isVisible = false;
+        }
+      }
+    }
+
+    if (orangeRadio == true) {
+      for (TaskSquare element in _childrenTaskList) {
+        if (element.status == 1) {
+          element.isVisible = true;
+        }
+      }
+    } else {
+      for (TaskSquare element in _childrenTaskList) {
+        if (element.status == 1) {
+          element.isVisible = false;
+        }
+      }
+    }
+
+    switch (status) {
+      case 'alphaDown':
+        // A -> Z
+        setState(() {
+          _childrenTaskList.sort(
+              (TaskSquare a, TaskSquare b) => a.taskName.compareTo(b.taskName));
+        });
+        break;
+      case 'alphaUp':
+        // Z -> A
+        setState(() {
+          _childrenTaskList.sort(
+              (TaskSquare a, TaskSquare b) => b.taskName.compareTo(a.taskName));
+        });
+        break;
+      case 'numDown':
+        // 1 -> 9
+        setState(() {
+          _childrenTaskList
+              .sort((TaskSquare a, TaskSquare b) => a.timeLeft - b.timeLeft);
+        });
+        break;
+      case 'numUp':
+        // 9 -> 1
+
+        setState(() {
+          _childrenTaskList
+              .sort((TaskSquare a, TaskSquare b) => b.timeLeft - a.timeLeft);
+        });
+        break;
+    }
   }
+}
+
+_back() {
+  debugPrint('No back available.');
 }
 
 final buttonColors = WindowButtonColors(

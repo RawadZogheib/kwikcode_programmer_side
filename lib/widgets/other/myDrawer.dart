@@ -309,6 +309,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
               child: Column(children: <Widget>[
                 TaskSquare(
                   key: const ValueKey('4'),
+                  taskId: '4',
                   taskName: 'Task Name 4',
                   projectManager: '@Samir',
                   description: 'adsadsad asd  asd as d asd',
@@ -331,10 +332,10 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                     ),
                   ],
                   status: 2,
-                  removeTask: (ValueKey<String> taskId) =>
-                      debugPrint(taskId.value),
-                  onBidTap: (ValueKey<String> taskId) =>
-                      debugPrint(taskId.value),
+                  removeTask: (String taskId) =>
+                      debugPrint(taskId),
+                  onBidTap: (String taskId) =>
+                      debugPrint(taskId),
                 ),
               ]),
             ),
@@ -370,6 +371,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
               child: Column(children: <Widget>[
                 TaskSquare(
                   key: const ValueKey('3'),
+                  taskId: '3',
                   taskName: 'Task Name 3',
                   projectManager: '@Samir',
                   description: 'adsadsad asd  asd as d asd',
@@ -392,10 +394,10 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                     ),
                   ],
                   status: 1,
-                  removeTask: (ValueKey<String> taskId) =>
-                      debugPrint(taskId.value),
-                  onBidTap: (ValueKey<String> taskId) =>
-                      debugPrint(taskId.value),
+                  removeTask: (String taskId) =>
+                      debugPrint(taskId),
+                  onBidTap: (String taskId) =>
+                      debugPrint(taskId),
                 ),
               ]),
             ),

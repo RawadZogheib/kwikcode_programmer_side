@@ -8,6 +8,7 @@ import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.da
 import 'package:kwikcode_programmer_side/widgets/toolTip/toolTip.dart';
 
 class TaskSquare extends StatefulWidget {
+  String taskId;
   String taskName;
   String projectManager;
   String description;
@@ -16,11 +17,13 @@ class TaskSquare extends StatefulWidget {
   int status;
   bool animate;
   bool disableToolTip;
-  Function removeTask;
-  Function onBidTap;
+  bool isVisible;
+  Function(String) removeTask;
+  Function(String) onBidTap;
 
   TaskSquare({
     Key? key,
+    required this.taskId,
     required this.taskName,
     required this.projectManager,
     required this.description,
@@ -29,6 +32,7 @@ class TaskSquare extends StatefulWidget {
     required this.status,
     this.animate = false,
     this.disableToolTip = false,
+    this.isVisible = true,
     required this.removeTask,
     required this.onBidTap,
   }) : super(key: key);
@@ -62,267 +66,273 @@ class _TaskSquareState extends State<TaskSquare> {
   Widget build(BuildContext context) {
     // double _height = MediaQuery.of(context).size.height;
     // double _width = MediaQuery.of(context).size.width;
-    return FlipCard(
-      fill: Fill.fillBack,
-      direction: FlipDirection.HORIZONTAL,
-      front: Container(
-        height: 300,
-        width: 300,
-        margin: const EdgeInsets.all(4.0),
-        decoration: BoxDecoration(
-          color: globals.darkBlue2,
-          border: Border.all(color: globals.logoColorBlue).scale(1.0),
-          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Text(
-              widget.taskName,
-              style: TextStyle(
-                  fontSize: 22,
-                  color: globals.whiteBlue,
-                  fontWeight: FontWeight.bold),
-            ),
-            Positioned(
-              bottom: 15,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 18,
-                    child: Text(
-                      'Project Manager: ',
-                      style: TextStyle(fontSize: 12, color: globals.white1),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 18,
-                    child: Text(
-                      widget.projectManager,
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: globals.white2,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
+    return Visibility(
+      visible: widget.isVisible,
+      child: FlipCard(
+        fill: Fill.fillBack,
+        direction: FlipDirection.HORIZONTAL,
+        front: Container(
+          height: 300,
+          width: 300,
+          margin: const EdgeInsets.all(4.0),
+          decoration: BoxDecoration(
+            color: globals.darkBlue2,
+            border: Border.all(color: globals.logoColorBlue).scale(1.0),
+            borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Text(
+                widget.taskName,
+                style: TextStyle(
+                    fontSize: 22,
+                    color: globals.whiteBlue,
+                    fontWeight: FontWeight.bold),
               ),
-            ),
-            Positioned(
-              top: 10,
-              right: 15,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    width: 75,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(
-                          widget.status == 3 || widget.status == 5
-                              ? Icons.warning
-                              : NewIcons.circle,
-                          size: 18.0,
-                          color: widget.status == 0 || widget.status == 5
-                              ? Colors.red
-                              : widget.status == 1 || widget.status == 3
-                                  ? Colors.orange
-                                  : widget.status == 2
-                                      ? Colors.blue
-                                      : widget.status == 4
-                                          ? Colors.green
-                                          : Colors.transparent.withOpacity(0.1),
-                        ),
-                      ],
+              Positioned(
+                bottom: 15,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 18,
+                      child: Text(
+                        'Project Manager: ',
+                        style: TextStyle(fontSize: 12, color: globals.white1),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 4.0),
-                  widget.status == 0 ||
-                          widget.status == 1 ||
-                          widget.status == 2 ||
-                          widget.status == 3
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.timer_outlined,
-                              color: globals.white2,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              _printDuration(
-                                  Duration(seconds: widget.timeLeft)),
-                              style: TextStyle(
-                                  fontSize: 12, color: globals.white2),
-                            ),
-                          ],
-                        )
-                      : const SizedBox(),
-                  widget.status == 0 || widget.status == 1 || widget.status == 2
-                      ? const SizedBox(height: 8.0)
-                      : const SizedBox(),
-                  widget.status == 0 || widget.status == 1
-                      ? InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          onTap: () => _goToBid(),
-                          child: Container(
-                            height: 30,
-                            width: 75,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: globals.white2,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(4.0)),
-                            ),
-                            child: Text(
-                              'Bid',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: globals.darkBlue2,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        )
-                      : widget.status == 2
-                          ? InkWell(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              onTap: () => _contactAdmin(),
-                              child: Container(
-                                height: 30,
-                                width: 75,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: globals.white2,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(4.0)),
-                                ),
-                                child: Text(
-                                  'Chat Admin',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: globals.darkBlue2,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                ],
-              ),
-            ),
-            Positioned(
-              left: 0,
-              child: Container(
-                height: 300,
-                width: 70,
-                padding: const EdgeInsets.all(8.0),
-                // decoration: BoxDecoration(
-                //   color: globals.darkBlue2,
-                //   borderRadius:
-                //   const BorderRadius.all(Radius.circular(4.0)),
-                // ),
-                child: ScrollConfiguration(
-                  behavior:
-                      MyCustomScrollBehavior().copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: widget.iconList,
+                    SizedBox(
+                      height: 18,
+                      child: Text(
+                        widget.projectManager,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: globals.white2,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ),
-            widget.disableToolTip == false
-                ? const Positioned(
-                    bottom: 15,
-                    right: 15,
-                    child: TargetWidget(),
-                  )
-                : Positioned(
-                    bottom: 15,
-                    right: 15,
-                    child: Stack(
-                      children: [
-                        InkWell(
-                          onTap: () => _onDisableToolTipTap(),
-                          child: SizedBox(
-                            width: 20.0,
-                            height: 20.0,
-                            child: Icon(
-                              Icons.info_outline,
-                              size: 20,
-                              color: globals.white1,
-                            ),
+              Positioned(
+                top: 10,
+                right: 15,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      width: 75,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(
+                            widget.status == 3 || widget.status == 5
+                                ? Icons.warning
+                                : NewIcons.circle,
+                            size: 18.0,
+                            color: widget.status == 0 || widget.status == 5
+                                ? Colors.red
+                                : widget.status == 1 || widget.status == 3
+                                    ? Colors.orange
+                                    : widget.status == 2
+                                        ? Colors.blue
+                                        : widget.status == 4
+                                            ? Colors.green
+                                            : Colors.transparent
+                                                .withOpacity(0.1),
                           ),
-                        ),
-                        _isClickedTooltip == true
-                            ? SizedBox(
-                                width: 20.0,
-                                height: 20.0,
-                                child: CircularProgressIndicator(
-                                  color: globals.white1,
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 4.0),
+                    widget.status == 0 ||
+                            widget.status == 1 ||
+                            widget.status == 2 ||
+                            widget.status == 3
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.timer_outlined,
+                                color: globals.white2,
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                _printDuration(
+                                    Duration(seconds: widget.timeLeft)),
+                                style: TextStyle(
+                                    fontSize: 12, color: globals.white2),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
+                    widget.status == 0 ||
+                            widget.status == 1 ||
+                            widget.status == 2
+                        ? const SizedBox(height: 8.0)
+                        : const SizedBox(),
+                    widget.status == 0 || widget.status == 1
+                        ? InkWell(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            onTap: () => _goToBid(),
+                            child: Container(
+                              height: 30,
+                              width: 75,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: globals.white2,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(4.0)),
+                              ),
+                              child: Text(
+                                'Bid',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: globals.darkBlue2,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )
+                        : widget.status == 2
+                            ? InkWell(
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                onTap: () => _contactAdmin(),
+                                child: Container(
+                                  height: 30,
+                                  width: 75,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: globals.white2,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(4.0)),
+                                  ),
+                                  child: Text(
+                                    'Chat Admin',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: globals.darkBlue2,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               )
                             : const SizedBox(),
-                      ],
-                    ),
-                  ),
-          ],
-        ),
-      ),
-      back: Container(
-        height: 300,
-        width: 300,
-        margin: const EdgeInsets.all(4.0),
-        decoration: BoxDecoration(
-          color: globals.darkBlue1,
-          border: Border.all(color: globals.logoColorBlue).scale(1.0),
-          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 45.0),
-            Text(
-              'Task Description:',
-              style: TextStyle(
-                  fontSize: 18,
-                  color: globals.white2,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  ],
+                ),
+              ),
+              Positioned(
+                left: 0,
                 child: Container(
-                  margin: const EdgeInsets.all(8.0),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                  ),
+                  height: 300,
+                  width: 70,
+                  padding: const EdgeInsets.all(8.0),
+                  // decoration: BoxDecoration(
+                  //   color: globals.darkBlue2,
+                  //   borderRadius:
+                  //   const BorderRadius.all(Radius.circular(4.0)),
+                  // ),
                   child: ScrollConfiguration(
                     behavior:
                         MyCustomScrollBehavior().copyWith(scrollbars: false),
                     child: SingleChildScrollView(
                       controller: ScrollController(),
-                      child: Text(
-                        widget.description,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16, color: globals.white1),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: widget.iconList,
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+              widget.disableToolTip == false
+                  ? const Positioned(
+                      bottom: 15,
+                      right: 15,
+                      child: TargetWidget(),
+                    )
+                  : Positioned(
+                      bottom: 15,
+                      right: 15,
+                      child: Stack(
+                        children: [
+                          InkWell(
+                            onTap: () => _onDisableToolTipTap(),
+                            child: SizedBox(
+                              width: 20.0,
+                              height: 20.0,
+                              child: Icon(
+                                Icons.info_outline,
+                                size: 20,
+                                color: globals.white1,
+                              ),
+                            ),
+                          ),
+                          _isClickedTooltip == true
+                              ? SizedBox(
+                                  width: 20.0,
+                                  height: 20.0,
+                                  child: CircularProgressIndicator(
+                                    color: globals.white1,
+                                  ),
+                                )
+                              : const SizedBox(),
+                        ],
+                      ),
+                    ),
+            ],
+          ),
+        ),
+        back: Container(
+          height: 300,
+          width: 300,
+          margin: const EdgeInsets.all(4.0),
+          decoration: BoxDecoration(
+            color: globals.darkBlue1,
+            border: Border.all(color: globals.logoColorBlue).scale(1.0),
+            borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 45.0),
+              Text(
+                'Task Description:',
+                style: TextStyle(
+                    fontSize: 18,
+                    color: globals.white2,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  child: Container(
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    ),
+                    child: ScrollConfiguration(
+                      behavior:
+                          MyCustomScrollBehavior().copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        controller: ScrollController(),
+                        child: Text(
+                          widget.description,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 16, color: globals.white1),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -340,10 +350,15 @@ class _TaskSquareState extends State<TaskSquare> {
           }
         } else {
           _timer1?.cancel();
-          widget.removeTask(widget.key);
+          widget.removeTask(widget.taskId);
         }
       });
     } else {
+      if(widget.status == 0) {
+        _timer1 = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+        setState(() {});
+      });
+      }
       //debugPrint(widget.key.toString());
     }
   }
@@ -360,7 +375,7 @@ class _TaskSquareState extends State<TaskSquare> {
   }
 
   _goToBid() {
-    widget.onBidTap(widget.key);
+    widget.onBidTap(widget.taskId);
     debugPrint('Go to Bid');
   }
 

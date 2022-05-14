@@ -161,6 +161,7 @@ class StatusMap extends StatelessWidget {
             ///
             TaskSquare(
               taskName: 'Any Task',
+              taskId: 'null',
               projectManager: 'Unknown',
               description:
                   'Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description ',
@@ -185,8 +186,8 @@ class StatusMap extends StatelessWidget {
               status: 0,
               animate: true,
               disableToolTip: true,
-              removeTask: () => debugPrint('test1'),
-              onBidTap: () => debugPrint('test1'),
+              removeTask: (taskId) => debugPrint('test1'),
+              onBidTap: (taskId) => debugPrint('test1'),
             ),
             const SizedBox(height: 40),
 

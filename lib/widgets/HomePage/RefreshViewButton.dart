@@ -42,11 +42,11 @@ class RefreshViewButton extends StatelessWidget {
                     child: CircularProgressIndicator(
                       color: colorIcon,
                     )),
-            const SizedBox(width: 25),
+            const SizedBox(width: 15),
             Text(
               text,
               style: TextStyle(
-                  fontSize: 18, color: colorText, fontWeight: FontWeight.bold),
+                  fontSize: 24, color: colorText, fontWeight: FontWeight.bold),
             ),
             const SizedBox(width: 20),
           ],
