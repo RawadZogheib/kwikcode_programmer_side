@@ -389,7 +389,7 @@ class _HomePageState extends State<HomePage>
   _filterTasks(String status, bool redRadio, bool orangeRadio,
       List<String> notLanguagesNameList) {
     /// alphaUp alphaDown numUp numDown
-    debugPrint(status);
+    //debugPrint(status);
 
     ///Sort
     switch (status) {
@@ -413,7 +413,6 @@ class _HomePageState extends State<HomePage>
         // 9 -> 1
         _childrenTaskList
             .sort((TaskSquare a, TaskSquare b) => b.timeLeft - a.timeLeft);
-        ;
         break;
     }
 
