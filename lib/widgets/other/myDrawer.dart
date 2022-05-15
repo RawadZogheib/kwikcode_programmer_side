@@ -4,9 +4,9 @@ import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
-import 'package:kwikcode_programmer_side/widgets/other/Flutter%20Logo.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 import 'package:kwikcode_programmer_side/widgets/other/NewsContainer.dart';
+import 'package:kwikcode_programmer_side/widgets/RankPage/RankPage.dart';
 import 'package:kwikcode_programmer_side/widgets/other/StatusMap.dart';
 import 'package:kwikcode_programmer_side/widgets/other/StrikeThroughWidget2.dart';
 import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
@@ -20,8 +20,9 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   bool _isLoggedIn = false;
+  final int _myKwikPoints = 1450;
 
-  String _statut = '-9999';
+  String _status = '-9999';
 
   Animation? _animation, _animation1, _animation2;
   AnimationController? _animationController;
@@ -38,6 +39,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     _loadAnimation();
+    _checkIsRank();
     _loadIsLoggedIn();
     super.initState();
   }
@@ -45,6 +47,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   @override
   void dispose() {
     // TODO: implement dispose
+    globals.drawerIsRank = false;
     _animationController!.dispose();
     super.dispose();
   }
@@ -119,11 +122,19 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                         ),
                                         const SizedBox(height: 5),
                                         MenuItem(
+                                          text: 'Ranks',
+                                          icon: Icons.leaderboard,
+                                          color: globals.whiteBlue,
+                                          onClicked: () =>
+                                              selectedItem(context, 3),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        MenuItem(
                                           text: 'Chat',
                                           icon: NewIcons.comments,
                                           color: globals.whiteBlue,
                                           onClicked: () =>
-                                              selectedItem(context, 3),
+                                              selectedItem(context, 4),
                                         ),
                                         const SizedBox(height: 5),
                                         MenuItem(
@@ -131,7 +142,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                           icon: NewIcons.newspaper,
                                           color: globals.whiteBlue,
                                           onClicked: () =>
-                                              selectedItem(context, 4),
+                                              selectedItem(context, 5),
                                         ),
                                         const SizedBox(height: 5),
                                         MenuItem(
@@ -139,7 +150,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                           icon: Icons.update,
                                           color: globals.whiteBlue,
                                           onClicked: () =>
-                                              selectedItem(context, 5),
+                                              selectedItem(context, 6),
                                         ),
                                         const SizedBox(height: 8),
                                         const Divider(color: Colors.white70),
@@ -149,21 +160,21 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                           icon: Icons.notifications_outlined,
                                           color: globals.white1,
                                           onClicked: () =>
-                                              selectedItem(context, 6),
+                                              selectedItem(context, 7),
                                         ),
                                         MenuItem(
                                           text: 'Settings',
                                           icon: NewIcons.cogs,
                                           color: globals.white1,
                                           onClicked: () =>
-                                              selectedItem(context, 7),
+                                              selectedItem(context, 8),
                                         ),
                                         MenuItem(
                                           text: 'About',
                                           icon: Icons.info,
                                           color: globals.white1,
                                           onClicked: () =>
-                                              selectedItem(context, 8),
+                                              selectedItem(context, 9),
                                         ),
                                         const SizedBox(height: 8),
                                         MenuItem(
@@ -171,7 +182,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                           icon: Icons.logout,
                                           color: globals.red1,
                                           onClicked: () =>
-                                              selectedItem(context, 9),
+                                              selectedItem(context, 10),
                                         ),
                                       ],
                                     ),
@@ -182,10 +193,10 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                      _statut != '-9999'
+                      _status != '-9999'
                           ? const VerticalDivider(color: Colors.white70)
                           : const SizedBox(),
-                      _statut != '-9999'
+                      _status != '-9999'
                           ? Column(
                               children: [
                                 const SizedBox(height: 20),
@@ -210,7 +221,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                _statut,
+                                                _status,
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontSize: 26,
@@ -237,7 +248,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                               ],
                             )
                           : const SizedBox(),
-                      _statut != '-9999'
+                      _status != '-9999'
                           ? const SizedBox(width: 8.0)
                           : const SizedBox(),
                     ],
@@ -261,34 +272,37 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       case 2: // My Wallet
         _case2();
         break;
-      case 3: // Chat
+      case 3: // Rank
         _case3();
         break;
-      case 4: // News
+      case 4: // Chat
         _case4();
         break;
-      case 5: // Updates
+      case 5: // News
         _case5();
         break;
-      case 6: // Notifications
+      case 6: // Updates
         _case6();
         break;
-      case 7: // Settings
+      case 7: // Notifications
         _case7();
         break;
-      case 8: // About
+      case 8: // Settings
         _case8();
         break;
-      case 9: // Logout
+      case 9: // About
         _case9();
+        break;
+      case 10: // Logout
+        _case10();
         break;
     }
   }
 
   Future<void> _case0() async {
-    if (_statut != 'My Tasks') {
+    if (_status != 'My Tasks') {
       debugPrint('My Tasks');
-      if (_statut != '-9999') {
+      if (_status != '-9999') {
         await _animationController!.reverse();
       }
 
@@ -320,24 +334,22 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                     TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
                   ],
                   status: 2,
-                  removeTask: (String taskId) =>
-                      debugPrint(taskId),
-                  onBidTap: (String taskId) =>
-                      debugPrint(taskId),
+                  removeTask: (String taskId) => debugPrint(taskId),
+                  onBidTap: (String taskId) => debugPrint(taskId),
                 ),
               ]),
             ),
           ),
         );
       });
-      _statut = 'My Tasks';
+      _status = 'My Tasks';
     }
   }
 
   Future<void> _case1() async {
-    if (_statut != 'My Bids') {
+    if (_status != 'My Bids') {
       debugPrint('My Bids');
-      if (_statut != '-9999') {
+      if (_status != '-9999') {
         await _animationController!.reverse();
       }
 
@@ -369,24 +381,22 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                     TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
                   ],
                   status: 1,
-                  removeTask: (String taskId) =>
-                      debugPrint(taskId),
-                  onBidTap: (String taskId) =>
-                      debugPrint(taskId),
+                  removeTask: (String taskId) => debugPrint(taskId),
+                  onBidTap: (String taskId) => debugPrint(taskId),
                 ),
               ]),
             ),
           ),
         );
       });
-      _statut = 'My Bids';
+      _status = 'My Bids';
     }
   }
 
   Future<void> _case2() async {
-    if (_statut != 'My Wallet') {
+    if (_status != 'My Wallet') {
       debugPrint('My Wallet');
-      if (_statut != '-9999') {
+      if (_status != '-9999') {
         await _animationController!.reverse();
       }
 
@@ -435,7 +445,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                     ),
                     Expanded(
                       child: Text(
-                        '\$ 1200',
+                        '\$ $_myKwikPoints',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 24,
@@ -512,14 +522,40 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           ),
         );
       });
-      _statut = 'My Wallet';
+      _status = 'My Wallet';
     }
   }
 
   Future<void> _case3() async {
-    if (_statut != 'Chat') {
+    if (_status != 'Ranks') {
+      debugPrint('Ranks');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize2) {
+        _drawerRightSize = _drawerRightSize2;
+        _loadAnimation();
+      }
+
+      ///
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = Container(
+          width: _drawerRightSize - 20,
+          margin: const EdgeInsets.all(8.0),
+          child: RankPage(myKwikPoints: _myKwikPoints),
+        );
+      });
+      _status = 'Ranks';
+    }
+  }
+
+  Future<void> _case4() async {
+    if (_status != 'Chat') {
       debugPrint('Chat');
-      if (_statut != '-9999') {
+      if (_status != '-9999') {
         await _animationController!.reverse();
       }
 
@@ -536,14 +572,14 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           width: _drawerRightSize,
         );
       });
-      _statut = 'Chat';
+      _status = 'Chat';
     }
     Navigator.of(context).pop();
     warningPopup(context, 'Coming Soon!!');
   }
 
-  Future<void> _case4() async {
-    if (_statut != 'News') {
+  Future<void> _case5() async {
+    if (_status != 'News') {
       List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
       int _colorCounter = 0;
       List<NewsContainer> _newsContainerList = [];
@@ -569,7 +605,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       /// ///////////////////////////////////////////
       debugPrint('News');
-      if (_statut != '-9999') {
+      if (_status != '-9999') {
         await _animationController!.reverse();
       }
 
@@ -596,12 +632,12 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           ),
         );
       });
-      _statut = 'News';
+      _status = 'News';
     }
   }
 
-  Future<void> _case5() async {
-    if (_statut != 'Updates') {
+  Future<void> _case6() async {
+    if (_status != 'Updates') {
       List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
       int _colorCounter = 0;
       List<NewsContainer> _updatesContainerList = [];
@@ -620,7 +656,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       /// ///////////////////////////////////////////
       debugPrint('Updates');
-      if (_statut != '-9999') {
+      if (_status != '-9999') {
         await _animationController!.reverse();
       }
 
@@ -647,40 +683,14 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           ),
         );
       });
-      _statut = 'Updates';
+      _status = 'Updates';
     }
-  }
-
-  Future<void> _case6() async {
-    if (_statut != 'Notifications') {
-      debugPrint('Notifications');
-      if (_statut != '-9999') {
-        await _animationController!.reverse();
-      }
-
-      /// Resize animation
-      if (_drawerRightSize != _drawerRightSize1) {
-        _drawerRightSize = _drawerRightSize1;
-        _loadAnimation();
-      }
-
-      ///
-      _animationController!.forward();
-      setState(() {
-        _currentWidget = SizedBox(
-          width: _drawerRightSize,
-        );
-      });
-      _statut = 'Notifications';
-    }
-    Navigator.of(context).pop();
-    warningPopup(context, 'Coming Soon!!');
   }
 
   Future<void> _case7() async {
-    if (_statut != 'Settings') {
-      debugPrint('Settings');
-      if (_statut != '-9999') {
+    if (_status != 'Notifications') {
+      debugPrint('Notifications');
+      if (_status != '-9999') {
         await _animationController!.reverse();
       }
 
@@ -697,16 +707,42 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           width: _drawerRightSize,
         );
       });
-      _statut = 'Settings';
+      _status = 'Notifications';
     }
     Navigator.of(context).pop();
     warningPopup(context, 'Coming Soon!!');
   }
 
   Future<void> _case8() async {
-    if (_statut != 'About') {
+    if (_status != 'Settings') {
+      debugPrint('Settings');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = SizedBox(
+          width: _drawerRightSize,
+        );
+      });
+      _status = 'Settings';
+    }
+    Navigator.of(context).pop();
+    warningPopup(context, 'Coming Soon!!');
+  }
+
+  Future<void> _case9() async {
+    if (_status != 'About') {
       debugPrint('About');
-      if (_statut != '-9999') {
+      if (_status != '-9999') {
         await _animationController!.reverse();
       }
 
@@ -725,11 +761,11 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           child: const StatusMap(),
         );
       });
-      _statut = 'About';
+      _status = 'About';
     }
   }
 
-  Future<void> _case9() async {
+  Future<void> _case10() async {
     Navigator.of(context).pop();
     await SessionManager().destroy();
 
@@ -766,9 +802,15 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   _onBackTap() async {
     //Navigator.of(context).pop();
     await _animationController!.reverse().then((value) => setState(() {
-          _statut = '-9999';
+          _status = '-9999';
           _currentWidget = const SizedBox();
         }));
+  }
+
+  void _checkIsRank() {
+    if (globals.drawerIsRank == true) {
+      selectedItem(context, 3);
+    }
   }
 }
 

@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage>
     _childrenProjectList = [
       ProjectSquare(
         name: 'Project 1',
-        imgUrl: 'https://picsum.photos/100/100/?1',
+        imgUrl: null,
         onTap: () => debugPrint('Project 1'),
       ),
       ProjectSquare(
@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage>
       ),
       ProjectSquare(
         name: 'Project 3',
-        imgUrl: 'https://picsum.photos/100/100/?3',
+        imgUrl: null,
         onTap: () => debugPrint('Project 3'),
       ),
     ];

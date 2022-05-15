@@ -41,6 +41,11 @@ final Color logoColorBlue = HexColor('#302ca2');
 final Color whiteBlue = HexColor("#f2f3f8");
 final Color white = HexColor("#fdfdfd");
 
+final Color platinum = HexColor("#828b99");
+final Color gold = HexColor("#e1bf74");
+final Color silver = HexColor("#898989");
+final Color bronze = HexColor("#b68965");
+
 //Errors
 const String warning1 = "No Spaces Allowed.";
 const String warning2_1 = "Your username must contain at least 8 characters.";
@@ -85,3 +90,4 @@ const String error409 = 'Coupon already claimed!';
 
 final ScrollController controllerMiddlePage = ScrollController();
 bool isLoadingTooltip = false;
+bool drawerIsRank = false;
