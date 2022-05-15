@@ -24,7 +24,9 @@ class _HomePageState extends State<HomePage>
   AnimationController? _animationController;
 
   List<ProjectSquare> _childrenProjectList = [];
+
   List<TaskSquare> _childrenTaskList = [];
+  List<TaskSquare> _childrenTaskListNoFilter = [];
 
   bool _isLoadingTasks = true;
   bool _isClickedRefresh = true;
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage>
     // TODO: implement initState
     globals.currentPage = 'HomePage';
     _loadAnimation();
-    _loadTasks();
+    _loadNewPage();
     super.initState();
   }
 
@@ -148,6 +150,11 @@ class _HomePageState extends State<HomePage>
         });
   }
 
+  _loadNewPage() async {
+    await _loadTasks(); //0
+    _filterTasks('alphaDown', true, true, []);
+  }
+
   _loadTasks() async {
     setState(() {
       _isLoadingTasks = true;
@@ -171,7 +178,7 @@ class _HomePageState extends State<HomePage>
         onTap: () => debugPrint('Project 3'),
       ),
     ];
-    _childrenTaskList = [
+    _childrenTaskListNoFilter = [
       TaskSquare(
         key: const ValueKey('1'),
         taskId: '1',
@@ -343,8 +350,11 @@ class _HomePageState extends State<HomePage>
   _removeTask(String taskId) {
     if (mounted) {
       setState(() {
-        _childrenTaskList.removeAt(_childrenTaskList
-            .indexWhere((element) => element.taskId == taskId));
+        // _childrenTaskList.removeAt(_childrenTaskList
+        //     .indexWhere((element) => element.taskId == taskId));
+        _childrenTaskListNoFilter
+            .removeWhere((element) => element.taskId == taskId);
+        _childrenTaskList.removeWhere((element) => element.taskId == taskId);
       });
     }
   }
@@ -359,8 +369,8 @@ class _HomePageState extends State<HomePage>
 
   _startAnimation(String taskId) {
     if (_animationIsActive == false) {
-      _childTaskIsActive = _childrenTaskList[
-          _childrenTaskList.indexWhere((element) => element.taskId == taskId)];
+      _childTaskIsActive = _childrenTaskListNoFilter[_childrenTaskListNoFilter
+          .indexWhere((element) => element.taskId == taskId)];
       _animationIsActive = true;
       _animationController!.forward();
     }
@@ -390,7 +400,10 @@ class _HomePageState extends State<HomePage>
       List<String> notLanguagesNameList) {
     /// alphaUp alphaDown numUp numDown
     //debugPrint(status);
-
+    _childrenTaskList.clear();
+    for(TaskSquare element in _childrenTaskListNoFilter){
+      _childrenTaskList.add(element);
+    }
     ///Sort
     switch (status) {
       case 'alphaDown':
@@ -417,47 +430,65 @@ class _HomePageState extends State<HomePage>
     }
 
     ///Check Task Status
-    if (redRadio == true) {
-      for (TaskSquare element in _childrenTaskList) {
-        if (element.status == 0) {
-          element.isVisible = true;
-        }
-      }
-    } else {
-      for (TaskSquare element in _childrenTaskList) {
-        if (element.status == 0) {
-          element.isVisible = false;
-        }
-      }
+    if (redRadio == true && orangeRadio == true) {
+      // _childrenTaskList = _childrenTaskListNoFilter;
+    } else if (redRadio == true && orangeRadio == false) {
+      _childrenTaskList = _childrenTaskListNoFilter
+          .where((element) => element.status == 0)
+          .toList();
+    } else if (redRadio == false && orangeRadio == true) {
+      _childrenTaskList = _childrenTaskListNoFilter
+          .where((element) => element.status == 1)
+          .toList();
+    } else if (redRadio == false && orangeRadio == false) {
+      _childrenTaskList.clear();
     }
-
-    if (orangeRadio == true) {
-      for (TaskSquare element in _childrenTaskList) {
-        if (element.status == 1) {
-          element.isVisible = true;
-        }
-      }
-    } else {
-      for (TaskSquare element in _childrenTaskList) {
-        if (element.status == 1) {
-          element.isVisible = false;
-        }
-      }
-    }
+    // if (redRadio == true) {
+    //   for (TaskSquare element in _childrenTaskList) {
+    //     if (element.status == 0) {
+    //       element.isVisible = true;
+    //     }
+    //   }
+    // } else {
+    //   for (TaskSquare element in _childrenTaskList) {
+    //     if (element.status == 0) {
+    //       element.isVisible = false;
+    //     }
+    //   }
+    // }
+    //
+    // if (orangeRadio == true) {
+    //   for (TaskSquare element in _childrenTaskList) {
+    //     if (element.status == 1) {
+    //       element.isVisible = true;
+    //     }
+    //   }
+    // } else {
+    //   for (TaskSquare element in _childrenTaskList) {
+    //     if (element.status == 1) {
+    //       element.isVisible = false;
+    //     }
+    //   }
+    // }
 
     ///Check Task Languages
-
+    List<TaskSquare> toRemove = [];
     for (String lang in notLanguagesNameList) {
-      for (TaskSquare element in _childrenTaskList) {
+      for (TaskSquare element in _childrenTaskListNoFilter) {
         for (TaskProgrammingItem iconItem in element.iconList) {
           if (iconItem.name == lang) {
-            element.isVisible = false;
-            continue;
+            if (_childrenTaskList.contains(element)) {
+              toRemove.add(element);
+            }
           }
+          // if (iconItem.name == lang) {
+          //   element.isVisible = false;
+          //   continue;
+          // }
         }
       }
     }
-
+    _childrenTaskList.removeWhere((e) => toRemove.contains(e));
 
     ///SetState
     setState(() {

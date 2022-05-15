@@ -84,4 +84,4 @@ const String success408 = "Payment Done Successfully."; ///////
 const String error409 = 'Coupon already claimed!';
 
 final ScrollController controllerMiddlePage = ScrollController();
-bool isLoadinTooltip = false;
+bool isLoadingTooltip = false;

@@ -97,14 +97,14 @@ class _MyFilterState extends State<MyFilter> {
                             const SizedBox(width: 68.0),
                             Icon(
                               NewIcons.sort_alpha_down,
-                              color: globals.white1,
+                              color: _sortStatus=='alphaDown'?globals.logoColorPink:globals.white1,
                             ),
                             const SizedBox(width: 8.0),
                             Text(
                               'Name',
                               style: TextStyle(
                                 fontSize: 18,
-                                color: globals.white1,
+                                color: _sortStatus=='alphaDown'?globals.logoColorPink:globals.white1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -123,14 +123,14 @@ class _MyFilterState extends State<MyFilter> {
                             const SizedBox(width: 68.0),
                             Icon(
                               NewIcons.sort_alpha_up,
-                              color: globals.white1,
+                              color: _sortStatus=='alphaUp'?globals.logoColorPink:globals.white1,
                             ),
                             const SizedBox(width: 8.0),
                             Text(
                               'Name',
                               style: TextStyle(
                                 fontSize: 18,
-                                color: globals.white1,
+                                color: _sortStatus=='alphaUp'?globals.logoColorPink:globals.white1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -149,14 +149,14 @@ class _MyFilterState extends State<MyFilter> {
                             const SizedBox(width: 52.0),
                             Icon(
                               NewIcons.sort_numeric_down,
-                              color: globals.white1,
+                              color: _sortStatus=='numDown'?globals.logoColorPink:globals.white1,
                             ),
                             const SizedBox(width: 8.0),
                             Text(
                               'Time Left',
                               style: TextStyle(
                                 fontSize: 18,
-                                color: globals.white1,
+                                color: _sortStatus=='numDown'?globals.logoColorPink:globals.white1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -175,14 +175,14 @@ class _MyFilterState extends State<MyFilter> {
                             const SizedBox(width: 52.0),
                             Icon(
                               NewIcons.sort_numeric_up,
-                              color: globals.white1,
+                              color: _sortStatus=='numUp'?globals.logoColorPink:globals.white1,
                             ),
                             const SizedBox(width: 8.0),
                             Text(
                               'Time Left',
                               style: TextStyle(
                                 fontSize: 18,
-                                color: globals.white1,
+                                color: _sortStatus=='numUp'?globals.logoColorPink:globals.white1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

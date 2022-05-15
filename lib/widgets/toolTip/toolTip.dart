@@ -25,9 +25,9 @@ class _TargetWidgetState extends State<TargetWidget> {
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
-    // if (tooltip != null && tooltip!.isOpen ) {// On screen change close not done
-    //   tooltip!.close();
-    // }
+    if (tooltip != null && tooltip!.isOpen ) {// On screen change close not done
+      tooltip!.close();
+    }
     return Stack(
       children: [
         InkWell(
@@ -56,8 +56,8 @@ class _TargetWidgetState extends State<TargetWidget> {
   }
 
   Future<bool> _loadToolTip() async {
-    if (globals.isLoadinTooltip == false) {
-      globals.isLoadinTooltip = true;
+    if (globals.isLoadingTooltip == false) {
+      globals.isLoadingTooltip = true;
       debugPrint('Loading toolTip');
       await Future.delayed(const Duration(seconds: 2));
       _toolTipList = [
@@ -66,9 +66,16 @@ class _TargetWidgetState extends State<TargetWidget> {
         ['+50', '-5', '3'],
         ['-50', '-10', '8'],
       ];
+      setState(() {
+        _isClickedTooltip = false;
+      });
+      await Future.delayed(const Duration(milliseconds: 100));
       debugPrint('Loading toolTip end');
       return true;
     } else {
+      setState(() {
+        _isClickedTooltip = false;
+      });
       debugPrint('false');
       return false;
     }
@@ -181,10 +188,7 @@ class _TargetWidgetState extends State<TargetWidget> {
       );
 
       tooltip!.show(context);
-      setState(() {
-        _isClickedTooltip = false;
-      });
-      globals.isLoadinTooltip = false;
+      globals.isLoadingTooltip = false;
     }
   }
 // Future<void> _scrollUp() async {

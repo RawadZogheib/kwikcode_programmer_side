@@ -355,11 +355,11 @@ class _TaskSquareState extends State<TaskSquare> {
         }
       });
     } else {
-      if(widget.status == 0) {
-        _timer1 = Timer.periodic(const Duration(seconds: 1), (Timer t) {
-        setState(() {});
-      });
-      }
+      // if (widget.status == 0) {
+      //   _timer1 = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      //     setState(() {});
+      //   });
+      // }
       //debugPrint(widget.key.toString());
     }
   }
