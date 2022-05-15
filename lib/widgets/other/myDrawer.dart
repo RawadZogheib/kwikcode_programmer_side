@@ -55,7 +55,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
+    //double _width = MediaQuery.of(context).size.width;
     return AnimatedBuilder(
         animation: _animationController!,
         builder: (BuildContext context, widget) {
@@ -209,6 +209,9 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                       children: [
                                         const SizedBox(width: 10),
                                         InkWell(
+                                          splashColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
                                           onTap: () => _onBackTap(),
                                           child: Icon(
                                             Icons.arrow_back_ios,
