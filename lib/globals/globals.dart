@@ -78,15 +78,8 @@ const String codeException =
     "Oops Something went wrong! please try to login again!";
 
 const String warning400 = "You must login first!"; ///////
-const String error401 = "Sorry, this day is full."; ///////
-const String error402 = "Sorry, this day is not available."; ///////
-const String error403 = "Sorry, this course is not available."; ///////
-const String success404 = "New course added."; ///////
-const String error405 = 'This teacher has no courses yet.';
-const String error406 = 'There is no courses available on this day.';
-const String warning407 = 'There is no teacehrs available.';
-const String success408 = "Payment Done Successfully."; ///////
-const String error409 = 'Coupon already claimed!';
+const String error401 = 'You have already bid.';
+
 
 final ScrollController controllerMiddlePage = ScrollController();
 bool isLoadingTooltip = false;

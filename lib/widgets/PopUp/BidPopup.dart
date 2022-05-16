@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/bid_item.dart';
+import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 import 'package:kwikcode_programmer_side/widgets/toolTip/toolTip.dart';
 
@@ -189,13 +191,23 @@ class _BidPopupState extends State<BidPopup> {
                             const BorderRadius.all(Radius.circular(12.0)),
                       ),
                       child: ScrollConfiguration(
-                        behavior: MyCustomScrollBehavior().copyWith(scrollbars: false),
+                        behavior: MyCustomScrollBehavior()
+                            .copyWith(scrollbars: false),
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
-                          child: ListView(
+                          child: ListView.builder(
                             controller: ScrollController(),
                             padding: const EdgeInsets.all(8.0),
-                            children: widget.childrenBid,
+                            itemCount: widget.childrenBid.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index == 0) {
+                                widget.childrenBid[0].color = globals.gold;
+                              } else {
+                                widget.childrenBid[index].color =
+                                    globals.white2;
+                              }
+                              return widget.childrenBid[index];
+                            },
                           ),
                         ),
                       ),
@@ -210,7 +222,27 @@ class _BidPopupState extends State<BidPopup> {
     );
   }
 
-  _makeBid() {
+  _makeBid() async {
+    String _userName = (await SessionManager().get('userName')).toString();
+    for (var element in widget.childrenBid) {
+      if (element.bidName == _userName) {
+        errorPopup(context, globals.error401);
+        return;
+      }
+    }
     debugPrint('Make Bid');
+    widget.childrenBid.add(
+      BidItem(
+        bidName: _userName,
+        kwikPointsAmount: 2100, //await SessionManager().get('myKwikPoints')
+        color: globals.white2,
+      ),
+    );
+    widget.childrenBid.sort(
+        (BidItem a, BidItem b) => b.kwikPointsAmount - a.kwikPointsAmount);
+
+    setState(() {
+      widget.childrenBid;
+    });
   }
 }
