@@ -4,9 +4,9 @@ import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
+import 'package:kwikcode_programmer_side/widgets/RankPage/RankPage.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 import 'package:kwikcode_programmer_side/widgets/other/NewsContainer.dart';
-import 'package:kwikcode_programmer_side/widgets/RankPage/RankPage.dart';
 import 'package:kwikcode_programmer_side/widgets/other/StatusMap.dart';
 import 'package:kwikcode_programmer_side/widgets/other/StrikeThroughWidget2.dart';
 import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
@@ -20,7 +20,7 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   bool _isLoggedIn = false;
-  final int _myKwikPoints = 1450;
+  final int _myKwikPoints = 1420;
 
   String _status = '-9999';
 
@@ -40,7 +40,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
     // TODO: implement initState
     _loadAnimation();
     _checkIsRank();
-    _loadIsLoggedIn();
+    //_loadIsLoggedIn();
     super.initState();
   }
 
@@ -448,7 +448,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                     ),
                     Expanded(
                       child: Text(
-                        '\$ $_myKwikPoints',
+                        '\$ 1740',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 24,
@@ -507,7 +507,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                             ),
                           ),
                           Text(
-                            ' 1200',
+                            ' $_myKwikPoints',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 24,
@@ -784,6 +784,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
     } else {
       setState(() {
         _isLoggedIn = false;
+        _case10();
       });
     }
   }

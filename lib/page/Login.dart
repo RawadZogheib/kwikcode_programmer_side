@@ -277,6 +277,8 @@ class _LoginState extends State<Login> {
         await SessionManager().set('gender', body[2][5]);
         await SessionManager().set('dateOfBirth', body[2][6]);
         await SessionManager().set('ip', ipv4);
+        await SessionManager().set('myKwikPoints',1420);
+        await SessionManager().set('isLoggedIn', true);
         //print(await session.get('isLoggedIn'));
         Navigator.pushNamedAndRemoveUntil(
             context, '/HomePage', (route) => false);
