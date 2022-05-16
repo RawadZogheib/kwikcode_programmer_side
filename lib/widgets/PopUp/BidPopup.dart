@@ -188,8 +188,16 @@ class _BidPopupState extends State<BidPopup> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(12.0)),
                       ),
-                      child: ListView(
-                        children: widget.childrenBid,
+                      child: ScrollConfiguration(
+                        behavior: MyCustomScrollBehavior().copyWith(scrollbars: false),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: ListView(
+                            controller: ScrollController(),
+                            padding: const EdgeInsets.all(8.0),
+                            children: widget.childrenBid,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -205,5 +213,4 @@ class _BidPopupState extends State<BidPopup> {
   _makeBid() {
     debugPrint('Make Bid');
   }
-
 }

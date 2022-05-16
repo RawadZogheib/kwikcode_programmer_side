@@ -379,8 +379,7 @@ class _HomePageState extends State<HomePage>
           .indexWhere((element) => element.taskId == taskId)];
       _animationIsActive = true;
       _animationController!
-          .forward()
-          .then((value) => globals.isLoadingBid = false);
+          .forward();
     }
   }
 
@@ -401,6 +400,7 @@ class _HomePageState extends State<HomePage>
                 removeTask: (String taskId) => debugPrint('null'),
                 onBidTap: (String taskId) => debugPrint('null'),
               ));
+      globals.isLoadingBid = false;
     }
   }
 
@@ -510,8 +510,44 @@ class _HomePageState extends State<HomePage>
     debugPrint('Load Bid');
 
     List<BidItem> _bidChildrenTMP = [];
-    _bidChildrenTMP.add(BidItem(bidName: 'Rawad'));
-    _bidChildrenTMP.add(BidItem(bidName: (_k++).toString()));
+    _bidChildrenTMP.add(BidItem(
+      bidName: 'Rawad',
+      kwikPointsAmount: 1700,
+      color: globals.white2,
+    ));
+    _bidChildrenTMP.add(BidItem(
+      bidName: (_k++).toString(),
+      kwikPointsAmount: 2300,
+      color: globals.white2,
+    ));
+    _bidChildrenTMP.add(BidItem(
+      bidName: (_k++).toString(),
+      kwikPointsAmount: 1300,
+      color: globals.white2,
+    ));
+    _bidChildrenTMP.add(BidItem(
+      bidName: (_k++).toString(),
+      kwikPointsAmount: 1600,
+      color: globals.white2,
+    ));
+    _bidChildrenTMP.add(BidItem(
+      bidName: (_k++).toString(),
+      kwikPointsAmount: 2100,
+      color: globals.white2,
+    ));
+    _bidChildrenTMP.add(BidItem(
+      bidName: (_k++).toString(),
+      kwikPointsAmount: 1800,
+      color: globals.white2,
+    ));
+    _bidChildrenTMP.add(BidItem(
+      bidName: (_k++).toString(),
+      kwikPointsAmount: 1300,
+      color: globals.white2,
+    ));
+    _bidChildrenTMP.sort(
+        (BidItem a, BidItem b) => b.kwikPointsAmount - a.kwikPointsAmount);
+    _bidChildrenTMP[0].color = globals.gold;
     _bidChildren = _bidChildrenTMP;
   }
 
