@@ -209,9 +209,10 @@ class _TaskSquareState extends State<TaskSquare> {
                                     )
                                   : Row(
                                       children: [
-                                        SizedBox(
+                                        Container(
                                           height: 24.0,
                                           width: 24.0,
+                                          padding: const EdgeInsets.all(6.0),
                                           child: CircularProgressIndicator(
                                             color: globals.darkBlue2,
                                           ),
