@@ -91,3 +91,5 @@ const String error409 = 'Coupon already claimed!';
 final ScrollController controllerMiddlePage = ScrollController();
 bool isLoadingTooltip = false;
 bool drawerIsRank = false;
+
+bool isLoadingBid = false;

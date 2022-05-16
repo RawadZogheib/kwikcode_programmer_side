@@ -1,32 +1,52 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
+import 'package:kwikcode_programmer_side/widgets/PopUp/bid_item.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 import 'package:kwikcode_programmer_side/widgets/toolTip/toolTip.dart';
 
-class BidPopup extends StatelessWidget {
+class BidPopup extends StatefulWidget {
+  List<BidItem> childrenBid;
   TaskSquare childTaskIsActive;
   Function onBackTap;
 
   BidPopup({
     Key? key,
+    required this.childrenBid,
     required this.childTaskIsActive,
     required this.onBackTap,
   }) : super(key: key);
 
   @override
+  State<BidPopup> createState() => _BidPopupState();
+}
+
+class _BidPopupState extends State<BidPopup> {
+  //List<BidItem> _bidChildren = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double _height = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
+    // double _height = MediaQuery.of(context).size.height;
+    // double _width = MediaQuery.of(context).size.width;
+    // if (globals.loadBid == false) {
+    //   globals.loadBid = true;
+    //   _loadBid();
+    // }
     return Container(
-      height: _height * 0.8,
-      width: _width * 0.5,
+      height: 530,
+      //_height * 0.8,
+      width: 640,
+      //_width * 0.5,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: globals.darkBlue1,
-        border: Border.all(color: globals.white1).scale(1.0),
+        border: Border.all(color: globals.white1).scale(2.0),
         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
       ),
       child: Column(
@@ -36,7 +56,7 @@ class BidPopup extends StatelessWidget {
             children: [
               const SizedBox(width: 20),
               InkWell(
-                onTap: () => onBackTap(),
+                onTap: () => widget.onBackTap(),
                 child: Icon(
                   Icons.arrow_back_ios,
                   color: globals.white2,
@@ -47,7 +67,7 @@ class BidPopup extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      childTaskIsActive.taskName,
+                      widget.childTaskIsActive.taskName,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 28,
@@ -130,7 +150,8 @@ class BidPopup extends StatelessWidget {
                                     child: Wrap(
                                       spacing: 12.0,
                                       alignment: WrapAlignment.center,
-                                      children: childTaskIsActive.iconList,
+                                      children:
+                                          widget.childTaskIsActive.iconList,
                                     ),
                                   ),
                                 ),
@@ -145,7 +166,7 @@ class BidPopup extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Task Info: ',
+                          'Task Payment: ',
                           style: TextStyle(
                               fontSize: 16,
                               color: globals.white2,
@@ -159,11 +180,17 @@ class BidPopup extends StatelessWidget {
                 ),
                 const SizedBox(width: 8.0),
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: globals.darkBlue2,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(12.0)),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: globals.darkBlue2,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      child: ListView(
+                        children: widget.childrenBid,
+                      ),
                     ),
                   ),
                 ),
@@ -175,5 +202,8 @@ class BidPopup extends StatelessWidget {
     );
   }
 
-  _makeBid() {}
+  _makeBid() {
+    debugPrint('Make Bid');
+  }
+
 }

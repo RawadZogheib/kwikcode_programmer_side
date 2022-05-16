@@ -46,6 +46,7 @@ class _TaskSquareState extends State<TaskSquare> {
   Timer? _timer1;
   Timer? _timer2;
   bool _isClickedTooltip = false;
+  bool _isLoadingBid = false;
 
   @override
   void initState() {
@@ -189,13 +190,42 @@ class _TaskSquareState extends State<TaskSquare> {
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(4.0)),
                               ),
-                              child: Text(
-                                'Bid',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: globals.darkBlue2,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                              child: _isLoadingBid == false
+                                  ? Row(
+                                      children: [
+                                        const SizedBox(
+                                          height: 24.0,
+                                          width: 24.0,
+                                        ),
+                                        const SizedBox(width: 2),
+                                        Text(
+                                          'Bid',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: globals.darkBlue2,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    )
+                                  : Row(
+                                      children: [
+                                        SizedBox(
+                                          height: 24.0,
+                                          width: 24.0,
+                                          child: CircularProgressIndicator(
+                                            color: globals.darkBlue2,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 2),
+                                        Text(
+                                          'Bid',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: globals.darkBlue2,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
                             ),
                           )
                         : widget.status == 2
@@ -375,9 +405,18 @@ class _TaskSquareState extends State<TaskSquare> {
     debugPrint('Contact Admin.');
   }
 
-  _goToBid() {
-    widget.onBidTap(widget.taskId);
-    debugPrint('Go to Bid');
+  _goToBid() async {
+    if (globals.isLoadingBid == false) {
+      globals.isLoadingBid = true;
+      setState(() {
+        _isLoadingBid = true;
+      });
+      await widget.onBidTap(widget.taskId);
+      setState(() {
+        _isLoadingBid = false;
+      });
+      debugPrint('Go to Bid');
+    }
   }
 
   Future<void> _animate() async {

@@ -8,6 +8,7 @@ import 'package:kwikcode_programmer_side/widgets/HomePage/RightView.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/projectSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/BidPopup.dart';
+import 'package:kwikcode_programmer_side/widgets/PopUp/bid_item.dart';
 import 'package:kwikcode_programmer_side/widgets/other/myDrawer.dart';
 import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
 
@@ -20,6 +21,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  List<BidItem> _bidChildren = [];
+  int _k = 0;
+
   Animation? _animation;
   AnimationController? _animationController;
 
@@ -139,6 +143,7 @@ class _HomePageState extends State<HomePage>
                     transform: Matrix4.translationValues(
                         0.0, _animation?.value * _height, 0.0),
                     child: BidPopup(
+                      childrenBid: _bidChildren,
                       childTaskIsActive: _childTaskIsActive,
                       onBackTap: () => _endAnimation(),
                     ),
@@ -367,12 +372,15 @@ class _HomePageState extends State<HomePage>
         curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
   }
 
-  _startAnimation(String taskId) {
+  _startAnimation(String taskId) async {
     if (_animationIsActive == false) {
+      await _loadBid();
       _childTaskIsActive = _childrenTaskListNoFilter[_childrenTaskListNoFilter
           .indexWhere((element) => element.taskId == taskId)];
       _animationIsActive = true;
-      _animationController!.forward();
+      _animationController!
+          .forward()
+          .then((value) => globals.isLoadingBid = false);
     }
   }
 
@@ -401,9 +409,10 @@ class _HomePageState extends State<HomePage>
     /// alphaUp alphaDown numUp numDown
     //debugPrint(status);
     _childrenTaskList.clear();
-    for(TaskSquare element in _childrenTaskListNoFilter){
+    for (TaskSquare element in _childrenTaskListNoFilter) {
       _childrenTaskList.add(element);
     }
+
     ///Sort
     switch (status) {
       case 'alphaDown':
@@ -495,10 +504,20 @@ class _HomePageState extends State<HomePage>
       _childrenTaskList;
     });
   }
-}
 
-_back() {
-  debugPrint('No back available.');
+  Future<void> _loadBid() async {
+    await Future.delayed(const Duration(seconds: 2));
+    debugPrint('Load Bid');
+
+    List<BidItem> _bidChildrenTMP = [];
+    _bidChildrenTMP.add(BidItem(bidName: 'Rawad'));
+    _bidChildrenTMP.add(BidItem(bidName: (_k++).toString()));
+    _bidChildren = _bidChildrenTMP;
+  }
+
+  _back() {
+    debugPrint('No back available.');
+  }
 }
 
 final buttonColors = WindowButtonColors(
