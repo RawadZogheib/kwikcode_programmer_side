@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 
 class BidItem extends StatelessWidget {
   String bidName;
@@ -17,17 +16,31 @@ class BidItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      width: 60,
       margin: const EdgeInsets.all(4.0),
       decoration: BoxDecoration(
         color: color,
         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
       ),
-      child: Center(child: Row(
+      child: Center(
+          child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(bidName),
-          Text(kwikPointsAmount.toString())
+          SizedBox(
+            width: 200,
+            child: Text(
+              bidName,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(width: 20),
+          SizedBox(
+            width: 110,
+            child: Text(
+              kwikPointsAmount.toString(),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(width: 20),
         ],
       )),
     );
