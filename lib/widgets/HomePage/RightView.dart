@@ -204,7 +204,6 @@ class _RightViewState extends State<RightView> {
     }
 
     setState(() {
-      print('_getKwikPointsAmount');
       _kwikPointsAmount;
     });
   }
