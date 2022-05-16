@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/projectSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
@@ -18,10 +19,23 @@ class RightView extends StatefulWidget {
 }
 
 class _RightViewState extends State<RightView> {
+  int _kwikPointsAmount = -9999;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _getKwikPointsAmount();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // double _height = MediaQuery.of(context).size.height;
     // double _width = MediaQuery.of(context).size.width;
+    if (widget.isLoadingProjects == true) {
+      _kwikPointsAmount = -9999;
+      _getKwikPointsAmount();
+    }
     return SizedBox(
       width: 300,
       child: Column(
@@ -37,19 +51,56 @@ class _RightViewState extends State<RightView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(width: 20),
+                const SizedBox(width: 15),
                 // Icon(
                 //   Icons.person,
                 //   color: globals.whiteBlue,
                 // ),
-                InkWell(
-                  onTap: () => _openDrawerRank(),
-                  child: Image.asset(
-                    'Assets/Rank/KwikCodeLogoPlatinum.png',
-                    height: 54,
-                    width: 54,
-                  ),
-                ),
+                _kwikPointsAmount == -9999
+                    ? Container(
+                        width: 24.0,
+                        height: 24.0,
+                        margin: const EdgeInsets.all(15),
+                        child: CircularProgressIndicator(
+                          color: globals.white1,
+                        ),
+                      )
+                    : _kwikPointsAmount >= 2000
+                        ? InkWell(
+                            onTap: () => _openDrawerRank(),
+                            child: Image.asset(
+                              'Assets/Rank/KwikCodeLogoPlatinum.png',
+                              height: 54,
+                              width: 54,
+                            ),
+                          )
+                        : _kwikPointsAmount >= 1500 && _kwikPointsAmount < 2000
+                            ? InkWell(
+                                onTap: () => _openDrawerRank(),
+                                child: Image.asset(
+                                  'Assets/Rank/KwikCodeLogoGold.png',
+                                  height: 54,
+                                  width: 54,
+                                ),
+                              )
+                            : _kwikPointsAmount >= 1200 &&
+                                    _kwikPointsAmount < 1500
+                                ? InkWell(
+                                    onTap: () => _openDrawerRank(),
+                                    child: Image.asset(
+                                      'Assets/Rank/KwikCodeLogoSilver.png',
+                                      height: 54,
+                                      width: 54,
+                                    ),
+                                  )
+                                : InkWell(
+                                    onTap: () => _openDrawerRank(),
+                                    child: Image.asset(
+                                      'Assets/Rank/KwikCodeLogoBronze.png',
+                                      height: 54,
+                                      width: 54,
+                                    ),
+                                  ),
                 const SizedBox(width: 15),
                 Text(
                   'Rawad',
@@ -72,7 +123,8 @@ class _RightViewState extends State<RightView> {
             ),
           ),
           Container(
-            height: 440,//475,
+            height: 440,
+            //475,
             width: 300,
             margin: const EdgeInsets.all(12.0),
             decoration: BoxDecoration(
@@ -143,5 +195,17 @@ class _RightViewState extends State<RightView> {
   _openDrawerRank() {
     globals.drawerIsRank = true;
     Scaffold.of(context).openEndDrawer();
+  }
+
+  Future<void> _getKwikPointsAmount() async {
+    _kwikPointsAmount = await SessionManager().get('myKwikPoints');
+    while (widget.isLoadingProjects == true) {
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    setState(() {
+      print('_getKwikPointsAmount');
+      _kwikPointsAmount;
+    });
   }
 }
