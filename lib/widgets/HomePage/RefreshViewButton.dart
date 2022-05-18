@@ -24,7 +24,7 @@ class RefreshViewButton extends StatelessWidget {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       hoverColor: Colors.transparent,
-      onTap: () => onTap(),
+      onTap: () => isClickedRefresh == false ? onTap() : null,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -36,12 +36,15 @@ class RefreshViewButton extends StatelessWidget {
                     icon,
                     color: colorIcon,
                   )
-                : SizedBox(
-                    height: 24.0,
-                    width: 24.0,
-                    child: CircularProgressIndicator(
-                      color: colorIcon,
-                    )),
+                : IgnorePointer(
+                    ignoring: true,
+                    child: SizedBox(
+                        height: 24.0,
+                        width: 24.0,
+                        child: CircularProgressIndicator(
+                          color: colorIcon,
+                        )),
+                  ),
             const SizedBox(width: 15),
             Text(
               text,

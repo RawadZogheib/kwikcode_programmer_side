@@ -23,6 +23,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   final int _myKwikPoints = 1420;
 
   String _status = '-9999';
+  bool _isLoading = false;
 
   Animation? _animation, _animation1, _animation2;
   AnimationController? _animationController;
@@ -219,23 +220,46 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                           ),
                                         ),
                                         Expanded(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                _status,
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 26,
-                                                  color: globals.white2,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 40),
-                                            ],
+                                          child: Text(
+                                            _status,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 26,
+                                              color: globals.white2,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
+                                        SizedBox(
+                                          height: 24,
+                                          width: 24,
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            onTap: () => _isLoading == false ? _refreshDrawer() : null,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                _isLoading == false
+                                                    ? Icon(
+                                                        NewIcons.sync_alt,
+                                                        color: globals.white2,
+                                                      )
+                                                    : SizedBox(
+                                                        height: 24.0,
+                                                        width: 24.0,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          color: globals.white2,
+                                                        ),
+                                                      ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
                                       ],
                                     ),
                                   ),
@@ -264,41 +288,50 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   }
 
   Future<void> selectedItem(BuildContext context, int index) async {
-    //Navigator.of(context).pop();
-    switch (index) {
-      case 0: // My Tasks
-        _case0();
-        break;
-      case 1: // My Bids
-        _case1();
-        break;
-      case 2: // My Wallet
-        _case2();
-        break;
-      case 3: // Rank
-        _case3();
-        break;
-      case 4: // Chat
-        _case4();
-        break;
-      case 5: // News
-        _case5();
-        break;
-      case 6: // Updates
-        _case6();
-        break;
-      case 7: // Notifications
-        _case7();
-        break;
-      case 8: // Settings
-        _case8();
-        break;
-      case 9: // About
-        _case9();
-        break;
-      case 10: // Logout
-        _case10();
-        break;
+    if (_isLoading == false) {
+
+      setState(() {
+        _isLoading = false;
+      });
+      //Navigator.of(context).pop();
+      switch (index) {
+        case 0: // My Tasks
+          _case0();
+          break;
+        case 1: // My Bids
+          _case1();
+          break;
+        case 2: // My Wallet
+          _case2();
+          break;
+        case 3: // Rank
+          _case3();
+          break;
+        case 4: // Chat
+          _case4();
+          break;
+        case 5: // News
+          _case5();
+          break;
+        case 6: // Updates
+          _case6();
+          break;
+        case 7: // Notifications
+          _case7();
+          break;
+        case 8: // Settings
+          _case8();
+          break;
+        case 9: // About
+          _case9();
+          break;
+        case 10: // Logout
+          _case10();
+          break;
+      }
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -815,6 +848,17 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
     if (globals.drawerIsRank == true) {
       selectedItem(context, 3);
     }
+  }
+
+  _refreshDrawer() async {
+    debugPrint('Refresh Drawer');
+    setState(() {
+      _isLoading = true;
+    });
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      _isLoading = false;
+    });
   }
 }
 
