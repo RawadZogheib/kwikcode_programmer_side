@@ -259,7 +259,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(width: 16),
+                                        const SizedBox(width: 20),
                                       ],
                                     ),
                                   ),
@@ -850,7 +850,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
     }
   }
 
-  _refreshDrawer() async {
+  Future<void> _refreshDrawer() async {
     debugPrint('Refresh Drawer');
     setState(() {
       _isLoading = true;
