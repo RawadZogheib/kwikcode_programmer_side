@@ -7,10 +7,7 @@ import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 
 class CallApi{
   final String _url = globals.myIP;
-  final String _imgUrl='http://mark.dbestech.com/uploads/';
-  getImage(){
-    return _imgUrl;
-  }
+
   postData(data, apiUrl) async {
     var fullUrl = _url + apiUrl + await _getToken() ;
     debugPrint(fullUrl);
@@ -22,6 +19,7 @@ class CallApi{
   }
   getData(apiUrl) async {
     var fullUrl = _url + apiUrl + await _getToken();
+    debugPrint(fullUrl);
     return await http.get(
         Uri.parse(fullUrl),
         headers: _setHeaders()

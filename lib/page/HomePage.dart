@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
+import 'package:kwikcode_programmer_side/api/my_api.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/MiddleView.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/MyFilter.dart';
@@ -9,6 +12,7 @@ import 'package:kwikcode_programmer_side/widgets/HomePage/projectSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/BidPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/bid_item.dart';
+import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/other/myDrawer.dart';
 import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
 
@@ -32,8 +36,8 @@ class _HomePageState extends State<HomePage>
   List<TaskSquare> _childrenTaskList = [];
   List<TaskSquare> _childrenTaskListNoFilter = [];
 
-  bool _isLoadingTasks = true;
-  bool _isClickedRefresh = true;
+  bool _isLoadingTasks = false;
+  bool _isClickedRefresh = false;
 
   //Color iconColor = globals.logoColorPink;
   //Color iconColor = globals.logoColorBlue;
@@ -155,17 +159,75 @@ class _HomePageState extends State<HomePage>
         });
   }
 
-  _loadNewPage() async {
+  Future<void> _loadNewPage() async {
     await _loadTasks(); //0
     _filterTasks('alphaDown', true, true, []);
   }
 
-  _loadTasks() async {
-    setState(() {
-      _isLoadingTasks = true;
-      _isClickedRefresh = true;
-    });
-    await Future.delayed(const Duration(seconds: 2));
+  Future<void> _loadTasks() async {
+    if (_isClickedRefresh == false) {
+      try {
+        debugPrint(
+            '=========>>======================================================>>==================================================>>=========');
+
+        if (mounted) {
+          setState(() {
+            _isLoadingTasks = true;
+            _isClickedRefresh = true;
+          });
+        }
+        debugPrint('load tasks');
+        var res =
+            await CallApi().getData('/Tasks/Control/(Control)loadTasks.php');
+        print(res.body);
+        List<dynamic> body = json.decode(res.body);
+
+        if (body[0] == 'Success') {
+          if (mounted) {
+            setState(() {
+              _isLoadingTasks = false;
+              _isClickedRefresh = false;
+            });
+          }
+        } else if (body[0] == "errorVersion") {
+          errorPopup(context, globals.errorVersion);
+        } else if (body[0] == "errorToken") {
+          errorPopup(context, globals.errorToken);
+        } else if (body[0] == "error4") {
+          warningPopup(context, globals.warning7);
+        } else if (body[0] == "error7") {
+          warningPopup(context, globals.warning7);
+        } else {
+          if (mounted) {
+            setState(() {
+              _isLoadingTasks = true;
+              _isClickedRefresh = false;
+            });
+          }
+          errorPopup(context, globals.errorElse);
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+        if (mounted) {
+          setState(() {
+            _isLoadingTasks = true;
+            _isClickedRefresh = false;
+          });
+        }
+        errorPopup(context, globals.errorException);
+      }
+
+      if (mounted) {
+        setState(() {
+          _isLoadingTasks = false;
+          _isClickedRefresh = false;
+        });
+      }
+      debugPrint('load tasks end!!!');
+      debugPrint(
+          '=========<<======================================================<<==================================================<<=========');
+    }
+
     _childrenProjectList = [
       ProjectSquare(
         name: 'Project 1',
@@ -311,48 +373,9 @@ class _HomePageState extends State<HomePage>
       ),
     ];
 
-    setState(() {
-      _isLoadingTasks = false;
-      _isClickedRefresh = false;
-    });
-
-    // _filterTasks(status, redRadio, orangeRadio,languagesNameList);
-
-    // if (_isClickedRefresh == false) {
-    //   try {
-    //     debugPrint(
-    //         '=========>>======================================================>>==================================================>>=========');
-    //     setState(() {
-    //       _isLoadingTasks = true;
-    //       _isClickedRefresh = true;
-    //     });
-    //     debugPrint('load Crypto');
-    //
-    //     //globals.myCurrencies = crypto.getStringList('myCurrencies')!;
-    //     var res =
-    //         await CallApi().getDataAPI('https://kwikcode.net/kwikcodePhp/...');
-    //     //print(res.body);
-    //     List<dynamic> body = json.decode(res.body);
-    //
-    //     setState(() {
-    //       _isLoadingTasks = false;
-    //       _isClickedRefresh = false;
-    //     });
-    //   } catch (e) {
-    //     debugPrint(e.toString());
-    //     setState(() {
-    //       _isLoadingTasks = true;
-    //       _isClickedRefresh = false;
-    //     });
-    //     errorPopup(context, globals.errorException);
-    //   }
-    //   debugPrint('load crypto end!!!');
-    //   debugPrint(
-    //       '=========<<======================================================<<==================================================<<=========');
-    // }
   }
 
-  _removeTask(String taskId) {
+  void _removeTask(String taskId) {
     if (mounted) {
       setState(() {
         // _childrenTaskList.removeAt(_childrenTaskList
@@ -372,18 +395,17 @@ class _HomePageState extends State<HomePage>
         curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
   }
 
-  _startAnimation(String taskId) async {
+  Future<void> _startAnimation(String taskId) async {
     if (_animationIsActive == false) {
       await _loadBid();
       _childTaskIsActive = _childrenTaskListNoFilter[_childrenTaskListNoFilter
           .indexWhere((element) => element.taskId == taskId)];
       _animationIsActive = true;
-      _animationController!
-          .forward();
+      _animationController!.forward();
     }
   }
 
-  _endAnimation() async {
+  Future<void> _endAnimation() async {
     if (_animationIsActive == true) {
       _animationIsActive = false;
       _animationController!
@@ -404,7 +426,7 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-  _filterTasks(String status, bool redRadio, bool orangeRadio,
+  void _filterTasks(String status, bool redRadio, bool orangeRadio,
       List<String> notLanguagesNameList) {
     /// alphaUp alphaDown numUp numDown
     //debugPrint(status);
