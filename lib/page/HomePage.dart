@@ -4,6 +4,7 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/api/my_api.dart';
+import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/MiddleView.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/MyFilter.dart';
@@ -177,9 +178,15 @@ class _HomePageState extends State<HomePage>
           });
         }
         debugPrint('load tasks');
-        var res =
-            await CallApi().getData('/Tasks/Control/(Control)loadTasks.php');
-        print(res.body);
+
+        var data = {
+          'version': globals.version,
+          'account_Id': await SessionManager().get('Id'),
+        };
+
+        var res = await CallApi()
+            .postData(data, '/Tasks/Control/(Control)loadTasks.php');
+        debugPrint(res.body);
         List<dynamic> body = json.decode(res.body);
 
         if (body[0] == 'Success') {
@@ -187,6 +194,28 @@ class _HomePageState extends State<HomePage>
             setState(() {
               _isLoadingTasks = false;
               _isClickedRefresh = false;
+
+              _childrenTaskListNoFilter.add(TaskSquare(
+                key: const ValueKey('1'),
+                taskId: '1',
+                taskName: 'Task Name 1',
+                projectManager: '@Samir',
+                description: 'adsadsad asd  asd as d asd',
+                timeLeft: 1000,
+                status: 0,
+                iconList: [
+                  TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+                  TaskProgrammingItem(name: 'Node JS', icon: NewIcons.node),
+                ],
+                removeTask: (String taskId) => _removeTask(taskId),
+                onBidTap: (String taskId) => _startAnimation(taskId),
+              ));
+
+              _childrenProjectList.add(ProjectSquare(
+                name: 'Project 1',
+                imgUrl: null,
+                onTap: () => debugPrint('Project 1'),
+              ));
             });
           }
         } else if (body[0] == "errorVersion") {
@@ -194,8 +223,6 @@ class _HomePageState extends State<HomePage>
         } else if (body[0] == "errorToken") {
           errorPopup(context, globals.errorToken);
         } else if (body[0] == "error4") {
-          warningPopup(context, globals.warning7);
-        } else if (body[0] == "error7") {
           warningPopup(context, globals.warning7);
         } else {
           if (mounted) {
@@ -372,7 +399,6 @@ class _HomePageState extends State<HomePage>
         onBidTap: (String taskId) => _startAnimation(taskId),
       ),
     ];
-
   }
 
   void _removeTask(String taskId) {

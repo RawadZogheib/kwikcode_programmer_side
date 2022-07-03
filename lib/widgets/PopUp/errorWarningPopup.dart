@@ -11,7 +11,7 @@ errorPopup(BuildContext context, String? text) {
     secondaryColor: globals.red1,
     barrierColor: Colors.transparent.withOpacity(0.6),
     toastDuration: const Duration(seconds: 3),
-    backgroundType: BACKGROUND_TYPE.solid,
+    backgroundType: BackgroundType.solid,
     title: Text(
       'Error',
       style: TextStyle(color: globals.red1, fontWeight: FontWeight.bold),
@@ -20,8 +20,8 @@ errorPopup(BuildContext context, String? text) {
       text ?? 'Unexpected Error.',
       style: TextStyle(color:globals.whiteBlue),
     ),
-    position: MOTION_TOAST_POSITION.bottom,
-    animationType: ANIMATION.fromRight,
+    position: MotionToastPosition.bottom,
+    animationType: AnimationType.fromRight,
     height: 100,
   ).show(context);
 }
@@ -33,7 +33,7 @@ warningPopup(BuildContext context, String? text) {
     secondaryColor: globals.yellow1,
     barrierColor: Colors.transparent.withOpacity(0.6),
     toastDuration: const Duration(seconds: 3),
-    backgroundType: BACKGROUND_TYPE.solid,
+    backgroundType: BackgroundType.solid,
     title: Text(
       'Warning',
       style: TextStyle(color:globals.yellow1,fontWeight: FontWeight.bold),
@@ -42,8 +42,8 @@ warningPopup(BuildContext context, String? text) {
       text ?? 'Unexpected Warning.',
       style: TextStyle(color:globals.whiteBlue),
     ),
-    position: MOTION_TOAST_POSITION.bottom,
-    animationType: ANIMATION.fromRight,
+    position: MotionToastPosition.bottom,
+    animationType: AnimationType.fromRight,
     height: 100,
   ).show(context);
 }
@@ -55,7 +55,7 @@ successPopup(BuildContext context, String? text) {
     secondaryColor: globals.green1,
     barrierColor: Colors.transparent.withOpacity(0.6),
     toastDuration: const Duration(seconds: 3),
-    backgroundType: BACKGROUND_TYPE.solid,
+    backgroundType: BackgroundType.solid,
     title: Text(
       'Success',
       style: TextStyle(color:globals.green1,fontWeight: FontWeight.bold),
@@ -64,8 +64,8 @@ successPopup(BuildContext context, String? text) {
       text ?? 'Unexpected Success.',
       style: TextStyle(color:globals.whiteBlue),
     ),
-    position: MOTION_TOAST_POSITION.bottom,
-    animationType: ANIMATION.fromRight,
+    position: MotionToastPosition.bottom,
+    animationType: AnimationType.fromRight,
     height: 100,
   ).show(context);
 }
