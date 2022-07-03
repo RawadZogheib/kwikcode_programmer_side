@@ -194,28 +194,46 @@ class _HomePageState extends State<HomePage>
             setState(() {
               _isLoadingTasks = false;
               _isClickedRefresh = false;
+              _childrenTaskListNoFilter.clear();
+              _childrenProjectList.clear();
 
-              _childrenTaskListNoFilter.add(TaskSquare(
-                key: const ValueKey('1'),
-                taskId: '1',
-                taskName: 'Task Name 1',
-                projectManager: '@Samir',
-                description: 'adsadsad asd  asd as d asd',
-                timeLeft: 1000,
-                status: 0,
-                iconList: [
-                  TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
-                  TaskProgrammingItem(name: 'Node JS', icon: NewIcons.node),
-                ],
-                removeTask: (String taskId) => _removeTask(taskId),
-                onBidTap: (String taskId) => _startAnimation(taskId),
-              ));
+              for (List<dynamic> _element in body[1]) {
+                String _projectMangerName = '';
+                for (List<dynamic> _element2 in body[2]) {
+                  if (_element2[0] == _element[2]) {
+                    _projectMangerName = _element2[2];
+                  }
+                }
 
-              _childrenProjectList.add(ProjectSquare(
-                name: 'Project 1',
-                imgUrl: null,
-                onTap: () => debugPrint('Project 1'),
-              ));
+                _childrenTaskListNoFilter.add(TaskSquare(
+                  key: ValueKey(_element[0]),
+                  taskId: _element[0],
+                  taskName: _element[1],
+                  //_element[2] project name
+                  //_element[3] programmer id
+                  projectManager: '@$_projectMangerName',
+                  description: _element[4],
+                  timeLeft: int.parse(_element[5]),
+                  status: int.parse(_element[6]),
+                  iconList: [//todo get icons info
+                    TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+                    TaskProgrammingItem(name: 'Node JS', icon: NewIcons.node),
+                  ],
+                  removeTask: (String taskId) => _removeTask(taskId),
+                  onBidTap: (String taskId) => _startAnimation(taskId),
+                ));
+              }
+
+              for (List<dynamic> _element3 in body[2]) {
+                _childrenProjectList.add(ProjectSquare(
+                  key: ValueKey(_element3[0]),
+                  name: _element3[1],
+                  //_element3[2] project manager name
+                  //_element3[3] project date
+                  imgUrl: null, //todo get image
+                  onTap: () => debugPrint('Project 1'),
+                ));
+              }
             });
           }
         } else if (body[0] == "errorVersion") {
@@ -255,150 +273,150 @@ class _HomePageState extends State<HomePage>
           '=========<<======================================================<<==================================================<<=========');
     }
 
-    _childrenProjectList = [
-      ProjectSquare(
-        name: 'Project 1',
-        imgUrl: null,
-        onTap: () => debugPrint('Project 1'),
-      ),
-      ProjectSquare(
-        name: 'Project 2',
-        imgUrl: 'https://picsum.photos/100/100/?2',
-        onTap: () => debugPrint('Project 2'),
-      ),
-      ProjectSquare(
-        name: 'Project 3',
-        imgUrl: null,
-        onTap: () => debugPrint('Project 3'),
-      ),
-    ];
-    _childrenTaskListNoFilter = [
-      TaskSquare(
-        key: const ValueKey('1'),
-        taskId: '1',
-        taskName: 'Task Name 1',
-        projectManager: '@Samir',
-        description: 'adsadsad asd  asd as d asd',
-        timeLeft: 1000,
-        iconList: [
-          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
-          TaskProgrammingItem(name: 'Node JS', icon: NewIcons.node),
-        ],
-        status: 0,
-        removeTask: (String taskId) => _removeTask(taskId),
-        onBidTap: (String taskId) => _startAnimation(taskId),
-      ),
-      TaskSquare(
-        key: const ValueKey('2'),
-        taskId: '2',
-        taskName: 'Task Name 2',
-        projectManager: '@Samira',
-        description: 'adsadsad asd  asd as d asd',
-        timeLeft: 100,
-        iconList: [
-          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
-          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
-        ],
-        status: 1,
-        removeTask: (String taskId) => _removeTask(taskId),
-        onBidTap: (String taskId) => _startAnimation(taskId),
-      ),
-      TaskSquare(
-        key: const ValueKey('3'),
-        taskId: '3',
-        taskName: 'Task Name 3',
-        projectManager: '@Samira',
-        description: 'adsadsad asd  asd as d asd',
-        timeLeft: 10000,
-        iconList: [
-          TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
-          TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
-          TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
-          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
-        ],
-        status: 0,
-        removeTask: (String taskId) => _removeTask(taskId),
-        onBidTap: (String taskId) => _startAnimation(taskId),
-      ),
-      TaskSquare(
-        key: const ValueKey('4'),
-        taskId: '4',
-        taskName: 'Task Name 4',
-        projectManager: '@Samir',
-        description: 'adsadsad asd  asd as d asd',
-        timeLeft: 5600,
-        iconList: [
-          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
-          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
-        ],
-        status: 1,
-        removeTask: (String taskId) => _removeTask(taskId),
-        onBidTap: (String taskId) => _startAnimation(taskId),
-      ),
-      TaskSquare(
-        key: const ValueKey('5'),
-        taskId: '5',
-        taskName: 'Task Name 5',
-        projectManager: '@Samir',
-        description: 'adsadsad asd  asd as d asd',
-        timeLeft: 3,
-        iconList: [
-          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
-          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
-          TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
-          TaskProgrammingItem(name: 'React Native', icon: NewIcons.react),
-          TaskProgrammingItem(name: 'Unity', icon: NewIcons.unity),
-          TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
-          TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
-          TaskProgrammingItem(name: 'Swift', icon: NewIcons.swift),
-          TaskProgrammingItem(name: 'Java', icon: NewIcons.java),
-        ],
-        status: 1,
-        removeTask: (String taskId) => _removeTask(taskId),
-        onBidTap: (String taskId) => _startAnimation(taskId),
-      ),
-      TaskSquare(
-        key: const ValueKey('6'),
-        taskId: '6',
-        taskName: 'Task Name 6',
-        projectManager: '@Samir',
-        description:
-            'adsadsad asd   askdjsa jk hjajk jjkoj jkoasj kodjqwskoa jasko jkaskojk kjas okjasko jasko jkoas jokj askoj dkosajko sda okjas jkojas jojas jokasj ko jaskodjkoasj koas dokjas kljasdko j koxj jo ij j ojas jojsad joj iou j  joasjjo joj asj jo sa ioj as j jos as das bnhjsagh  hjnn jhjjis jj j jijo j jojio joij  oijoi jojjjko jk as g hhhji hjih jihjjd io 7uyc enqwmne  cyu8 hhjvbcsdf y678sdyfc7897sx8 7hjkz yy  uiy iou hji hjckj m,nhj h78as asd fd casdf s  f  d cvv v gvcb x gxc   oj kojko jiok  jokj  jdjoj jo jas jojdo u djuo s duioa  ioj oiasd as d asd',
-        timeLeft: 86400,
-        iconList: [
-          TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
-          TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
-          TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
-          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
-        ],
-        status: 0,
-        removeTask: (String taskId) => _removeTask(taskId),
-        onBidTap: (String taskId) => _startAnimation(taskId),
-      ),
-      TaskSquare(
-        key: const ValueKey('7'),
-        taskId: '7',
-        taskName: 'Task Name 7',
-        projectManager: '@Andrea',
-        description:
-            'adsadsad asd  a fhg f fglk  fghjkljh gsjfh d j  zd f  dsj kjsdhhjk d fh  hjasd h  hjk  hjsdjkl h sdjhkl fhj jksdl jf jksdhj  jk jjk hj jk dfh hjsd f kj hjdsf jklh klfdsjkl j jklxcj jkgsdjgfjikl sdfjkl  sj kj gjk jfjkl  jfjkl jdjk  g j djkl  jjksdfg jfjzdkj  jkdfg jjk jjk  jefsdjkf jjkcv  jjfjk jiojgkj jko j jdf jdfgjk gjket j jkod f jkfsjk  dfjgf jkfdj j ji jk  rj   xh fd   ui fjk j  g iuofgzdu  uio jfjk sd  jkf d   k j jks j sfjkl j jkfjgjk d fjgjkl dfjjk bjsdkj b njdfl jkfj qweopr ewio uriosed  cjn sd as d asd',
-        timeLeft: 43000,
-        iconList: [
-          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
-          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
-          TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
-          TaskProgrammingItem(name: 'React Native', icon: NewIcons.react),
-          TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
-          TaskProgrammingItem(name: 'Unity', icon: NewIcons.unity),
-          TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
-          TaskProgrammingItem(name: 'Swift', icon: NewIcons.swift),
-          TaskProgrammingItem(name: 'Java', icon: NewIcons.java),
-        ],
-        status: 1,
-        removeTask: (String taskId) => _removeTask(taskId),
-        onBidTap: (String taskId) => _startAnimation(taskId),
-      ),
-    ];
+    // _childrenProjectList = [
+    //   ProjectSquare(
+    //     name: 'Project 1',
+    //     imgUrl: null,
+    //     onTap: () => debugPrint('Project 1'),
+    //   ),
+    //   ProjectSquare(
+    //     name: 'Project 2',
+    //     imgUrl: 'https://picsum.photos/100/100/?2',
+    //     onTap: () => debugPrint('Project 2'),
+    //   ),
+    //   ProjectSquare(
+    //     name: 'Project 3',
+    //     imgUrl: null,
+    //     onTap: () => debugPrint('Project 3'),
+    //   ),
+    // ];
+    // _childrenTaskListNoFilter = [
+    //   TaskSquare(
+    //     key: const ValueKey('8'),
+    //     taskId: '1',
+    //     taskName: 'Task Name 1',
+    //     projectManager: '@Samir',
+    //     description: 'adsadsad asd  asd as d asd',
+    //     timeLeft: 1000,
+    //     iconList: [
+    //       TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+    //       TaskProgrammingItem(name: 'Node JS', icon: NewIcons.node),
+    //     ],
+    //     status: 0,
+    //     removeTask: (String taskId) => _removeTask(taskId),
+    //     onBidTap: (String taskId) => _startAnimation(taskId),
+    //   ),
+    //   TaskSquare(
+    //     key: const ValueKey('2'),
+    //     taskId: '2',
+    //     taskName: 'Task Name 2',
+    //     projectManager: '@Samira',
+    //     description: 'adsadsad asd  asd as d asd',
+    //     timeLeft: 100,
+    //     iconList: [
+    //       TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+    //       TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
+    //     ],
+    //     status: 1,
+    //     removeTask: (String taskId) => _removeTask(taskId),
+    //     onBidTap: (String taskId) => _startAnimation(taskId),
+    //   ),
+    //   TaskSquare(
+    //     key: const ValueKey('3'),
+    //     taskId: '3',
+    //     taskName: 'Task Name 3',
+    //     projectManager: '@Samira',
+    //     description: 'adsadsad asd  asd as d asd',
+    //     timeLeft: 10000,
+    //     iconList: [
+    //       TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
+    //       TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
+    //       TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
+    //       TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
+    //     ],
+    //     status: 0,
+    //     removeTask: (String taskId) => _removeTask(taskId),
+    //     onBidTap: (String taskId) => _startAnimation(taskId),
+    //   ),
+    //   TaskSquare(
+    //     key: const ValueKey('4'),
+    //     taskId: '4',
+    //     taskName: 'Task Name 4',
+    //     projectManager: '@Samir',
+    //     description: 'adsadsad asd  asd as d asd',
+    //     timeLeft: 5600,
+    //     iconList: [
+    //       TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+    //       TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
+    //     ],
+    //     status: 1,
+    //     removeTask: (String taskId) => _removeTask(taskId),
+    //     onBidTap: (String taskId) => _startAnimation(taskId),
+    //   ),
+    //   TaskSquare(
+    //     key: const ValueKey('5'),
+    //     taskId: '5',
+    //     taskName: 'Task Name 5',
+    //     projectManager: '@Samir',
+    //     description: 'adsadsad asd  asd as d asd',
+    //     timeLeft: 3,
+    //     iconList: [
+    //       TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+    //       TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
+    //       TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
+    //       TaskProgrammingItem(name: 'React Native', icon: NewIcons.react),
+    //       TaskProgrammingItem(name: 'Unity', icon: NewIcons.unity),
+    //       TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
+    //       TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
+    //       TaskProgrammingItem(name: 'Swift', icon: NewIcons.swift),
+    //       TaskProgrammingItem(name: 'Java', icon: NewIcons.java),
+    //     ],
+    //     status: 1,
+    //     removeTask: (String taskId) => _removeTask(taskId),
+    //     onBidTap: (String taskId) => _startAnimation(taskId),
+    //   ),
+    //   TaskSquare(
+    //     key: const ValueKey('6'),
+    //     taskId: '6',
+    //     taskName: 'Task Name 6',
+    //     projectManager: '@Samir',
+    //     description:
+    //         'adsadsad asd   askdjsa jk hjajk jjkoj jkoasj kodjqwskoa jasko jkaskojk kjas okjasko jasko jkoas jokj askoj dkosajko sda okjas jkojas jojas jokasj ko jaskodjkoasj koas dokjas kljasdko j koxj jo ij j ojas jojsad joj iou j  joasjjo joj asj jo sa ioj as j jos as das bnhjsagh  hjnn jhjjis jj j jijo j jojio joij  oijoi jojjjko jk as g hhhji hjih jihjjd io 7uyc enqwmne  cyu8 hhjvbcsdf y678sdyfc7897sx8 7hjkz yy  uiy iou hji hjckj m,nhj h78as asd fd casdf s  f  d cvv v gvcb x gxc   oj kojko jiok  jokj  jdjoj jo jas jojdo u djuo s duioa  ioj oiasd as d asd',
+    //     timeLeft: 86400,
+    //     iconList: [
+    //       TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
+    //       TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
+    //       TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
+    //       TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
+    //     ],
+    //     status: 0,
+    //     removeTask: (String taskId) => _removeTask(taskId),
+    //     onBidTap: (String taskId) => _startAnimation(taskId),
+    //   ),
+    //   TaskSquare(
+    //     key: const ValueKey('7'),
+    //     taskId: '7',
+    //     taskName: 'Task Name 7',
+    //     projectManager: '@Andrea',
+    //     description:
+    //         'adsadsad asd  a fhg f fglk  fghjkljh gsjfh d j  zd f  dsj kjsdhhjk d fh  hjasd h  hjk  hjsdjkl h sdjhkl fhj jksdl jf jksdhj  jk jjk hj jk dfh hjsd f kj hjdsf jklh klfdsjkl j jklxcj jkgsdjgfjikl sdfjkl  sj kj gjk jfjkl  jfjkl jdjk  g j djkl  jjksdfg jfjzdkj  jkdfg jjk jjk  jefsdjkf jjkcv  jjfjk jiojgkj jko j jdf jdfgjk gjket j jkod f jkfsjk  dfjgf jkfdj j ji jk  rj   xh fd   ui fjk j  g iuofgzdu  uio jfjk sd  jkf d   k j jks j sfjkl j jkfjgjk d fjgjkl dfjjk bjsdkj b njdfl jkfj qweopr ewio uriosed  cjn sd as d asd',
+    //     timeLeft: 43000,
+    //     iconList: [
+    //       TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+    //       TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
+    //       TaskProgrammingItem(name: 'Java Script', icon: NewIcons.js),
+    //       TaskProgrammingItem(name: 'React Native', icon: NewIcons.react),
+    //       TaskProgrammingItem(name: 'CSS', icon: NewIcons.css3_alt),
+    //       TaskProgrammingItem(name: 'Unity', icon: NewIcons.unity),
+    //       TaskProgrammingItem(name: 'HTML', icon: NewIcons.html5),
+    //       TaskProgrammingItem(name: 'Swift', icon: NewIcons.swift),
+    //       TaskProgrammingItem(name: 'Java', icon: NewIcons.java),
+    //     ],
+    //     status: 1,
+    //     removeTask: (String taskId) => _removeTask(taskId),
+    //     onBidTap: (String taskId) => _startAnimation(taskId),
+    //   ),
+    // ];
   }
 
   void _removeTask(String taskId) {
