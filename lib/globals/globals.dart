@@ -7,7 +7,8 @@ import 'package:kwikcode_programmer_side/hexColor/hexColor.dart';
 const String version = "v1.0";
 
 //Server Ip  (page[/my_api.dart])
-const String myIP = "http://147.78.44.3/kwikcode_php";
+// const String myIP = "http://147.78.44.3/kwikcode_php";
+const String myIP = "https://kwikcode.net/kwikcode_php";
 
 String currentPage = 'HomePage'; //HomePage
 
