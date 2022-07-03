@@ -37,7 +37,7 @@ dependencies:
   bitsdojo_window: ^0.1.2
   shared_preferences: ^2.0.13
   http: ^0.13.4
-  motion_toast: ^2.1.6
+  motion_toast: ^2.2.1
   infinite_listview: ^1.1.0
   flip_card: ^0.6.0
   dart_ipify: ^1.1.1
