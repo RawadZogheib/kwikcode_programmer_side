@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
-import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/api/my_api.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/filters.dart' as filters;
@@ -198,13 +197,20 @@ class _HomePageState extends State<HomePage>
               for (List<dynamic> _element in body[1]) {
                 String _projectName = '';
                 String _projectMangerName = '';
+                List<TaskProgrammingItem> _listTaskProgrammingItem = [];
                 for (List<dynamic> _element2 in body[2]) {
                   if (_element2[0] == _element[2]) {
                     _projectName = _element2[1];
                     _projectMangerName = _element2[2];
                   }
                 }
-
+                for (List<dynamic> _element3 in _element[8]) {
+                  _listTaskProgrammingItem.add(TaskProgrammingItem(
+                    name: _element3[0],
+                    icon: _element3[1],
+                  ));
+                }
+                print(_listTaskProgrammingItem);
                 _childrenTaskListNoFilter.add(TaskSquare(
                   key: ValueKey(_L++),
                   taskId: _element[0],
@@ -216,11 +222,9 @@ class _HomePageState extends State<HomePage>
                   description: _element[4],
                   timeLeft: int.parse(_element[5]),
                   status: int.parse(_element[6]),
-                  iconList: [
-                    //todo get icons info
-                    TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
-                    TaskProgrammingItem(name: 'Node JS', icon: NewIcons.node),
-                  ],
+                  //_element[7] task date
+                  //_element[8] bid list
+                  iconList: _listTaskProgrammingItem,
                   removeTask: (String taskId) => _removeTask(taskId),
                   onBidTap: (String taskId) => _startAnimation(taskId),
                 ));

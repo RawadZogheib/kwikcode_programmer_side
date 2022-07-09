@@ -23,7 +23,6 @@ class MyFilter extends StatefulWidget {
 }
 
 class _MyFilterState extends State<MyFilter> {
-  List<ProgrammingItem> _languagesIconsList = [];
 
   @override
   void initState() {
@@ -367,7 +366,7 @@ class _MyFilterState extends State<MyFilter> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Wrap(
                                     alignment: WrapAlignment.center,
-                                    children: _languagesIconsList,
+                                    children: filters.languagesIconsList,
                                   ),
                                 ),
                               ),
@@ -416,7 +415,7 @@ class _MyFilterState extends State<MyFilter> {
   _sortUp() {
     filters.notLanguagesNameList.clear();
 
-    for (ProgrammingItem element in _languagesIconsList) {
+    for (ProgrammingItem element in filters.languagesIconsList) {
       if (element.isSelected == false) {
         filters.notLanguagesNameList.add(element.name);
       }
@@ -426,7 +425,7 @@ class _MyFilterState extends State<MyFilter> {
 
   void _loadIcons() {
     setState(() {
-      _languagesIconsList = [
+      filters.languagesIconsList = [
         ProgrammingItem(
           name: 'Flutter',
           icon: 'Flutter',
