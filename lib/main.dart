@@ -24,18 +24,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return MaterialApp(
-          title: 'MyWallet',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          //home: FirstPage(),
-          initialRoute: '/FirstPage',
-          routes: {
-            '/FirstPage': (context) => const FirstPage(),
-            '/HomePage': (context) => const HomePage(),
-            '/Login': (context) => const Login(),
-          });
+    return MaterialApp(
+        title: 'MyWallet',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        //home: FirstPage(),
+        initialRoute: '/FirstPage',
+        routes: {
+          '/FirstPage': (context) => const FirstPage(),
+          '/HomePage': (context) => const HomePage(),
+          '/Login': (context) => const Login(),
+        });
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
-import 'package:kwikcode_programmer_side/globals/filters.dart' as filters;
 
 class ProjectSquare extends StatefulWidget {
   String projectName;

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/api/my_api.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
-import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/globals/filters.dart' as filters;
+import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/MiddleView.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/MyFilter.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/RightView.dart';
@@ -514,7 +514,7 @@ class _HomePageState extends State<HomePage>
       }
 
       if (filters.redRadio == true && filters.orangeRadio == false) {
-        if(_element.status != 0){
+        if (_element.status != 0) {
           _childrenTaskList.add(TaskSquare(
             key: ValueKey(_L++),
             taskId: _element.taskId,
@@ -532,7 +532,7 @@ class _HomePageState extends State<HomePage>
           continue;
         }
       } else if (filters.redRadio == false && filters.orangeRadio == true) {
-        if(_element.status != 1){
+        if (_element.status != 1) {
           _childrenTaskList.add(TaskSquare(
             key: ValueKey(_L++),
             taskId: _element.taskId,
@@ -553,10 +553,13 @@ class _HomePageState extends State<HomePage>
 
       if (filters.notLanguagesNameList.isNotEmpty) {
         Set<String> _set1 = {};
-        for(TaskProgrammingItem _e in _element.iconList){
+        for (TaskProgrammingItem _e in _element.iconList) {
           _set1.add(_e.name);
         }
-        if(_set1.toSet().intersection(filters.notLanguagesNameList.toSet()).isNotEmpty){
+        if (_set1
+            .toSet()
+            .intersection(filters.notLanguagesNameList.toSet())
+            .isNotEmpty) {
           _childrenTaskList.add(TaskSquare(
             key: ValueKey(_L++),
             taskId: _element.taskId,
@@ -593,23 +596,23 @@ class _HomePageState extends State<HomePage>
     ///Sort
     switch (filters.sortStatus) {
       case 'alphaDown':
-      // A -> Z
+        // A -> Z
         _childrenTaskList.sort(
-                (TaskSquare a, TaskSquare b) => a.taskName.compareTo(b.taskName));
+            (TaskSquare a, TaskSquare b) => a.taskName.compareTo(b.taskName));
 
         break;
       case 'alphaUp':
-      // Z -> A
+        // Z -> A
         _childrenTaskList.sort(
-                (TaskSquare a, TaskSquare b) => b.taskName.compareTo(a.taskName));
+            (TaskSquare a, TaskSquare b) => b.taskName.compareTo(a.taskName));
         break;
       case 'numDown':
-      // 1 -> 9
+        // 1 -> 9
         _childrenTaskList
             .sort((TaskSquare a, TaskSquare b) => a.timeLeft - b.timeLeft);
         break;
       case 'numUp':
-      // 9 -> 1
+        // 9 -> 1
         _childrenTaskList
             .sort((TaskSquare a, TaskSquare b) => b.timeLeft - a.timeLeft);
         break;
@@ -617,7 +620,7 @@ class _HomePageState extends State<HomePage>
 
     ///SetState
     setState(() {
-        _childrenTaskList;
+      _childrenTaskList;
     });
   }
 
