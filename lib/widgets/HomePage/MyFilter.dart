@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
-import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/globals/filters.dart' as filters;
+import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/RefreshViewButton.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
@@ -23,7 +23,6 @@ class MyFilter extends StatefulWidget {
 }
 
 class _MyFilterState extends State<MyFilter> {
-
   List<ProgrammingItem> _languagesIconsList = [];
 
   @override
@@ -63,7 +62,7 @@ class _MyFilterState extends State<MyFilter> {
                 ),
                 const SizedBox(height: 10),
                 Container(
-                  height: 199,
+                  height: 197,
                   width: 250,
                   margin: const EdgeInsets.symmetric(
                       vertical: 5.0, horizontal: 10.0),
@@ -71,123 +70,186 @@ class _MyFilterState extends State<MyFilter> {
                     borderRadius: BorderRadius.circular(22.0),
                     border: Border.all(color: globals.logoColorBlue).scale(2),
                   ),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      Text(
-                        'Sort By:',
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: globals.white2,
-                          fontWeight: FontWeight.bold,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(22.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        Text(
+                          'Sort By:',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: globals.white2,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      InkWell(
-                        onTap: () {
-                          filters.sortStatus = 'alphaDown';
-                          _sortUp();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(width: 68.0),
-                            Icon(
-                              NewIcons.sort_alpha_down,
-                              color: filters.sortStatus=='alphaDown'?globals.logoColorPink:globals.white1,
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () {
+                            filters.sortStatus = 'alphaDown';
+                            _sortUp();
+                          },
+                          child: Container(
+                            height: 36,
+                            color: filters.sortStatus == 'alphaDown'
+                                ? globals.darkBlue1
+                                : globals.transparent,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  NewIcons.sort_alpha_down,
+                                  color: filters.sortStatus == 'alphaDown'
+                                      ? globals.logoColorPink
+                                      : globals.white1,
+                                ),
+                                const SizedBox(width: 8.0),
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: filters.sortStatus == 'alphaDown'
+                                        ? globals.logoColorPink
+                                        : globals.white1,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 6.0),
+                                Icon(
+                                  NewIcons.sort_alpha_down,
+                                  color: filters.sortStatus == 'alphaDown'
+                                      ? globals.logoColorPink
+                                      : globals.white1,
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8.0),
-                            Text(
-                              'Name',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: filters.sortStatus=='alphaDown'?globals.logoColorPink:globals.white1,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      InkWell(
-                        onTap: () {
-                          filters.sortStatus = 'alphaUp';
-                          _sortUp();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(width: 68.0),
-                            Icon(
-                              NewIcons.sort_alpha_up,
-                              color: filters.sortStatus=='alphaUp'?globals.logoColorPink:globals.white1,
+                        InkWell(
+                          onTap: () {
+                            filters.sortStatus = 'alphaUp';
+                            _sortUp();
+                          },
+                          child: Container(
+                            height: 36,
+                            color: filters.sortStatus == 'alphaUp'
+                                ? globals.darkBlue1
+                                : globals.transparent,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  NewIcons.sort_alpha_up,
+                                  color: filters.sortStatus == 'alphaUp'
+                                      ? globals.logoColorPink
+                                      : globals.white1,
+                                ),
+                                const SizedBox(width: 8.0),
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: filters.sortStatus == 'alphaUp'
+                                        ? globals.logoColorPink
+                                        : globals.white1,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 6.0),
+                                Icon(
+                                  NewIcons.sort_alpha_up,
+                                  color: filters.sortStatus == 'alphaUp'
+                                      ? globals.logoColorPink
+                                      : globals.white1,
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8.0),
-                            Text(
-                              'Name',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: filters.sortStatus=='alphaUp'?globals.logoColorPink:globals.white1,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      InkWell(
-                        onTap: () {
-                          filters.sortStatus = 'numDown';
-                          _sortUp();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(width: 52.0),
-                            Icon(
-                              NewIcons.sort_numeric_down,
-                              color: filters.sortStatus=='numDown'?globals.logoColorPink:globals.white1,
+                        InkWell(
+                          onTap: () {
+                            filters.sortStatus = 'numDown';
+                            _sortUp();
+                          },
+                          child: Container(
+                            height: 36,
+                            color: filters.sortStatus == 'numDown'
+                                ? globals.darkBlue1
+                                : globals.transparent,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  NewIcons.sort_numeric_down,
+                                  color: filters.sortStatus == 'numDown'
+                                      ? globals.logoColorPink
+                                      : globals.white1,
+                                ),
+                                const SizedBox(width: 8.0),
+                                Text(
+                                  'Time Left',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: filters.sortStatus == 'numDown'
+                                        ? globals.logoColorPink
+                                        : globals.white1,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 6.0),
+                                Icon(
+                                  NewIcons.sort_numeric_down,
+                                  color: filters.sortStatus == 'numDown'
+                                      ? globals.logoColorPink
+                                      : globals.white1,
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8.0),
-                            Text(
-                              'Time Left',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: filters.sortStatus=='numDown'?globals.logoColorPink:globals.white1,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      InkWell(
-                        onTap: () {
-                          filters.sortStatus = 'numUp';
-                          _sortUp();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(width: 52.0),
-                            Icon(
-                              NewIcons.sort_numeric_up,
-                              color: filters.sortStatus=='numUp'?globals.logoColorPink:globals.white1,
+                        InkWell(
+                          onTap: () {
+                            filters.sortStatus = 'numUp';
+                            _sortUp();
+                          },
+                          child: Container(
+                            height: 36,
+                            color: filters.sortStatus == 'numUp'
+                                ? globals.darkBlue1
+                                : globals.transparent,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  NewIcons.sort_numeric_up,
+                                  color: filters.sortStatus == 'numUp'
+                                      ? globals.logoColorPink
+                                      : globals.white1,
+                                ),
+                                const SizedBox(width: 8.0),
+                                Text(
+                                  'Time Left',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: filters.sortStatus == 'numUp'
+                                        ? globals.logoColorPink
+                                        : globals.white1,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 6.0),
+                                Icon(
+                                  NewIcons.sort_numeric_up,
+                                  color: filters.sortStatus == 'numUp'
+                                      ? globals.logoColorPink
+                                      : globals.white1,
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8.0),
-                            Text(
-                              'Time Left',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: filters.sortStatus=='numUp'?globals.logoColorPink:globals.white1,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
 
