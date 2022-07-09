@@ -232,6 +232,7 @@ class _HomePageState extends State<HomePage>
                   //_element3[3] project date
                   imgUrl: null, //todo get image
                   onTap: () => debugPrint('Project 1'),
+                  filterByProjects: () => _filterByProjects(_childrenProjectList),
                 ));
               }
             });
@@ -617,9 +618,19 @@ class _HomePageState extends State<HomePage>
     _bidChildren = _bidChildrenTMP;
   }
 
+
+  void _filterByProjects(List<ProjectSquare> childrenProjectList) {
+    for (var _element in childrenProjectList) {
+      _element.isSelected == true
+          ? globals.listProjectSelected.add(_element.name)
+          : globals.listProjectSelected.remove(_element.name);
+    }
+  }
+
   _back() {
     debugPrint('No back available.');
   }
+
 }
 
 final buttonColors = WindowButtonColors(

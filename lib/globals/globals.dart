@@ -87,3 +87,5 @@ bool isLoadingTooltip = false;
 bool drawerIsRank = false;
 
 bool isLoadingBid = false;
+
+Set<String> listProjectSelected = {};

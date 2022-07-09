@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
-import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 
 class ProjectSquare extends StatefulWidget {
   String name;
   String? imgUrl;
   bool isSelected;
   Function onTap;
+  Function filterByProjects;
 
   ProjectSquare({
     Key? key,
@@ -14,6 +14,7 @@ class ProjectSquare extends StatefulWidget {
     required this.imgUrl,
     this.isSelected = true,
     required this.onTap,
+    required this.filterByProjects,
   }) : super(key: key);
 
   @override
@@ -46,13 +47,15 @@ class _ProjectSquareState extends State<ProjectSquare> {
             Expanded(
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(22.0)),
-                child: widget.imgUrl!=null?Image.network(
-                  widget.imgUrl!,
-                  fit: BoxFit.contain,
-                ):Image.asset(
-                  'Assets/Other/KwikCodeLogo.png',
-                  fit: BoxFit.contain,
-                ),
+                child: widget.imgUrl != null
+                    ? Image.network(
+                        widget.imgUrl!,
+                        fit: BoxFit.contain,
+                      )
+                    : Image.asset(
+                        'Assets/Other/KwikCodeLogo.png',
+                        fit: BoxFit.contain,
+                      ),
               ),
             ),
             const SizedBox(width: 15),
@@ -75,7 +78,9 @@ class _ProjectSquareState extends State<ProjectSquare> {
     setState(() {
       widget.isSelected = !widget.isSelected;
     });
-    errorPopup(context,'Filter By Project is not available yet.');
+    debugPrint(globals.listProjectSelected.toString());
+    widget.filterByProjects();
+    // errorPopup(context,'Filter By Project is not available yet.');
     // widget.filterTasks(
     //     _sortStatus, _redRadio, _orangeRadio, _notLanguagesNameList);
   }
