@@ -36,159 +36,179 @@ class _RightViewState extends State<RightView> {
       _kwikPointsAmount = -9999;
       _getKwikPointsAmount();
     }
-    return SizedBox(
-      width: 300,
-      child: Column(
-        children: [
-          Container(
-            height: 70,
+    return Stack(
+      children: [
+        Positioned(
+          right: 0.0,
+          bottom: 0.0,
+          child: Container(
+            height: 300,
             width: 300,
-            margin: const EdgeInsets.symmetric(horizontal: 12.0),
-            decoration: BoxDecoration(
-              color: globals.darkBlue2,
-              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+            // margin: const EdgeInsets.only(
+            //     top: 0.0, bottom: 0, left: 25, right: 25),
+            child: Image.asset(
+              'Assets/Other/KwikCodeLogo.png',
+              fit: BoxFit.contain,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(width: 15),
-                // Icon(
-                //   Icons.person,
-                //   color: globals.whiteBlue,
-                // ),
-                _kwikPointsAmount == -9999
-                    ? Container(
-                        width: 24.0,
-                        height: 24.0,
-                        margin: const EdgeInsets.all(15),
-                        child: CircularProgressIndicator(
-                          color: globals.white1,
-                        ),
-                      )
-                    : _kwikPointsAmount >= 2000
-                        ? InkWell(
-                            onTap: () => _openDrawerRank(),
-                            child: Image.asset(
-                              'Assets/Rank/KwikCodeLogoPlatinum.png',
-                              height: 54,
-                              width: 54,
+          ),
+        ),
+        SizedBox(
+          width: 300,
+          child: Column(
+            children: [
+              Container(
+                height: 70,
+                width: 300,
+                margin: const EdgeInsets.symmetric(horizontal: 12.0),
+                decoration: BoxDecoration(
+                  color: globals.darkBlue2,
+                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: 15),
+                    // Icon(
+                    //   Icons.person,
+                    //   color: globals.whiteBlue,
+                    // ),
+                    _kwikPointsAmount == -9999
+                        ? Container(
+                            width: 24.0,
+                            height: 24.0,
+                            margin: const EdgeInsets.all(15),
+                            child: CircularProgressIndicator(
+                              color: globals.white1,
                             ),
                           )
-                        : _kwikPointsAmount >= 1500 && _kwikPointsAmount < 2000
+                        : _kwikPointsAmount >= 2000
                             ? InkWell(
                                 onTap: () => _openDrawerRank(),
                                 child: Image.asset(
-                                  'Assets/Rank/KwikCodeLogoGold.png',
+                                  'Assets/Rank/KwikCodeLogoPlatinum.png',
                                   height: 54,
                                   width: 54,
                                 ),
                               )
-                            : _kwikPointsAmount >= 1200 &&
-                                    _kwikPointsAmount < 1500
+                            : _kwikPointsAmount >= 1500 &&
+                                    _kwikPointsAmount < 2000
                                 ? InkWell(
                                     onTap: () => _openDrawerRank(),
                                     child: Image.asset(
-                                      'Assets/Rank/KwikCodeLogoSilver.png',
+                                      'Assets/Rank/KwikCodeLogoGold.png',
                                       height: 54,
                                       width: 54,
                                     ),
                                   )
-                                : InkWell(
-                                    onTap: () => _openDrawerRank(),
-                                    child: Image.asset(
-                                      'Assets/Rank/KwikCodeLogoBronze.png',
-                                      height: 54,
-                                      width: 54,
+                                : _kwikPointsAmount >= 1200 &&
+                                        _kwikPointsAmount < 1500
+                                    ? InkWell(
+                                        onTap: () => _openDrawerRank(),
+                                        child: Image.asset(
+                                          'Assets/Rank/KwikCodeLogoSilver.png',
+                                          height: 54,
+                                          width: 54,
+                                        ),
+                                      )
+                                    : InkWell(
+                                        onTap: () => _openDrawerRank(),
+                                        child: Image.asset(
+                                          'Assets/Rank/KwikCodeLogoBronze.png',
+                                          height: 54,
+                                          width: 54,
+                                        ),
+                                      ),
+                    const SizedBox(width: 15),
+                    Text(
+                      'Rawad',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: globals.white2,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(width: 35),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => Scaffold.of(context).openEndDrawer(),
+                        child: Icon(
+                          Icons.menu,
+                          color: globals.whiteBlue,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 440,
+                //475,
+                width: 300,
+                margin: const EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  //color: Colors.transparent, //globals.darkBlue2,
+                  color: globals.darkBlue2,
+                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Center(
+                      child: Text(
+                        'Projects',
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: globals.whiteBlue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    widget.isLoadingProjects == false
+                        ? Expanded(
+                            child: ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12.0)),
+                              child: Container(
+                                margin: const EdgeInsets.all(8.0),
+                                //padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 12),
+                                decoration: const BoxDecoration(
+                                  //border: Border.all(color: globals.logoColorBlue).scale(2),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12.0)),
+                                ),
+                                child: ScrollConfiguration(
+                                  behavior: MyCustomScrollBehavior()
+                                      .copyWith(scrollbars: false),
+                                  child: SingleChildScrollView(
+                                    controller: ScrollController(),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: widget.childrenProjectList,
                                     ),
                                   ),
-                const SizedBox(width: 15),
-                Text(
-                  'Rawad',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: globals.white2,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(width: 35),
-                Expanded(
-                  child: InkWell(
-                    onTap: () => Scaffold.of(context).openEndDrawer(),
-                    child: Icon(
-                      Icons.menu,
-                      color: globals.whiteBlue,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 440,
-            //475,
-            width: 300,
-            margin: const EdgeInsets.all(12.0),
-            decoration: BoxDecoration(
-              //color: Colors.transparent, //globals.darkBlue2,
-              color: globals.darkBlue2,
-              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-            ),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                Center(
-                  child: Text(
-                    'Projects',
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: globals.whiteBlue,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                widget.isLoadingProjects == false
-                    ? Expanded(
-                        child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12.0)),
-                          child: Container(
-                            margin: const EdgeInsets.all(8.0),
-                            //padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 12),
-                            decoration: const BoxDecoration(
-                              //border: Border.all(color: globals.logoColorBlue).scale(2),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            child: ScrollConfiguration(
-                              behavior: MyCustomScrollBehavior()
-                                  .copyWith(scrollbars: false),
-                              child: SingleChildScrollView(
-                                controller: ScrollController(),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: widget.childrenProjectList,
                                 ),
                               ),
                             ),
+                          )
+                        : Expanded(
+                            child: Container(
+                              height: 42.0,
+                              width: 42.0,
+                              alignment: Alignment.center,
+                              child: CircularProgressIndicator(
+                                color: globals.logoColorPink,
+                              ),
+                            ),
                           ),
-                        ),
-                      )
-                    : Expanded(
-                        child: Container(
-                          height: 42.0,
-                          width: 42.0,
-                          alignment: Alignment.center,
-                          child: CircularProgressIndicator(
-                            color: globals.logoColorPink,
-                          ),
-                        ),
-                      ),
-                //const SizedBox(height: 20),
-              ],
-            ),
+                    //const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
