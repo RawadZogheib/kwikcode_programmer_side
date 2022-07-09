@@ -412,8 +412,31 @@ class _HomePageState extends State<HomePage>
 
       if (filters.notLanguagesNameList.isNotEmpty) {
         Set<String> _set1 = {};
+        Set<String> _set2 = {};
         for (TaskProgrammingItem _e in _element.iconList) {
           _set1.add(_e.name);
+        }
+        for (ProgrammingItem _f in filters.languagesIconsList) {
+          _set2.add(_f.name);
+        }
+        if (filters.notLanguagesNameList.contains('Other')) {
+          if(!_set2.containsAll(_set1) || _set1.isEmpty){
+            _childrenTaskList.add(TaskSquare(
+              key: ValueKey(_L++),
+              taskId: _element.taskId,
+              taskName: _element.taskName,
+              isVisible: false,
+              projectName: _element.projectName,
+              projectManager: _element.projectManager,
+              description: _element.description,
+              timeLeft: _element.timeLeft,
+              status: _element.status,
+              iconList: _element.iconList,
+              removeTask: _element.removeTask,
+              onBidTap: _element.onBidTap,
+            ));
+            continue;
+          }
         }
         if (_set1
             .intersection(filters.notLanguagesNameList.toSet())
