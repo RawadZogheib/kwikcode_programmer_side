@@ -6,6 +6,7 @@ import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/api/my_api.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
+import 'package:kwikcode_programmer_side/globals/filters.dart' as filters;
 import 'package:kwikcode_programmer_side/widgets/HomePage/MiddleView.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/MyFilter.dart';
 import 'package:kwikcode_programmer_side/widgets/HomePage/RightView.dart';
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   List<BidItem> _bidChildren = [];
   int _k = 0;
+  int _L = 0;
 
   Animation? _animation;
   AnimationController? _animationController;
@@ -50,6 +52,7 @@ class _HomePageState extends State<HomePage>
     taskId: 'null',
     taskName: 'null',
     projectManager: '@null',
+    projectName: '',
     description: 'null',
     timeLeft: 0,
     iconList: const [],
@@ -121,12 +124,7 @@ class _HomePageState extends State<HomePage>
                           children: [
                             MyFilter(
                               isClickedRefresh: _isClickedRefresh,
-                              filterTasks: (String status,
-                                      bool redRadio,
-                                      bool orangeRadio,
-                                      List<String> notLanguagesNameList) =>
-                                  _filterTasks(status, redRadio, orangeRadio,
-                                      notLanguagesNameList),
+                              filterTasks: () => _filterTasks(),
                               loadTasks: () => _loadTasks(),
                             ),
                             const SizedBox(width: 10),
@@ -162,7 +160,7 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _loadNewPage() async {
     await _loadTasks(); //0
-    _filterTasks('alphaDown', true, true, []);
+    _filterTasks();
   }
 
   Future<void> _loadTasks() async {
@@ -198,24 +196,28 @@ class _HomePageState extends State<HomePage>
               _childrenProjectList.clear();
 
               for (List<dynamic> _element in body[1]) {
+                String _projectName = '';
                 String _projectMangerName = '';
                 for (List<dynamic> _element2 in body[2]) {
                   if (_element2[0] == _element[2]) {
+                    _projectName = _element2[1];
                     _projectMangerName = _element2[2];
                   }
                 }
 
                 _childrenTaskListNoFilter.add(TaskSquare(
-                  key: ValueKey(_element[0]),
+                  key: ValueKey(_L++),
                   taskId: _element[0],
                   taskName: _element[1],
-                  //_element[2] project name
+                  //_element[2] project id
                   //_element[3] programmer id
+                  projectName: _projectName,
                   projectManager: '@$_projectMangerName',
                   description: _element[4],
                   timeLeft: int.parse(_element[5]),
                   status: int.parse(_element[6]),
-                  iconList: [//todo get icons info
+                  iconList: [
+                    //todo get icons info
                     TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
                     TaskProgrammingItem(name: 'Node JS', icon: NewIcons.node),
                   ],
@@ -227,13 +229,17 @@ class _HomePageState extends State<HomePage>
               for (List<dynamic> _element3 in body[2]) {
                 _childrenProjectList.add(ProjectSquare(
                   key: ValueKey(_element3[0]),
-                  name: _element3[1],
+                  projectName: _element3[1],
                   //_element3[2] project manager name
                   //_element3[3] project date
-                  imgUrl: null, //todo get image
+                  isSelected: true,
+                  imgUrl: null,
+                  //todo get image
                   onTap: () => debugPrint('Project 1'),
-                  filterByProjects: () => _filterByProjects(_childrenProjectList),
+                  filterByProjects: () =>
+                      _filterByProjects(_childrenProjectList),
                 ));
+                filters.projectSelectedSet.add(_element3[1]);
               }
             });
           }
@@ -460,6 +466,7 @@ class _HomePageState extends State<HomePage>
                 taskId: 'null',
                 taskName: 'null',
                 projectManager: '@null',
+                projectName: '',
                 description: 'null',
                 timeLeft: 0,
                 iconList: const [],
@@ -471,104 +478,146 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-  void _filterTasks(String status, bool redRadio, bool orangeRadio,
-      List<String> notLanguagesNameList) {
+  void _filterTasks() {
     /// alphaUp alphaDown numUp numDown
     //debugPrint(status);
     _childrenTaskList.clear();
-    for (TaskSquare element in _childrenTaskListNoFilter) {
-      _childrenTaskList.add(element);
+
+    ///Check Task Status
+    if (filters.redRadio == false && filters.orangeRadio == false) {
+      // _childrenTaskList.clear();
+      ///SetState
+      setState(() {
+        _childrenTaskList;
+      });
+      return;
+    }
+
+    ///Check Task Languages
+    for (TaskSquare _element in _childrenTaskListNoFilter) {
+      if (!filters.projectSelectedSet.contains(_element.projectName)) {
+        _childrenTaskList.add(TaskSquare(
+          key: ValueKey(_L++),
+          taskId: _element.taskId,
+          taskName: _element.taskName,
+          isVisible: false,
+          projectName: _element.projectName,
+          projectManager: _element.projectManager,
+          description: _element.description,
+          timeLeft: _element.timeLeft,
+          status: _element.status,
+          iconList: _element.iconList,
+          removeTask: _element.removeTask,
+          onBidTap: _element.onBidTap,
+        ));
+        continue;
+      }
+
+      if (filters.redRadio == true && filters.orangeRadio == false) {
+        if(_element.status != 0){
+          _childrenTaskList.add(TaskSquare(
+            key: ValueKey(_L++),
+            taskId: _element.taskId,
+            taskName: _element.taskName,
+            isVisible: false,
+            projectName: _element.projectName,
+            projectManager: _element.projectManager,
+            description: _element.description,
+            timeLeft: _element.timeLeft,
+            status: _element.status,
+            iconList: _element.iconList,
+            removeTask: _element.removeTask,
+            onBidTap: _element.onBidTap,
+          ));
+          continue;
+        }
+      } else if (filters.redRadio == false && filters.orangeRadio == true) {
+        if(_element.status != 1){
+          _childrenTaskList.add(TaskSquare(
+            key: ValueKey(_L++),
+            taskId: _element.taskId,
+            taskName: _element.taskName,
+            isVisible: false,
+            projectName: _element.projectName,
+            projectManager: _element.projectManager,
+            description: _element.description,
+            timeLeft: _element.timeLeft,
+            status: _element.status,
+            iconList: _element.iconList,
+            removeTask: _element.removeTask,
+            onBidTap: _element.onBidTap,
+          ));
+          continue;
+        }
+      }
+
+      if (filters.notLanguagesNameList.isNotEmpty) {
+        Set<String> _set1 = {};
+        for(TaskProgrammingItem _e in _element.iconList){
+          _set1.add(_e.name);
+        }
+        if(_set1.toSet().intersection(filters.notLanguagesNameList.toSet()).isNotEmpty){
+          _childrenTaskList.add(TaskSquare(
+            key: ValueKey(_L++),
+            taskId: _element.taskId,
+            taskName: _element.taskName,
+            isVisible: false,
+            projectName: _element.projectName,
+            projectManager: _element.projectManager,
+            description: _element.description,
+            timeLeft: _element.timeLeft,
+            status: _element.status,
+            iconList: _element.iconList,
+            removeTask: _element.removeTask,
+            onBidTap: _element.onBidTap,
+          ));
+          continue;
+        }
+      }
+      _childrenTaskList.add(TaskSquare(
+        key: ValueKey(_L++),
+        taskId: _element.taskId,
+        taskName: _element.taskName,
+        isVisible: true,
+        projectName: _element.projectName,
+        projectManager: _element.projectManager,
+        description: _element.description,
+        timeLeft: _element.timeLeft,
+        status: _element.status,
+        iconList: _element.iconList,
+        removeTask: _element.removeTask,
+        onBidTap: _element.onBidTap,
+      ));
     }
 
     ///Sort
-    switch (status) {
+    switch (filters.sortStatus) {
       case 'alphaDown':
-        // A -> Z
+      // A -> Z
         _childrenTaskList.sort(
-            (TaskSquare a, TaskSquare b) => a.taskName.compareTo(b.taskName));
+                (TaskSquare a, TaskSquare b) => a.taskName.compareTo(b.taskName));
 
         break;
       case 'alphaUp':
-        // Z -> A
+      // Z -> A
         _childrenTaskList.sort(
-            (TaskSquare a, TaskSquare b) => b.taskName.compareTo(a.taskName));
+                (TaskSquare a, TaskSquare b) => b.taskName.compareTo(a.taskName));
         break;
       case 'numDown':
-        // 1 -> 9
+      // 1 -> 9
         _childrenTaskList
             .sort((TaskSquare a, TaskSquare b) => a.timeLeft - b.timeLeft);
         break;
       case 'numUp':
-        // 9 -> 1
+      // 9 -> 1
         _childrenTaskList
             .sort((TaskSquare a, TaskSquare b) => b.timeLeft - a.timeLeft);
         break;
     }
 
-    ///Check Task Status
-    if (redRadio == true && orangeRadio == true) {
-      // _childrenTaskList = _childrenTaskListNoFilter;
-    } else if (redRadio == true && orangeRadio == false) {
-      _childrenTaskList = _childrenTaskListNoFilter
-          .where((element) => element.status == 0)
-          .toList();
-    } else if (redRadio == false && orangeRadio == true) {
-      _childrenTaskList = _childrenTaskListNoFilter
-          .where((element) => element.status == 1)
-          .toList();
-    } else if (redRadio == false && orangeRadio == false) {
-      _childrenTaskList.clear();
-    }
-    // if (redRadio == true) {
-    //   for (TaskSquare element in _childrenTaskList) {
-    //     if (element.status == 0) {
-    //       element.isVisible = true;
-    //     }
-    //   }
-    // } else {
-    //   for (TaskSquare element in _childrenTaskList) {
-    //     if (element.status == 0) {
-    //       element.isVisible = false;
-    //     }
-    //   }
-    // }
-    //
-    // if (orangeRadio == true) {
-    //   for (TaskSquare element in _childrenTaskList) {
-    //     if (element.status == 1) {
-    //       element.isVisible = true;
-    //     }
-    //   }
-    // } else {
-    //   for (TaskSquare element in _childrenTaskList) {
-    //     if (element.status == 1) {
-    //       element.isVisible = false;
-    //     }
-    //   }
-    // }
-
-    ///Check Task Languages
-    List<TaskSquare> toRemove = [];
-    for (String lang in notLanguagesNameList) {
-      for (TaskSquare element in _childrenTaskListNoFilter) {
-        for (TaskProgrammingItem iconItem in element.iconList) {
-          if (iconItem.name == lang) {
-            if (_childrenTaskList.contains(element)) {
-              toRemove.add(element);
-            }
-          }
-          // if (iconItem.name == lang) {
-          //   element.isVisible = false;
-          //   continue;
-          // }
-        }
-      }
-    }
-    _childrenTaskList.removeWhere((e) => toRemove.contains(e));
-
     ///SetState
     setState(() {
-      _childrenTaskList;
+        _childrenTaskList;
     });
   }
 
@@ -618,19 +667,18 @@ class _HomePageState extends State<HomePage>
     _bidChildren = _bidChildrenTMP;
   }
 
-
   void _filterByProjects(List<ProjectSquare> childrenProjectList) {
     for (var _element in childrenProjectList) {
       _element.isSelected == true
-          ? globals.listProjectSelected.add(_element.name)
-          : globals.listProjectSelected.remove(_element.name);
+          ? filters.projectSelectedSet.add(_element.projectName)
+          : filters.projectSelectedSet.remove(_element.projectName);
     }
+    _filterTasks();
   }
 
   _back() {
     debugPrint('No back available.');
   }
-
 }
 
 final buttonColors = WindowButtonColors(

@@ -363,6 +363,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                   taskId: '4',
                   taskName: 'Task Name 4',
                   projectManager: '@Samir',
+                  projectName: '',
                   description: 'adsadsad asd  asd as d asd',
                   timeLeft: 5600,
                   iconList: [
@@ -410,6 +411,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                   taskId: '3',
                   taskName: 'Task Name 3',
                   projectManager: '@Samir',
+                  projectName: '',
                   description: 'adsadsad asd  asd as d asd',
                   timeLeft: 5600,
                   iconList: [

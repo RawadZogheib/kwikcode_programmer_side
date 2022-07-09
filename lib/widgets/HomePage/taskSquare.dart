@@ -12,6 +12,7 @@ class TaskSquare extends StatefulWidget {
   String taskId;
   String taskName;
   String projectManager;
+  String projectName;
   String description;
   int timeLeft;
   List<TaskProgrammingItem> iconList;
@@ -27,6 +28,7 @@ class TaskSquare extends StatefulWidget {
     required this.taskId,
     required this.taskName,
     required this.projectManager,
+    required this.projectName,
     required this.description,
     required this.timeLeft,
     required this.iconList,

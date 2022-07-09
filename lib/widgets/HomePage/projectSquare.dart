@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
+import 'package:kwikcode_programmer_side/globals/filters.dart' as filters;
 
 class ProjectSquare extends StatefulWidget {
-  String name;
+  String projectName;
   String? imgUrl;
   bool isSelected;
   Function onTap;
@@ -10,7 +11,7 @@ class ProjectSquare extends StatefulWidget {
 
   ProjectSquare({
     Key? key,
-    required this.name,
+    required this.projectName,
     required this.imgUrl,
     this.isSelected = true,
     required this.onTap,
@@ -60,7 +61,7 @@ class _ProjectSquareState extends State<ProjectSquare> {
             ),
             const SizedBox(width: 15),
             Text(
-              widget.name,
+              widget.projectName,
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.white,
@@ -78,8 +79,8 @@ class _ProjectSquareState extends State<ProjectSquare> {
     setState(() {
       widget.isSelected = !widget.isSelected;
     });
-    debugPrint(globals.listProjectSelected.toString());
     widget.filterByProjects();
+    // debugPrint(filters.projectSelectedSet.toString());
     // errorPopup(context,'Filter By Project is not available yet.');
     // widget.filterTasks(
     //     _sortStatus, _redRadio, _orangeRadio, _notLanguagesNameList);

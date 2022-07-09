@@ -164,6 +164,7 @@ class StatusMap extends StatelessWidget {
               taskName: 'Any Task',
               taskId: 'null',
               projectManager: 'Unknown',
+              projectName: '',
               description:
                   'Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description ',
               timeLeft: 6000,

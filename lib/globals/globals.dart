@@ -1,4 +1,4 @@
-library my_wallet.globals;
+library kwikcode_programmer_side.globals;
 
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/hexColor/hexColor.dart';
@@ -87,5 +87,3 @@ bool isLoadingTooltip = false;
 bool drawerIsRank = false;
 
 bool isLoadingBid = false;
-
-Set<String> listProjectSelected = {};

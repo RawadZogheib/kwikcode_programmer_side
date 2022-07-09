@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
+import 'package:kwikcode_programmer_side/globals/filters.dart' as filters;
 import 'package:kwikcode_programmer_side/widgets/HomePage/RefreshViewButton.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
 
 class MyFilter extends StatefulWidget {
   bool isClickedRefresh;
-  Function(String, bool, bool, List<String>) filterTasks;
+  Function() filterTasks;
   Function() loadTasks;
 
   MyFilter({
@@ -22,10 +23,6 @@ class MyFilter extends StatefulWidget {
 }
 
 class _MyFilterState extends State<MyFilter> {
-  String _sortStatus = 'alphaDown'; // alphaDown alphaUp numDown numUp
-  bool _redRadio = true;
-  bool _orangeRadio = true;
-  final List<String> _notLanguagesNameList = [];
 
   List<ProgrammingItem> _languagesIconsList = [];
 
@@ -88,7 +85,7 @@ class _MyFilterState extends State<MyFilter> {
                       const SizedBox(height: 10),
                       InkWell(
                         onTap: () {
-                          _sortStatus = 'alphaDown';
+                          filters.sortStatus = 'alphaDown';
                           _sortUp();
                         },
                         child: Row(
@@ -97,14 +94,14 @@ class _MyFilterState extends State<MyFilter> {
                             const SizedBox(width: 68.0),
                             Icon(
                               NewIcons.sort_alpha_down,
-                              color: _sortStatus=='alphaDown'?globals.logoColorPink:globals.white1,
+                              color: filters.sortStatus=='alphaDown'?globals.logoColorPink:globals.white1,
                             ),
                             const SizedBox(width: 8.0),
                             Text(
                               'Name',
                               style: TextStyle(
                                 fontSize: 18,
-                                color: _sortStatus=='alphaDown'?globals.logoColorPink:globals.white1,
+                                color: filters.sortStatus=='alphaDown'?globals.logoColorPink:globals.white1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -114,7 +111,7 @@ class _MyFilterState extends State<MyFilter> {
                       const SizedBox(height: 10),
                       InkWell(
                         onTap: () {
-                          _sortStatus = 'alphaUp';
+                          filters.sortStatus = 'alphaUp';
                           _sortUp();
                         },
                         child: Row(
@@ -123,14 +120,14 @@ class _MyFilterState extends State<MyFilter> {
                             const SizedBox(width: 68.0),
                             Icon(
                               NewIcons.sort_alpha_up,
-                              color: _sortStatus=='alphaUp'?globals.logoColorPink:globals.white1,
+                              color: filters.sortStatus=='alphaUp'?globals.logoColorPink:globals.white1,
                             ),
                             const SizedBox(width: 8.0),
                             Text(
                               'Name',
                               style: TextStyle(
                                 fontSize: 18,
-                                color: _sortStatus=='alphaUp'?globals.logoColorPink:globals.white1,
+                                color: filters.sortStatus=='alphaUp'?globals.logoColorPink:globals.white1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -140,7 +137,7 @@ class _MyFilterState extends State<MyFilter> {
                       const SizedBox(height: 10),
                       InkWell(
                         onTap: () {
-                          _sortStatus = 'numDown';
+                          filters.sortStatus = 'numDown';
                           _sortUp();
                         },
                         child: Row(
@@ -149,14 +146,14 @@ class _MyFilterState extends State<MyFilter> {
                             const SizedBox(width: 52.0),
                             Icon(
                               NewIcons.sort_numeric_down,
-                              color: _sortStatus=='numDown'?globals.logoColorPink:globals.white1,
+                              color: filters.sortStatus=='numDown'?globals.logoColorPink:globals.white1,
                             ),
                             const SizedBox(width: 8.0),
                             Text(
                               'Time Left',
                               style: TextStyle(
                                 fontSize: 18,
-                                color: _sortStatus=='numDown'?globals.logoColorPink:globals.white1,
+                                color: filters.sortStatus=='numDown'?globals.logoColorPink:globals.white1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -166,7 +163,7 @@ class _MyFilterState extends State<MyFilter> {
                       const SizedBox(height: 10),
                       InkWell(
                         onTap: () {
-                          _sortStatus = 'numUp';
+                          filters.sortStatus = 'numUp';
                           _sortUp();
                         },
                         child: Row(
@@ -175,14 +172,14 @@ class _MyFilterState extends State<MyFilter> {
                             const SizedBox(width: 52.0),
                             Icon(
                               NewIcons.sort_numeric_up,
-                              color: _sortStatus=='numUp'?globals.logoColorPink:globals.white1,
+                              color: filters.sortStatus=='numUp'?globals.logoColorPink:globals.white1,
                             ),
                             const SizedBox(width: 8.0),
                             Text(
                               'Time Left',
                               style: TextStyle(
                                 fontSize: 18,
-                                color: _sortStatus=='numUp'?globals.logoColorPink:globals.white1,
+                                color: filters.sortStatus=='numUp'?globals.logoColorPink:globals.white1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -225,12 +222,12 @@ class _MyFilterState extends State<MyFilter> {
                           children: [
                             InkWell(
                               onTap: () {
-                                _redRadio = !_redRadio;
+                                filters.redRadio = !filters.redRadio;
                                 _sortUp();
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: _redRadio == true
+                                  color: filters.redRadio == true
                                       ? Colors.red
                                       : Colors.red.withOpacity(0.5),
                                   shape: BoxShape.circle,
@@ -246,12 +243,12 @@ class _MyFilterState extends State<MyFilter> {
                             ),
                             InkWell(
                               onTap: () {
-                                _orangeRadio = !_orangeRadio;
+                                filters.orangeRadio = !filters.orangeRadio;
                                 _sortUp();
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: _orangeRadio == true
+                                  color: filters.orangeRadio == true
                                       ? Colors.orange
                                       : Colors.orange.withOpacity(0.5),
                                   shape: BoxShape.circle,
@@ -355,15 +352,14 @@ class _MyFilterState extends State<MyFilter> {
   }
 
   _sortUp() {
-    _notLanguagesNameList.clear();
+    filters.notLanguagesNameList.clear();
 
     for (ProgrammingItem element in _languagesIconsList) {
       if (element.isSelected == false) {
-        _notLanguagesNameList.add(element.name);
+        filters.notLanguagesNameList.add(element.name);
       }
     }
-    widget.filterTasks(
-        _sortStatus, _redRadio, _orangeRadio, _notLanguagesNameList);
+    widget.filterTasks();
   }
 
   void _loadIcons() {
