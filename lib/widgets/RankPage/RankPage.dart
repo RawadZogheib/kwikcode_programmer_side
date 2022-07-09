@@ -62,97 +62,160 @@ class RankPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Tooltip(
-                      message: 'Bronze',
-                      child: Image.asset(
-                        'Assets/Rank/KwikCodeLogoBronze.png',
-                        height: 54,
-                        width: 54,
-                      ),
+                    Column(
+                      children: [
+                        Image.asset(
+                          'Assets/Rank/KwikCodeLogoBronze.png',
+                          height: 54,
+                          width: 54,
+                        ),
+                        SizedBox(
+                          height: 16,
+                          child: Text(
+                            'Junior',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: globals.bronze,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(width: 5),
-                    SizedBox(
-                      height: 20,
-                      width: 100,
-                      child: LiquidLinearProgressIndicator(
-                        value: myKwikPoints >= 1200
-                            ? 2
-                            : myKwikPoints.toDouble() / 1200,
-                        valueColor:
-                            AlwaysStoppedAnimation(globals.logoColorBlue),
-                        backgroundColor: globals.whiteBlue,
-                        borderColor: globals.logoColorBlue,
-                        borderWidth: 1.0,
-                        borderRadius: 12.0,
-                        direction: Axis.horizontal,
-                      ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                          width: 100,
+                          child: LiquidLinearProgressIndicator(
+                            value: myKwikPoints >= 1200
+                                ? 2
+                                : myKwikPoints.toDouble() / 1200,
+                            valueColor:
+                                AlwaysStoppedAnimation(globals.logoColorBlue),
+                            backgroundColor: globals.whiteBlue,
+                            borderColor: globals.logoColorBlue,
+                            borderWidth: 1.0,
+                            borderRadius: 12.0,
+                            direction: Axis.horizontal,
+                          ),
+                        ),
+                        const SizedBox(height: 0),
+                      ],
                     ),
                     const SizedBox(width: 5),
-                    Tooltip(
-                      message: 'Silver',
-                      child: Image.asset(
-                        'Assets/Rank/KwikCodeLogoSilver.png',
-                        height: 54,
-                        width: 54,
-                      ),
+                    Column(
+                      children: [
+                        Image.asset(
+                          'Assets/Rank/KwikCodeLogoSilver.png',
+                          height: 54,
+                          width: 54,
+                        ),
+                        SizedBox(
+                          height: 16,
+                          child: Text(
+                            'Middle',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: globals.silver,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(width: 5),
-                    SizedBox(
-                      height: 20,
-                      width: 100,
-                      child: LiquidLinearProgressIndicator(
-                        value: myKwikPoints >= 1500
-                            ? 2
-                            : myKwikPoints < 1200
-                                ? -1
-                                : (myKwikPoints.toDouble() - 1200) / 300,
-                        //(1500-1200)
-                        valueColor:
-                            AlwaysStoppedAnimation(globals.logoColorBlue),
-                        backgroundColor: globals.whiteBlue,
-                        borderColor: globals.logoColorBlue,
-                        borderWidth: 1.0,
-                        borderRadius: 12.0,
-                        direction: Axis.horizontal,
-                      ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                          width: 100,
+                          child: LiquidLinearProgressIndicator(
+                            value: myKwikPoints >= 1500
+                                ? 2
+                                : myKwikPoints < 1200
+                                    ? -1
+                                    : (myKwikPoints.toDouble() - 1200) / 300,
+                            //(1500-1200)
+                            valueColor:
+                                AlwaysStoppedAnimation(globals.logoColorBlue),
+                            backgroundColor: globals.whiteBlue,
+                            borderColor: globals.logoColorBlue,
+                            borderWidth: 1.0,
+                            borderRadius: 12.0,
+                            direction: Axis.horizontal,
+                          ),
+                        ),
+                        const SizedBox(height: 0),
+                      ],
                     ),
                     const SizedBox(width: 5),
-                    Tooltip(
-                      message: 'Gold',
-                      child: Image.asset(
-                        'Assets/Rank/KwikCodeLogoGold.png',
-                        height: 54,
-                        width: 54,
-                      ),
+                    Column(
+                      children: [
+                        Image.asset(
+                          'Assets/Rank/KwikCodeLogoGold.png',
+                          height: 54,
+                          width: 54,
+                        ),
+                        SizedBox(
+                          height: 16,
+                          child: Text(
+                            'Senior',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: globals.gold,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(width: 5),
-                    SizedBox(
-                      height: 20,
-                      width: 100,
-                      child: LiquidLinearProgressIndicator(
-                        value: myKwikPoints >= 2000
-                            ? 2
-                            : myKwikPoints < 1500
-                                ? -1
-                                : (myKwikPoints.toDouble() - 1500) / 500,
-                        //(2000-1500)
-                        valueColor:
-                            AlwaysStoppedAnimation(globals.logoColorBlue),
-                        backgroundColor: globals.whiteBlue,
-                        borderColor: globals.logoColorBlue,
-                        borderWidth: 1.0,
-                        borderRadius: 12.0,
-                        direction: Axis.horizontal,
-                      ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                          width: 100,
+                          child: LiquidLinearProgressIndicator(
+                            value: myKwikPoints >= 2000
+                                ? 2
+                                : myKwikPoints < 1500
+                                    ? -1
+                                    : (myKwikPoints.toDouble() - 1500) / 500,
+                            //(2000-1500)
+                            valueColor:
+                                AlwaysStoppedAnimation(globals.logoColorBlue),
+                            backgroundColor: globals.whiteBlue,
+                            borderColor: globals.logoColorBlue,
+                            borderWidth: 1.0,
+                            borderRadius: 12.0,
+                            direction: Axis.horizontal,
+                          ),
+                        ),
+                        const SizedBox(height: 0),
+                      ],
                     ),
                     const SizedBox(width: 5),
-                    Tooltip(
-                      message: 'Platinum',
-                      child: Image.asset(
-                        'Assets/Rank/KwikCodeLogoPlatinum.png',
-                        height: 54,
-                        width: 54,
-                      ),
+                    Column(
+                      children: [
+                        Image.asset(
+                          'Assets/Rank/KwikCodeLogoPlatinum.png',
+                          height: 54,
+                          width: 54,
+                        ),
+                        SizedBox(
+                          height: 16,
+                          child: Text(
+                            'Expert',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: globals.platinum,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(width: 5),
                   ],
@@ -208,11 +271,11 @@ class RankPage extends StatelessWidget {
                     SizedBox(
                       width: 54,
                       child: Text(
-                        '2000',
+                        '3000',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
-                          color: myKwikPoints >= 2000
+                          color: myKwikPoints >= 3000
                               ? globals.white2
                               : globals.white1,
                           fontWeight: FontWeight.bold,
@@ -256,7 +319,8 @@ class RankPage extends StatelessWidget {
                     const SizedBox(width: 60),
                     SizedBox(
                         height: 20,
-                        child: VerticalDivider(color: globals.white1, thickness: 3)),
+                        child: VerticalDivider(
+                            color: globals.white1, thickness: 3)),
                     const SizedBox(width: 60),
                     Text(
                       'KwikPoints',
@@ -278,8 +342,6 @@ class RankPage extends StatelessWidget {
                 RankItem(rank: 4, userName: 'Rawad', kwikPointsAmount: '1420'),
                 RankItem(rank: 5, userName: 'Arwa', kwikPointsAmount: '1210'),
                 RankItem(rank: 6, userName: 'Rami', kwikPointsAmount: '1170'),
-
-
                 RankItem(rank: 7, userName: 'Samir', kwikPointsAmount: '1590'),
                 RankItem(rank: 8, userName: 'Rawad', kwikPointsAmount: '1420'),
                 RankItem(rank: 9, userName: 'Arwa', kwikPointsAmount: '1210'),
