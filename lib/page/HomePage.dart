@@ -557,7 +557,6 @@ class _HomePageState extends State<HomePage>
           _set1.add(_e.name);
         }
         if (_set1
-            .toSet()
             .intersection(filters.notLanguagesNameList.toSet())
             .isNotEmpty) {
           _childrenTaskList.add(TaskSquare(
