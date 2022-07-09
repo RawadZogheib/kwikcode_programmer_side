@@ -115,7 +115,7 @@ class RankPage extends StatelessWidget {
                         SizedBox(
                           height: 16,
                           child: Text(
-                            'Middle',
+                            'Semi Senior',
                             style: TextStyle(
                               fontSize: 12,
                               color: globals.silver,
