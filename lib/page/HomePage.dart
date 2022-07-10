@@ -196,29 +196,32 @@ class _HomePageState extends State<HomePage>
 
               for (List<dynamic> _element in body[1]) {
                 String _projectName = '';
-                String _projectMangerName = '';
+                // String _projectMangerName = '';
                 List<TaskProgrammingItem> _listTaskProgrammingItem = [];
                 for (List<dynamic> _element2 in body[2]) {
                   if (_element2[0] == _element[2]) {
                     _projectName = _element2[1];
-                    _projectMangerName = _element2[2];
+                    // _projectMangerName = _element2[2];
                   }
                 }
-                for (List<dynamic> _element3 in _element[8]) {
+                for (List<dynamic> _element3 in _element[9]) {
                   _listTaskProgrammingItem.add(TaskProgrammingItem(
                     name: _element3[0],
-                    icon: _element3[1],
+                    icon: _element3[1] == 'Flutter'
+                        ? _element3[1]
+                        : IconData(
+                            int.parse(_element3[1].replaceAll('"', '')),
+                            fontFamily: _element3[2],
+                          ),
                   ));
                 }
-                print(_listTaskProgrammingItem);
                 _childrenTaskListNoFilter.add(TaskSquare(
                   key: ValueKey(_L++),
                   taskId: _element[0],
                   taskName: _element[1],
                   //_element[2] project id
-                  //_element[3] programmer id
                   projectName: _projectName,
-                  projectManager: '@$_projectMangerName',
+                  projectManager: '@${_element[3]}',
                   description: _element[4],
                   timeLeft: int.parse(_element[5]),
                   status: int.parse(_element[6]),
@@ -420,7 +423,7 @@ class _HomePageState extends State<HomePage>
           _set2.add(_f.name);
         }
         if (filters.notLanguagesNameList.contains('Other')) {
-          if(!_set2.containsAll(_set1) || _set1.isEmpty){
+          if (!_set2.containsAll(_set1) || _set1.isEmpty) {
             _childrenTaskList.add(TaskSquare(
               key: ValueKey(_L++),
               taskId: _element.taskId,
