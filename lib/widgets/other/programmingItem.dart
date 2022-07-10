@@ -112,22 +112,28 @@ class TaskProgrammingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return icon.runtimeType == IconData
-        ? Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              icon,
-              size: _iconSize,
-              color: _iconColor,
+        ? Tooltip(
+            message: name,
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(
+                icon,
+                size: _iconSize,
+                color: _iconColor,
+              ),
             ),
           )
 
         /// Flutter
         : icon.runtimeType == String && icon == 'Flutter'
-            ? Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: MyFlutterLogo(
-                  size: _iconSize,
-                  color: _iconColor,
+            ? Tooltip(
+                message: name,
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: MyFlutterLogo(
+                    size: _iconSize,
+                    color: _iconColor,
+                  ),
                 ),
               )
             : const SizedBox.shrink();

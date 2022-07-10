@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
+import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/api/my_api.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/filters.dart' as filters;
@@ -207,12 +208,16 @@ class _HomePageState extends State<HomePage>
                 for (List<dynamic> _element3 in _element[9]) {
                   _listTaskProgrammingItem.add(TaskProgrammingItem(
                     name: _element3[0],
-                    icon: _element3[1] == 'Flutter'
-                        ? _element3[1]
-                        : IconData(
-                            int.parse(_element3[1].replaceAll('"', '')),
-                            fontFamily: _element3[2],
-                          ),
+                    icon: _element3[1] == ''
+                        ? NewIcons.question
+                        // Icons.question_mark
+                        // Icons.crop_square_sharp
+                        : _element3[1] == 'Flutter'
+                            ? _element3[1]
+                            : IconData(
+                                int.parse(_element3[1].replaceAll('"', '')),
+                                fontFamily: _element3[2],
+                              ),
                   ));
                 }
                 _childrenTaskListNoFilter.add(TaskSquare(
