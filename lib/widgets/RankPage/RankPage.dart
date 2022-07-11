@@ -6,6 +6,10 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class RankPage extends StatelessWidget {
   int myKwikPoints;
+  final int _junior = 0;
+  final int _semiSenior = 1400;
+  final int _senior = 2000;
+  final int _expert = 3000;
 
   RankPage({
     Key? key,
@@ -89,9 +93,9 @@ class RankPage extends StatelessWidget {
                           height: 20,
                           width: 100,
                           child: LiquidLinearProgressIndicator(
-                            value: myKwikPoints >= 1200
+                            value: myKwikPoints >= _semiSenior
                                 ? 2
-                                : myKwikPoints.toDouble() / 1200,
+                                : myKwikPoints.toDouble() / _semiSenior,
                             valueColor:
                                 AlwaysStoppedAnimation(globals.logoColorBlue),
                             backgroundColor: globals.whiteBlue,
@@ -114,6 +118,7 @@ class RankPage extends StatelessWidget {
                         ),
                         SizedBox(
                           height: 16,
+                          width: 69,
                           child: Text(
                             'Semi Senior',
                             style: TextStyle(
@@ -132,11 +137,11 @@ class RankPage extends StatelessWidget {
                           height: 20,
                           width: 100,
                           child: LiquidLinearProgressIndicator(
-                            value: myKwikPoints >= 1500
+                            value: myKwikPoints >= _senior
                                 ? 2
-                                : myKwikPoints < 1200
+                                : myKwikPoints < _semiSenior
                                     ? -1
-                                    : (myKwikPoints.toDouble() - 1200) / 300,
+                                    : (myKwikPoints.toDouble() - _semiSenior) / (_senior - _semiSenior),
                             //(1500-1200)
                             valueColor:
                                 AlwaysStoppedAnimation(globals.logoColorBlue),
@@ -178,11 +183,11 @@ class RankPage extends StatelessWidget {
                           height: 20,
                           width: 100,
                           child: LiquidLinearProgressIndicator(
-                            value: myKwikPoints >= 2000
+                            value: myKwikPoints >= _expert
                                 ? 2
-                                : myKwikPoints < 1500
+                                : myKwikPoints < _senior
                                     ? -1
-                                    : (myKwikPoints.toDouble() - 1500) / 500,
+                                    : (myKwikPoints.toDouble() - _senior) / (_expert - _senior),
                             //(2000-1500)
                             valueColor:
                                 AlwaysStoppedAnimation(globals.logoColorBlue),
@@ -239,13 +244,13 @@ class RankPage extends StatelessWidget {
                     ),
                     const SizedBox(width: 110),
                     SizedBox(
-                      width: 54,
+                      width: 69,
                       child: Text(
-                        '1200',
+                        _semiSenior.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
-                          color: myKwikPoints >= 1200
+                          color: myKwikPoints >= _semiSenior
                               ? globals.white2
                               : globals.white1,
                           fontWeight: FontWeight.bold,
@@ -256,11 +261,11 @@ class RankPage extends StatelessWidget {
                     SizedBox(
                       width: 54,
                       child: Text(
-                        '1500',
+                      _senior.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
-                          color: myKwikPoints >= 1500
+                          color: myKwikPoints >= _senior
                               ? globals.white2
                               : globals.white1,
                           fontWeight: FontWeight.bold,
@@ -271,11 +276,11 @@ class RankPage extends StatelessWidget {
                     SizedBox(
                       width: 54,
                       child: Text(
-                        '3000',
+                        _expert.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
-                          color: myKwikPoints >= 3000
+                          color: myKwikPoints >= _expert
                               ? globals.white2
                               : globals.white1,
                           fontWeight: FontWeight.bold,
