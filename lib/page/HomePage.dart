@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage>
           return WillPopScope(
             onWillPop: () async => _back(),
             child: Scaffold(
-              endDrawer: const MyDrawer(),
+              endDrawer: MyDrawer(onBid: (taskSquare) => _startAnimation2(taskSquare)),
               backgroundColor: globals.darkBlue1,
               body: Stack(
                 alignment: Alignment.center,
@@ -322,6 +322,15 @@ class _HomePageState extends State<HomePage>
     }
   }
 
+  Future<void> _startAnimation2(TaskSquare taskSquare) async {
+    if (_animationIsActive == false) {
+      await _loadBid();
+      _childTaskIsActive = taskSquare;
+      _animationIsActive = true;
+      _animationController!.forward();
+    }
+  }
+
   Future<void> _endAnimation() async {
     if (_animationIsActive == true) {
       _animationIsActive = false;
@@ -513,7 +522,7 @@ class _HomePageState extends State<HomePage>
   }
 
   Future<void> _loadBid() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 6));
     debugPrint('Load Bid');
 
     List<BidItem> _bidChildrenTMP = [];

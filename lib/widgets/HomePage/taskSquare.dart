@@ -68,7 +68,7 @@ class _TaskSquareState extends State<TaskSquare> {
 
   @override
   Widget build(BuildContext context) {
-    // double _height = MediaQuery.of(context).size.height;
+    double _height = MediaQuery.of(context).size.height;
     // double _width = MediaQuery.of(context).size.width;
     return Visibility(
       visible: widget.isVisible,
@@ -411,13 +411,17 @@ class _TaskSquareState extends State<TaskSquare> {
   _goToBid() async {
     if (globals.isLoadingBid == false) {
       globals.isLoadingBid = true;
-      setState(() {
-        _isLoadingBid = true;
-      });
+      if(mounted){
+        setState(() {
+          _isLoadingBid = true;
+        });
+      }
       await widget.onBidTap(widget.taskId);
-      setState(() {
-        _isLoadingBid = false;
-      });
+      if(mounted){
+        setState(() {
+          _isLoadingBid = false;
+        });
+      }
       debugPrint('Go to Bid');
     }
   }

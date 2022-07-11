@@ -15,7 +15,9 @@ import 'package:kwikcode_programmer_side/widgets/other/StrikeThroughWidget2.dart
 import 'package:kwikcode_programmer_side/widgets/other/programmingItem.dart';
 
 class MyDrawer extends StatefulWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+  Function(TaskSquare) onBid;
+
+  MyDrawer({Key? key, required this.onBid}) : super(key: key);
 
   @override
   State<MyDrawer> createState() => _MyDrawerState();
@@ -1040,7 +1042,13 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
               //_element[8] bid list
               iconList: _listTaskProgrammingItem,
               removeTask: (String taskId) => null,
-              onBidTap: (String taskId) => null,
+              onBidTap: (String taskId) async {
+                await widget.onBid(_childrenMyTasks
+                    .firstWhere((_element2) => _element2.taskId == taskId));
+                if(mounted) {
+                  Navigator.pop(context);
+                }
+              },
             ));
           }
           return _childrenMyTasks;
