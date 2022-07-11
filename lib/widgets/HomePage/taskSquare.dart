@@ -284,10 +284,10 @@ class _TaskSquareState extends State<TaskSquare> {
                 ),
               ),
               widget.disableToolTip == false
-                  ? const Positioned(
+                  ? Positioned(
                       bottom: 15,
                       right: 15,
-                      child: TargetWidget(),
+                      child: TargetWidget(taskId: widget.taskId),
                     )
                   : Positioned(
                       bottom: 15,

@@ -1,10 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:kwikcode_programmer_side/api/my_api.dart';
+import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
+import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
 import 'package:kwikcode_programmer_side/widgets/toolTip/toolTipWidgets.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 
 class TargetWidget extends StatefulWidget {
-  const TargetWidget({Key? key}) : super(key: key);
+  String taskId;
+
+  TargetWidget({Key? key, required this.taskId}) : super(key: key);
 
   @override
   _TargetWidgetState createState() => _TargetWidgetState();
@@ -25,7 +32,8 @@ class _TargetWidgetState extends State<TargetWidget> {
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
-    if (tooltip != null && tooltip!.isOpen ) {// On screen change close not done
+    if (tooltip != null && tooltip!.isOpen) {
+      // On screen change close not done
       tooltip!.close();
     }
     return Stack(
@@ -58,14 +66,54 @@ class _TargetWidgetState extends State<TargetWidget> {
   Future<bool> _loadToolTip() async {
     if (globals.isLoadingTooltip == false) {
       globals.isLoadingTooltip = true;
-      debugPrint('Loading toolTip');
-      await Future.delayed(const Duration(seconds: 2));
-      _toolTipList = [
-        ['+400', '+5', '12'],
-        ['+200', '+0', '4'],
-        ['+50', '-5', '3'],
-        ['-50', '-10', '8'],
-      ];
+      debugPrint('Loading payment');
+      try {
+        debugPrint(
+            '=========>>======================================================>>==================================================>>=========');
+        var data = {
+          'version': globals.version,
+          'account_Id': await SessionManager().get('Id'),
+          'task_Id': widget.taskId,
+        };
+
+        var res = await CallApi()
+            .postData(data, '/Tasks/Control/(Control)getPayment.php');
+        debugPrint(res.body);
+        List<dynamic> body = json.decode(res.body);
+
+        if (body[0] == 'Success') {
+          if (mounted) {
+            for (List<dynamic> _element in body[1]) {
+              _toolTipList = [
+                ['${_element[0]}', '${_element[1]}', '${_element[2]}'],
+                ['${_element[3]}', '${_element[4]}', '${_element[5]}'],
+                ['${_element[6]}', '${_element[7]}', '${_element[8]}'],
+                ['${_element[9]}', '${_element[10]}', '${_element[11]}'],
+              ];
+            }
+            print(_toolTipList);
+            // setState((){
+            _toolTipList;
+            // });
+          }
+          return true;
+        } else if (body[0] == "errorVersion") {
+          errorPopup(context, globals.errorVersion);
+        } else if (body[0] == "errorToken") {
+          errorPopup(context, globals.errorToken);
+        } else if (body[0] == "error4") {
+          warningPopup(context, globals.warning7);
+        } else {
+          errorPopup(context, globals.errorElse);
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+        errorPopup(context, globals.errorException);
+      }
+      globals.isLoadingTooltip = false;
+      debugPrint('load payment end!!!');
+      debugPrint(
+          '=========<<======================================================<<==================================================<<=========');
       setState(() {
         _isClickedTooltip = false;
       });
@@ -188,7 +236,6 @@ class _TargetWidgetState extends State<TargetWidget> {
       );
 
       tooltip!.show(context);
-      globals.isLoadingTooltip = false;
     }
   }
 // Future<void> _scrollUp() async {

@@ -314,7 +314,10 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _startAnimation(String taskId) async {
     if (_animationIsActive == false) {
-      await _loadBid(taskId);
+      if(await _loadBid(taskId) == false){
+        globals.isLoadingBid = false;
+        return;
+      }
       _childTaskIsActive = _childrenTaskListNoFilter[_childrenTaskListNoFilter
           .indexWhere((element) => element.taskId == taskId)];
       _animationIsActive = true;
@@ -324,7 +327,10 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _startAnimation2(TaskSquare taskSquare) async {
     if (_animationIsActive == false) {
-      await _loadBid(taskSquare.taskId);
+      if(await _loadBid(taskSquare.taskId) == false){
+        globals.isLoadingBid = false;
+        return;
+      }
       _childTaskIsActive = taskSquare;
       _animationIsActive = true;
       _animationController!.forward();
@@ -521,14 +527,13 @@ class _HomePageState extends State<HomePage>
     });
   }
 
-  Future<void> _loadBid(String taskId) async {
+  Future<bool> _loadBid(String taskId) async {
     // await Future.delayed(const Duration(seconds: 2));
     try {
       List<BidItem> _bidChildrenTMP = [];
       debugPrint(
           '=========>>======================================================>>==================================================>>=========');
       debugPrint('load Bid');
-
       var data = {
         'version': globals.version,
         'account_Id': await SessionManager().get('Id'),
@@ -544,10 +549,17 @@ class _HomePageState extends State<HomePage>
         if (mounted) {
 
           for (List<dynamic> _element in body[1]) {
-
+            int _amount = 0;
+            try{
+              _amount = int.parse(_element[1]);
+            }catch(e){
+              _amount = 0;
+              debugPrint('The amount on KwikPoints is empty.');
+            }
             _bidChildrenTMP.add(BidItem(
-              bidName: 'Rawad',
-              kwikPointsAmount: 1700,
+              bidName: _element[0],
+              kwikPointsAmount: _amount,
+              // bid  date: _element[2],
               color: globals.white2,
             ));
           }
@@ -560,6 +572,7 @@ class _HomePageState extends State<HomePage>
             _bidChildren = _bidChildrenTMP;
           });
         }
+        return true;
       } else if (body[0] == "errorVersion") {
         errorPopup(context, globals.errorVersion);
       } else if (body[0] == "errorToken") {
@@ -573,9 +586,11 @@ class _HomePageState extends State<HomePage>
       debugPrint(e.toString());
       errorPopup(context, globals.errorException);
     }
-    debugPrint('load tasks end!!!');
+    debugPrint('load bid end!!!');
     debugPrint(
         '=========<<======================================================<<==================================================<<=========');
+
+    return false;
   }
 
   void _filterByProjects(List<ProjectSquare> childrenProjectList) {

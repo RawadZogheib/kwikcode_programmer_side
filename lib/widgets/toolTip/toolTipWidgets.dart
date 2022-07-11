@@ -131,7 +131,7 @@ class ToolTipWidget extends StatelessWidget {
               left: index != 0 ? 15 : 1,
               child: Tooltip(
                 message:
-                    'If you finish the task in $totalTime Day${int.parse(totalTime) > 1 ? 's' : ''}\n you will ${int.parse(usdAmount) >= 0 ? 'receive' : 'be charged'} $usdAmount US dollar \n and ${(int.parse(kpAmount) >= 0 && int.parse(usdAmount) >= 0) || (int.parse(kpAmount) < 0 && int.parse(usdAmount) < 0) ? '' : int.parse(kpAmount) >= 0 ? 'receive' : 'be charged'} $kpAmount KwikPoints',
+                    'If you finish the task in $totalTime Day${int.parse(totalTime) > 1 ? 's' : ''}\n you will ${int.parse(usdAmount) >= 0 ? 'receive' : 'be charged'} $usdAmount US dollar \n and ${(int.parse(kpAmount) >= 0 && int.parse(usdAmount) >= 0) || (int.parse(kpAmount) < 0 && int.parse(usdAmount) < 0) ? '' : int.parse(kpAmount) >= 0 ? 'receive' : 'be charged'} $kpAmount KwikPoints.',
                 child: Icon(
                   Icons.info_outline,
                   color: Colors.transparent.withOpacity(1),

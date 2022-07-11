@@ -175,7 +175,7 @@ class _BidPopupState extends State<BidPopup> {
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(width: 10),
-                        const TargetWidget(),
+                        TargetWidget(taskId: widget.childTaskIsActive.taskId),
                       ],
                     ),
                   ],
