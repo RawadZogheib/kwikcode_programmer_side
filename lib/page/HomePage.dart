@@ -526,45 +526,57 @@ class _HomePageState extends State<HomePage>
     debugPrint('Load Bid');
 
     List<BidItem> _bidChildrenTMP = [];
-    _bidChildrenTMP.add(BidItem(
-      bidName: 'Rawad',
-      kwikPointsAmount: 1700,
-      color: globals.white2,
-    ));
-    _bidChildrenTMP.add(BidItem(
-      bidName: (_l++).toString(),
-      kwikPointsAmount: 2300,
-      color: globals.white2,
-    ));
-    _bidChildrenTMP.add(BidItem(
-      bidName: (_l++).toString(),
-      kwikPointsAmount: 1300,
-      color: globals.white2,
-    ));
-    _bidChildrenTMP.add(BidItem(
-      bidName: (_l++).toString(),
-      kwikPointsAmount: 1600,
-      color: globals.white2,
-    ));
-    _bidChildrenTMP.add(BidItem(
-      bidName: (_l++).toString(),
-      kwikPointsAmount: 2100,
-      color: globals.white2,
-    ));
-    _bidChildrenTMP.add(BidItem(
-      bidName: (_l++).toString(),
-      kwikPointsAmount: 1800,
-      color: globals.white2,
-    ));
-    _bidChildrenTMP.add(BidItem(
-      bidName: (_l++).toString(),
-      kwikPointsAmount: 1300,
-      color: globals.white2,
-    ));
-    _bidChildrenTMP.sort(
-        (BidItem a, BidItem b) => b.kwikPointsAmount - a.kwikPointsAmount);
-    _bidChildrenTMP[0].color = globals.gold;
-    _bidChildren = _bidChildrenTMP;
+    try {
+      debugPrint(
+          '=========>>======================================================>>==================================================>>=========');
+      debugPrint('load tasks');
+
+      var data = {
+        'version': globals.version,
+        'account_Id': await SessionManager().get('Id'),
+      };
+
+      var res = await CallApi()
+          .postData(data, '/Bids/Control/(Control)loadAllBids.php');
+      debugPrint(res.body);
+      List<dynamic> body = json.decode(res.body);
+
+      if (body[0] == 'Success') {
+        if (mounted) {
+
+          for (List<dynamic> _element in body[1]) {
+
+            _bidChildrenTMP.add(BidItem(
+              bidName: 'Rawad',
+              kwikPointsAmount: 1700,
+              color: globals.white2,
+            ));
+          }
+
+          _bidChildrenTMP.sort(
+                  (BidItem a, BidItem b) => b.kwikPointsAmount - a.kwikPointsAmount);
+          _bidChildrenTMP[0].color = globals.gold;
+
+          setState((){
+            _bidChildren = _bidChildrenTMP;
+          });
+        }
+      } else if (body[0] == "errorVersion") {
+        errorPopup(context, globals.errorVersion);
+      } else if (body[0] == "errorToken") {
+        errorPopup(context, globals.errorToken);
+      } else if (body[0] == "error4") {
+        warningPopup(context, globals.warning7);
+      } else {
+        errorPopup(context, globals.errorElse);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      errorPopup(context, globals.errorException);
+    }
+    debugPrint('load tasks end!!!');
+    debugPrint(
+        '=========<<======================================================<<==================================================<<=========');
   }
 
   void _filterByProjects(List<ProjectSquare> childrenProjectList) {
