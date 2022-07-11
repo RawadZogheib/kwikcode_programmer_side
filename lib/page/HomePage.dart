@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   List<BidItem> _bidChildren = [];
   int _k = 0;
-  int _L = 0;
+  int _l = 0;
 
   Animation? _animation;
   AnimationController? _animationController;
@@ -165,121 +165,120 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _loadTasks() async {
     if (_isClickedRefresh == false) {
-      try {
-        debugPrint(
-            '=========>>======================================================>>==================================================>>=========');
+      // try {
+      debugPrint(
+          '=========>>======================================================>>==================================================>>=========');
 
+      if (mounted) {
+        setState(() {
+          _isLoadingTasks = true;
+          _isClickedRefresh = true;
+        });
+      }
+      debugPrint('load tasks');
+
+      var data = {
+        'version': globals.version,
+        'account_Id': await SessionManager().get('Id'),
+      };
+
+      var res = await CallApi()
+          .postData(data, '/Tasks/Control/(Control)loadTasks.php');
+      debugPrint(res.body);
+      List<dynamic> body = json.decode(res.body);
+
+      if (body[0] == 'Success') {
         if (mounted) {
           setState(() {
-            _isLoadingTasks = true;
-            _isClickedRefresh = true;
+            _isLoadingTasks = false;
+            _isClickedRefresh = false;
+            _childrenTaskListNoFilter.clear();
+            _childrenProjectList.clear();
+
+            for (List<dynamic> _element in body[1]) {
+              String _projectName = '';
+              // String _projectMangerName = '';
+              List<TaskProgrammingItem> _listTaskProgrammingItem = [];
+              for (List<dynamic> _element2 in body[2]) {
+                if (_element2[0] == _element[2]) {
+                  _projectName = _element2[1];
+                  // _projectMangerName = _element2[2];
+                }
+              }
+              for (List<dynamic> _element3 in _element[8]) {
+                _listTaskProgrammingItem.add(TaskProgrammingItem(
+                  name: _element3[0],
+                  icon: _element3[1] == ''
+                      ? NewIcons.question
+                      // Icons.question_mark
+                      // Icons.crop_square_sharp
+                      : _element3[1] == 'Flutter'
+                          ? _element3[1]
+                          : IconData(
+                              int.parse(_element3[1].replaceAll('"', '')),
+                              fontFamily: _element3[2],
+                            ),
+                ));
+              }
+              _childrenTaskListNoFilter.add(TaskSquare(
+                key: ValueKey(_k++),
+                taskId: _element[0],
+                taskName: _element[1],
+                //_element[2] project id
+                projectName: _projectName,
+                projectManager: '@${_element[3]}',
+                description: _element[4],
+                timeLeft: int.parse(_element[5]),
+                status: int.parse(_element[6]),
+                //_element[7] task date
+                //_element[8] bid list
+                iconList: _listTaskProgrammingItem,
+                removeTask: (String taskId) => _removeTask(taskId),
+                onBidTap: (String taskId) => _startAnimation(taskId),
+              ));
+            }
+
+            for (List<dynamic> _element3 in body[2]) {
+              _childrenProjectList.add(ProjectSquare(
+                key: ValueKey(_element3[0]),
+                projectName: _element3[1],
+                //_element3[2] project manager name
+                //_element3[3] project date
+                isSelected: true,
+                imgUrl: null,
+                //todo get image
+                onTap: () => debugPrint('Project 1'),
+                filterByProjects: () => _filterByProjects(_childrenProjectList),
+              ));
+              filters.projectSelectedSet.add(_element3[1]);
+            }
           });
         }
-        debugPrint('load tasks');
-
-        var data = {
-          'version': globals.version,
-          'account_Id': await SessionManager().get('Id'),
-        };
-
-        var res = await CallApi()
-            .postData(data, '/Tasks/Control/(Control)loadTasks.php');
-        debugPrint(res.body);
-        List<dynamic> body = json.decode(res.body);
-
-        if (body[0] == 'Success') {
-          if (mounted) {
-            setState(() {
-              _isLoadingTasks = false;
-              _isClickedRefresh = false;
-              _childrenTaskListNoFilter.clear();
-              _childrenProjectList.clear();
-
-              for (List<dynamic> _element in body[1]) {
-                String _projectName = '';
-                // String _projectMangerName = '';
-                List<TaskProgrammingItem> _listTaskProgrammingItem = [];
-                for (List<dynamic> _element2 in body[2]) {
-                  if (_element2[0] == _element[2]) {
-                    _projectName = _element2[1];
-                    // _projectMangerName = _element2[2];
-                  }
-                }
-                for (List<dynamic> _element3 in _element[9]) {
-                  _listTaskProgrammingItem.add(TaskProgrammingItem(
-                    name: _element3[0],
-                    icon: _element3[1] == ''
-                        ? NewIcons.question
-                        // Icons.question_mark
-                        // Icons.crop_square_sharp
-                        : _element3[1] == 'Flutter'
-                            ? _element3[1]
-                            : IconData(
-                                int.parse(_element3[1].replaceAll('"', '')),
-                                fontFamily: _element3[2],
-                              ),
-                  ));
-                }
-                _childrenTaskListNoFilter.add(TaskSquare(
-                  key: ValueKey(_L++),
-                  taskId: _element[0],
-                  taskName: _element[1],
-                  //_element[2] project id
-                  projectName: _projectName,
-                  projectManager: '@${_element[3]}',
-                  description: _element[4],
-                  timeLeft: int.parse(_element[5]),
-                  status: int.parse(_element[6]),
-                  //_element[7] task date
-                  //_element[8] bid list
-                  iconList: _listTaskProgrammingItem,
-                  removeTask: (String taskId) => _removeTask(taskId),
-                  onBidTap: (String taskId) => _startAnimation(taskId),
-                ));
-              }
-
-              for (List<dynamic> _element3 in body[2]) {
-                _childrenProjectList.add(ProjectSquare(
-                  key: ValueKey(_element3[0]),
-                  projectName: _element3[1],
-                  //_element3[2] project manager name
-                  //_element3[3] project date
-                  isSelected: true,
-                  imgUrl: null,
-                  //todo get image
-                  onTap: () => debugPrint('Project 1'),
-                  filterByProjects: () =>
-                      _filterByProjects(_childrenProjectList),
-                ));
-                filters.projectSelectedSet.add(_element3[1]);
-              }
-            });
-          }
-        } else if (body[0] == "errorVersion") {
-          errorPopup(context, globals.errorVersion);
-        } else if (body[0] == "errorToken") {
-          errorPopup(context, globals.errorToken);
-        } else if (body[0] == "error4") {
-          warningPopup(context, globals.warning7);
-        } else {
-          if (mounted) {
-            setState(() {
-              _isLoadingTasks = true;
-              _isClickedRefresh = false;
-            });
-          }
-          errorPopup(context, globals.errorElse);
-        }
-      } catch (e) {
-        debugPrint(e.toString());
+      } else if (body[0] == "errorVersion") {
+        errorPopup(context, globals.errorVersion);
+      } else if (body[0] == "errorToken") {
+        errorPopup(context, globals.errorToken);
+      } else if (body[0] == "error4") {
+        warningPopup(context, globals.warning7);
+      } else {
         if (mounted) {
           setState(() {
             _isLoadingTasks = true;
             _isClickedRefresh = false;
           });
         }
-        errorPopup(context, globals.errorException);
+        errorPopup(context, globals.errorElse);
       }
+      // } catch (e) {
+      //   debugPrint(e.toString());
+      //   if (mounted) {
+      //     setState(() {
+      //       _isLoadingTasks = true;
+      //       _isClickedRefresh = false;
+      //     });
+      //   }
+      //   errorPopup(context, globals.errorException);
+      // }
 
       if (mounted) {
         setState(() {
@@ -364,7 +363,7 @@ class _HomePageState extends State<HomePage>
     for (TaskSquare _element in _childrenTaskListNoFilter) {
       if (!filters.projectSelectedSet.contains(_element.projectName)) {
         _childrenTaskList.add(TaskSquare(
-          key: ValueKey(_L++),
+          key: ValueKey(_k++),
           taskId: _element.taskId,
           taskName: _element.taskName,
           isVisible: false,
@@ -383,7 +382,7 @@ class _HomePageState extends State<HomePage>
       if (filters.redRadio == true && filters.orangeRadio == false) {
         if (_element.status != 0) {
           _childrenTaskList.add(TaskSquare(
-            key: ValueKey(_L++),
+            key: ValueKey(_k++),
             taskId: _element.taskId,
             taskName: _element.taskName,
             isVisible: false,
@@ -401,7 +400,7 @@ class _HomePageState extends State<HomePage>
       } else if (filters.redRadio == false && filters.orangeRadio == true) {
         if (_element.status != 1) {
           _childrenTaskList.add(TaskSquare(
-            key: ValueKey(_L++),
+            key: ValueKey(_k++),
             taskId: _element.taskId,
             taskName: _element.taskName,
             isVisible: false,
@@ -430,7 +429,7 @@ class _HomePageState extends State<HomePage>
         if (filters.notLanguagesNameList.contains('Other')) {
           if (!_set2.containsAll(_set1) || _set1.isEmpty) {
             _childrenTaskList.add(TaskSquare(
-              key: ValueKey(_L++),
+              key: ValueKey(_k++),
               taskId: _element.taskId,
               taskName: _element.taskName,
               isVisible: false,
@@ -450,7 +449,7 @@ class _HomePageState extends State<HomePage>
             .intersection(filters.notLanguagesNameList.toSet())
             .isNotEmpty) {
           _childrenTaskList.add(TaskSquare(
-            key: ValueKey(_L++),
+            key: ValueKey(_k++),
             taskId: _element.taskId,
             taskName: _element.taskName,
             isVisible: false,
@@ -467,7 +466,7 @@ class _HomePageState extends State<HomePage>
         }
       }
       _childrenTaskList.add(TaskSquare(
-        key: ValueKey(_L++),
+        key: ValueKey(_k++),
         taskId: _element.taskId,
         taskName: _element.taskName,
         isVisible: true,
@@ -524,32 +523,32 @@ class _HomePageState extends State<HomePage>
       color: globals.white2,
     ));
     _bidChildrenTMP.add(BidItem(
-      bidName: (_k++).toString(),
+      bidName: (_l++).toString(),
       kwikPointsAmount: 2300,
       color: globals.white2,
     ));
     _bidChildrenTMP.add(BidItem(
-      bidName: (_k++).toString(),
+      bidName: (_l++).toString(),
       kwikPointsAmount: 1300,
       color: globals.white2,
     ));
     _bidChildrenTMP.add(BidItem(
-      bidName: (_k++).toString(),
+      bidName: (_l++).toString(),
       kwikPointsAmount: 1600,
       color: globals.white2,
     ));
     _bidChildrenTMP.add(BidItem(
-      bidName: (_k++).toString(),
+      bidName: (_l++).toString(),
       kwikPointsAmount: 2100,
       color: globals.white2,
     ));
     _bidChildrenTMP.add(BidItem(
-      bidName: (_k++).toString(),
+      bidName: (_l++).toString(),
       kwikPointsAmount: 1800,
       color: globals.white2,
     ));
     _bidChildrenTMP.add(BidItem(
-      bidName: (_k++).toString(),
+      bidName: (_l++).toString(),
       kwikPointsAmount: 1300,
       color: globals.white2,
     ));

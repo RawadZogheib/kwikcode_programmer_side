@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/NewIcons.dart';
+import 'package:kwikcode_programmer_side/api/my_api.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
@@ -24,6 +27,22 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
   String _status = '-9999';
   bool _isLoading = false;
+
+  int _k = 0;
+  final List<TaskSquare> _childrenMyTasks = [];
+  final Map<String, int> _indexMap = {
+    'My Tasks' : 0,
+    'My Bids' : 1,
+    'My Wallet' : 2,
+    'Rank' : 3,
+    'Chat' : 4,
+    'News' : 5,
+    'Updates' : 6,
+    'Notifications' : 7,
+    'Settings' : 8,
+    'About' : 9,
+    'Logout' : 10
+  };
 
   Animation? _animation, _animation1, _animation2;
   AnimationController? _animationController;
@@ -237,7 +256,9 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                             splashColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
-                                            onTap: () => _isLoading == false ? _refreshDrawer() : null,
+                                            onTap: () => _isLoading == false
+                                                ? _refreshDrawer(_status)
+                                                : null,
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
@@ -289,44 +310,43 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
   Future<void> selectedItem(BuildContext context, int index) async {
     if (_isLoading == false) {
-
       setState(() {
-        _isLoading = false;
+        _isLoading = true;
       });
       //Navigator.of(context).pop();
       switch (index) {
         case 0: // My Tasks
-          _case0();
+          await _case0();
           break;
         case 1: // My Bids
-          _case1();
+          await _case1();
           break;
         case 2: // My Wallet
-          _case2();
+          await _case2();
           break;
         case 3: // Rank
-          _case3();
+          await _case3();
           break;
         case 4: // Chat
-          _case4();
+          await _case4();
           break;
         case 5: // News
-          _case5();
+          await _case5();
           break;
         case 6: // Updates
-          _case6();
+          await _case6();
           break;
         case 7: // Notifications
-          _case7();
+          await _case7();
           break;
         case 8: // Settings
-          _case8();
+          await _case8();
           break;
         case 9: // About
-          _case9();
+          await _case9();
           break;
         case 10: // Logout
-          _case10();
+          await _case10();
           break;
       }
       setState(() {
@@ -336,7 +356,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   }
 
   Future<void> _case0() async {
-    if (_status != 'My Tasks') {
+    // if (_status != 'My Tasks') {
       debugPrint('My Tasks');
       if (_status != '-9999') {
         await _animationController!.reverse();
@@ -351,40 +371,58 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       ///
       _animationController!.forward();
       setState(() {
-        _currentWidget = SizedBox(
-          width: _drawerRightSize,
-          child: ScrollConfiguration(
-            behavior: MyCustomScrollBehavior().copyWith(scrollbars: false),
-            child: SingleChildScrollView(
-              controller: ScrollController(),
-              child: Column(children: <Widget>[
-                TaskSquare(
-                  key: const ValueKey('4'),
-                  taskId: '4',
-                  taskName: 'Task Name 4',
-                  projectManager: '@Samir',
-                  projectName: '',
-                  description: 'adsadsad asd  asd as d asd',
-                  timeLeft: 5600,
-                  iconList: [
-                    TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
-                    TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
-                  ],
-                  status: 2,
-                  removeTask: (String taskId) => debugPrint(taskId),
-                  onBidTap: (String taskId) => debugPrint(taskId),
+        _currentWidget = FutureBuilder(
+            future: _loadMyTasks(),
+            builder: (context, AsyncSnapshot _snapShot) {
+              if(_snapShot.hasData){
+                return SizedBox(
+                  width: _drawerRightSize,
+                  child: ScrollConfiguration(
+                    behavior:
+                    MyCustomScrollBehavior().copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      child: Column(children: _snapShot.data),
+                    ),
+                  ),
+                );
+              }
+              return SizedBox(
+                width: _drawerRightSize,
+                child: ScrollConfiguration(
+                  behavior:
+                      MyCustomScrollBehavior().copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    child: Column(children: <Widget>[
+                      TaskSquare(
+                        key: const ValueKey('4'),
+                        taskId: '4',
+                        taskName: 'Task Name 4',
+                        projectManager: '@Samir',
+                        projectName: '',
+                        description: 'adsadsad asd  asd as d asd',
+                        timeLeft: 5600,
+                        iconList: [
+                          TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
+                          TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),
+                        ],
+                        status: 2,
+                        removeTask: (String taskId) => debugPrint(taskId),
+                        onBidTap: (String taskId) => debugPrint(taskId),
+                      ),
+                    ]),
+                  ),
                 ),
-              ]),
-            ),
-          ),
-        );
+              );
+            });
       });
       _status = 'My Tasks';
-    }
+    // }
   }
 
   Future<void> _case1() async {
-    if (_status != 'My Bids') {
+    // if (_status != 'My Bids') {
       debugPrint('My Bids');
       if (_status != '-9999') {
         await _animationController!.reverse();
@@ -428,11 +466,11 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
         );
       });
       _status = 'My Bids';
-    }
+    // }
   }
 
   Future<void> _case2() async {
-    if (_status != 'My Wallet') {
+    // if (_status != 'My Wallet') {
       debugPrint('My Wallet');
       if (_status != '-9999') {
         await _animationController!.reverse();
@@ -561,11 +599,11 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
         );
       });
       _status = 'My Wallet';
-    }
+    // }
   }
 
   Future<void> _case3() async {
-    if (_status != 'Ranks') {
+    // if (_status != 'Ranks') {
       debugPrint('Ranks');
       if (_status != '-9999') {
         await _animationController!.reverse();
@@ -587,11 +625,11 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
         );
       });
       _status = 'Ranks';
-    }
+    // }
   }
 
   Future<void> _case4() async {
-    if (_status != 'Chat') {
+    // if (_status != 'Chat') {
       debugPrint('Chat');
       if (_status != '-9999') {
         await _animationController!.reverse();
@@ -611,13 +649,13 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
         );
       });
       _status = 'Chat';
-    }
-    Navigator.of(context).pop();
+    // }
+    // Navigator.of(context).pop();
     warningPopup(context, 'Coming Soon!!');
   }
 
   Future<void> _case5() async {
-    if (_status != 'News') {
+    // if (_status != 'News') {
       List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
       int _colorCounter = 0;
       List<NewsContainer> _newsContainerList = [];
@@ -671,11 +709,11 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
         );
       });
       _status = 'News';
-    }
+    // }
   }
 
   Future<void> _case6() async {
-    if (_status != 'Updates') {
+    // if (_status != 'Updates') {
       List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
       int _colorCounter = 0;
       List<NewsContainer> _updatesContainerList = [];
@@ -722,11 +760,11 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
         );
       });
       _status = 'Updates';
-    }
+    // }
   }
 
   Future<void> _case7() async {
-    if (_status != 'Notifications') {
+    // if (_status != 'Notifications') {
       debugPrint('Notifications');
       if (_status != '-9999') {
         await _animationController!.reverse();
@@ -746,13 +784,13 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
         );
       });
       _status = 'Notifications';
-    }
+    // }
     Navigator.of(context).pop();
     warningPopup(context, 'Coming Soon!!');
   }
 
   Future<void> _case8() async {
-    if (_status != 'Settings') {
+    // if (_status != 'Settings') {
       debugPrint('Settings');
       if (_status != '-9999') {
         await _animationController!.reverse();
@@ -772,13 +810,13 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
         );
       });
       _status = 'Settings';
-    }
+    // }
     Navigator.of(context).pop();
     warningPopup(context, 'Coming Soon!!');
   }
 
   Future<void> _case9() async {
-    if (_status != 'About') {
+    // if (_status != 'About') {
       debugPrint('About');
       if (_status != '-9999') {
         await _animationController!.reverse();
@@ -800,7 +838,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
         );
       });
       _status = 'About';
-    }
+    // }
   }
 
   Future<void> _case10() async {
@@ -852,15 +890,87 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> _refreshDrawer() async {
+  Future<void> _refreshDrawer(String index) async {
+
     debugPrint('Refresh Drawer');
-    setState(() {
-      _isLoading = true;
-    });
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      _isLoading = false;
-    });
+    await selectedItem(context, _indexMap[_status]!);
+    // await Future.delayed(const Duration(seconds: 2));
+  }
+
+  Future<List<TaskSquare>> _loadMyTasks() async {
+      // try {
+        debugPrint(
+            '=========>>======================================================>>==================================================>>=========');
+        debugPrint('load tasks');
+
+        var data = {
+          'version': globals.version,
+          'account_Id': await SessionManager().get('Id'),
+        };
+
+        var res = await CallApi()
+            .postData(data, '/Tasks/Control/(Control)myTasks.php');
+        debugPrint(res.body);
+        List<dynamic> body = json.decode(res.body);
+
+        if (body[0] == 'Success') {
+          if (mounted) {
+            _childrenMyTasks.clear();
+
+            for (List<dynamic> _element in body[1]) {
+              List<TaskProgrammingItem> _listTaskProgrammingItem = [];
+
+              for (List<dynamic> _element3 in _element[8]) {
+                _listTaskProgrammingItem.add(TaskProgrammingItem(
+                  name: _element3[0],
+                  icon: _element3[1] == ''
+                      ? NewIcons.question
+                      // Icons.question_mark
+                      // Icons.crop_square_sharp
+                      : _element3[1] == 'Flutter'
+                          ? _element3[1]
+                          : IconData(
+                              int.parse(_element3[1].replaceAll('"', '')),
+                              fontFamily: _element3[2],
+                            ),
+                ));
+              }
+              _childrenMyTasks.add(TaskSquare(
+                key: ValueKey(_k++),
+                taskId: _element[0],
+                taskName: _element[1],
+                //_element[2] project id
+                projectName: '_projectName',
+                projectManager: '@${_element[3]}',
+                description: _element[4],
+                timeLeft: int.parse(_element[5]),
+                status: int.parse(_element[6]),
+                //_element[7] task date
+                //_element[8] bid list
+                iconList: _listTaskProgrammingItem,
+                removeTask: (String taskId) => null,
+                onBidTap: (String taskId) => null,
+              ));
+            }
+            return _childrenMyTasks;
+          }
+        } else if (body[0] == "errorVersion") {
+          errorPopup(context, globals.errorVersion);
+        } else if (body[0] == "errorToken") {
+          errorPopup(context, globals.errorToken);
+        } else if (body[0] == "error4") {
+          warningPopup(context, globals.warning7);
+        } else {
+          errorPopup(context, globals.errorElse);
+        }
+      // } catch (e) {
+      //   debugPrint(e.toString());
+      //   errorPopup(context, globals.errorException);
+      // }
+      debugPrint('load tasks end!!!');
+      debugPrint(
+          '=========<<======================================================<<==================================================<<=========');
+    return [];
   }
 }
 
