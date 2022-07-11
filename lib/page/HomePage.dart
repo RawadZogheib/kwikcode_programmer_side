@@ -314,7 +314,7 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _startAnimation(String taskId) async {
     if (_animationIsActive == false) {
-      await _loadBid();
+      await _loadBid(taskId);
       _childTaskIsActive = _childrenTaskListNoFilter[_childrenTaskListNoFilter
           .indexWhere((element) => element.taskId == taskId)];
       _animationIsActive = true;
@@ -324,7 +324,7 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _startAnimation2(TaskSquare taskSquare) async {
     if (_animationIsActive == false) {
-      await _loadBid();
+      await _loadBid(taskSquare.taskId);
       _childTaskIsActive = taskSquare;
       _animationIsActive = true;
       _animationController!.forward();
@@ -521,19 +521,18 @@ class _HomePageState extends State<HomePage>
     });
   }
 
-  Future<void> _loadBid() async {
-    await Future.delayed(const Duration(seconds: 2));
-    debugPrint('Load Bid');
-
-    List<BidItem> _bidChildrenTMP = [];
+  Future<void> _loadBid(String taskId) async {
+    // await Future.delayed(const Duration(seconds: 2));
     try {
+      List<BidItem> _bidChildrenTMP = [];
       debugPrint(
           '=========>>======================================================>>==================================================>>=========');
-      debugPrint('load tasks');
+      debugPrint('load Bid');
 
       var data = {
         'version': globals.version,
         'account_Id': await SessionManager().get('Id'),
+        'task_Id': taskId,
       };
 
       var res = await CallApi()
