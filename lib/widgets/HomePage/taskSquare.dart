@@ -50,11 +50,14 @@ class _TaskSquareState extends State<TaskSquare> {
   bool _isClickedTooltip = false;
   bool _isLoadingBid = false;
 
+  late Widget _childTargetWidget;
+
   @override
   void initState() {
     // TODO: implement initState
     _timeLeftChrono();
     _animate();
+    _childTargetWidget = TargetWidget(taskId: widget.taskId);
     super.initState();
   }
 
@@ -287,7 +290,8 @@ class _TaskSquareState extends State<TaskSquare> {
                   ? Positioned(
                       bottom: 15,
                       right: 15,
-                      child: TargetWidget(taskId: widget.taskId),
+                      child: _childTargetWidget,
+                //  todo
                     )
                   : Positioned(
                       bottom: 15,

@@ -95,8 +95,12 @@ class _TargetWidgetState extends State<TargetWidget> {
             // setState((){
             _toolTipList;
             // });
+            setState(() {
+              _isClickedTooltip = false;
+            });
+            await Future.delayed(const Duration(milliseconds: 100));
+            return true;
           }
-          return true;
         } else if (body[0] == "errorVersion") {
           errorPopup(context, globals.errorVersion);
         } else if (body[0] == "errorToken") {
@@ -110,7 +114,6 @@ class _TargetWidgetState extends State<TargetWidget> {
         debugPrint(e.toString());
         errorPopup(context, globals.errorException);
       }
-      globals.isLoadingTooltip = false;
       debugPrint('load payment end!!!');
       debugPrint(
           '=========<<======================================================<<==================================================<<=========');
@@ -119,7 +122,7 @@ class _TargetWidgetState extends State<TargetWidget> {
       });
       await Future.delayed(const Duration(milliseconds: 100));
       debugPrint('Loading toolTip end');
-      return true;
+      return false;
     } else {
       setState(() {
         _isClickedTooltip = false;
@@ -135,8 +138,10 @@ class _TargetWidgetState extends State<TargetWidget> {
         _isClickedTooltip = true;
       });
       if (await _loadToolTip() == false) {
+        debugPrint('false');
         return;
       }
+
       // if(_isLoadingTooltip == false){
       //   debugPrint('stop  onTap');
       //   return;
@@ -236,6 +241,7 @@ class _TargetWidgetState extends State<TargetWidget> {
       );
 
       tooltip!.show(context);
+      globals.isLoadingTooltip = false;
     }
   }
 // Future<void> _scrollUp() async {
