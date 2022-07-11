@@ -522,7 +522,7 @@ class _HomePageState extends State<HomePage>
   }
 
   Future<void> _loadBid() async {
-    await Future.delayed(const Duration(seconds: 6));
+    await Future.delayed(const Duration(seconds: 2));
     debugPrint('Load Bid');
 
     List<BidItem> _bidChildrenTMP = [];
