@@ -27,6 +27,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  bool _isLoggedIn = false;
   List<BidItem> _bidChildren = [];
   int _k = 0;
   int _l = 0;
@@ -64,6 +65,7 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     // TODO: implement initState
+    _loadIsLoggedIn();
     globals.currentPage = 'HomePage';
     _loadAnimation();
     _loadNewPage();
@@ -600,6 +602,19 @@ class _HomePageState extends State<HomePage>
           : filters.projectSelectedSet.remove(_element.projectName);
     }
     _filterTasks();
+  }
+
+  Future<void> _loadIsLoggedIn() async {
+    if (await SessionManager().containsKey('isLoggedIn')) {
+      _isLoggedIn = await SessionManager().get('isLoggedIn');
+      debugPrint('isLoggedIn');
+        _isLoggedIn;
+    } else {
+      await SessionManager().destroy();
+        _isLoggedIn = false;
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamedAndRemoveUntil('/Login', (route) => false);
+    }
   }
 
   _back() {

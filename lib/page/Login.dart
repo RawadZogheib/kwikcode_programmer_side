@@ -306,9 +306,17 @@ class _LoginState extends State<Login> {
           });
         }
       } else if (body[0] == "error4") {
+        setState(() {
+          _errTxt = globals.error4;
+          _colErrTxt = globals.red_1;
+        });
         warningPopup(context, globals.error4);
       } else if (body[0] == "error13") {
-        warningPopup(context, globals.error13);
+        setState(() {
+          _errTxt = globals.error13;
+          _colErrTxt = globals.red_1;
+        });
+        errorPopup(context, globals.error13);
       } else {
         if (mounted) {
           setState(() {

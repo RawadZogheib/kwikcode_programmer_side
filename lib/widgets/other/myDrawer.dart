@@ -486,184 +486,322 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
   Future<void> _case2() async {
     if (_status != 'My Wallet') {
-    debugPrint('My Wallet');
-    if (_status != '-9999') {
-      await _animationController!.reverse();
-    }
+      debugPrint('My Wallet');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
 
-    /// Resize animation
-    if (_drawerRightSize != _drawerRightSize1) {
-      _drawerRightSize = _drawerRightSize1;
-      _loadAnimation();
-    }
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
 
-    ///
-    _animationController!.forward();
-    setState(() {
-      _currentWidget = Container(
-        width: _drawerRightSize - 20,
-        margin: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Container(
-              height: 70,
-              decoration: BoxDecoration(
-                border: Border.all(color: globals.logoColorPink),
-                borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 70,
-                    width: 120,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: globals.logoColorPink,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(12.0)),
-                    ),
-                    child: Text(
-                      'US Dollar: ',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: globals.darkBlue1,
-                        fontWeight: FontWeight.bold,
+      ///
+      _animationController!.forward();
+      _currentWidget = FutureBuilder(
+          future: _loadMyWallet().whenComplete(() => _isLoadingFalse()),
+          builder: (context, AsyncSnapshot _snapShot) {
+            if (_snapShot.connectionState == ConnectionState.waiting) {
+              return _loadingWidgetWallet();
+            }
+            if (_snapShot.hasData) {
+              return Container(
+                width: _drawerRightSize - 20,
+                margin: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 70,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: globals.logoColorPink),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12.0)),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      '\$ 1740',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: globals.white2,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 15.0),
-            Container(
-              height: 70,
-              decoration: BoxDecoration(
-                border: Border.all(color: globals.logoColorBlue),
-                borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 70,
-                    width: 120,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: globals.logoColorBlue,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(12.0)),
-                    ),
-                    child: Text(
-                      'KwikPoints: ',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: globals.darkBlue1,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        StrikeThroughWidget2(
-                          color: globals.white2,
-                          child: Text(
-                            'KP',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: globals.white2,
-                              fontWeight: FontWeight.bold,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 70,
+                            width: 120,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: globals.logoColorPink,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            child: Text(
+                              'US Dollar: ',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: globals.darkBlue1,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        Text(
-                          ' $_myKwikPoints',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: globals.white2,
-                            fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: Text(
+                              '\$ 1740',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: globals.white2,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    });
-    _status = 'My Wallet';
+                    const SizedBox(height: 15.0),
+                    Container(
+                      height: 70,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: globals.logoColorBlue),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 70,
+                            width: 120,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: globals.logoColorBlue,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            child: Text(
+                              'KwikPoints: ',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: globals.darkBlue1,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                StrikeThroughWidget2(
+                                  color: globals.white2,
+                                  child: Text(
+                                    'KP',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: globals.white2,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  ' $_myKwikPoints',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: globals.white2,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return _loadingWidgetWallet();
+          });
+    } else if (!_animationController!.isAnimating &&
+        _status == 'My Wallet' &&
+        _isLoading == false) {
+      _isLoadingTrue();
+      _currentWidget = FutureBuilder(
+          future: _loadMyWallet().whenComplete(() => _isLoadingFalse()),
+          builder: (context, AsyncSnapshot _snapShot) {
+            if (_snapShot.connectionState == ConnectionState.waiting) {
+              return _loadingWidgetWallet();
+            }
+            if (_snapShot.hasData) {
+              return Container(
+                width: _drawerRightSize - 20,
+                margin: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 70,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: globals.logoColorPink),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 70,
+                            width: 120,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: globals.logoColorPink,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            child: Text(
+                              'US Dollar: ',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: globals.darkBlue1,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '\$ 1740',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: globals.white2,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 15.0),
+                    Container(
+                      height: 70,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: globals.logoColorBlue),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 70,
+                            width: 120,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: globals.logoColorBlue,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            child: Text(
+                              'KwikPoints: ',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: globals.darkBlue1,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                StrikeThroughWidget2(
+                                  color: globals.white2,
+                                  child: Text(
+                                    'KP',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: globals.white2,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  ' $_myKwikPoints',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: globals.white2,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return _loadingWidgetWallet();
+          });
     }
+    _status = 'My Wallet';
   }
 
   Future<void> _case3() async {
     if (_status != 'Ranks') {
-    debugPrint('Ranks');
-    if (_status != '-9999') {
-      await _animationController!.reverse();
-    }
+      debugPrint('Ranks');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
 
-    /// Resize animation
-    if (_drawerRightSize != _drawerRightSize2) {
-      _drawerRightSize = _drawerRightSize2;
-      _loadAnimation();
-    }
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize2) {
+        _drawerRightSize = _drawerRightSize2;
+        _loadAnimation();
+      }
 
-    ///
-    _animationController!.forward();
-    setState(() {
-      _currentWidget = Container(
-        width: _drawerRightSize - 20,
-        margin: const EdgeInsets.all(8.0),
-        child: RankPage(myKwikPoints: _myKwikPoints),
-      );
-    });
-    _status = 'Ranks';
+      ///
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = Container(
+          width: _drawerRightSize - 20,
+          margin: const EdgeInsets.all(8.0),
+          child: RankPage(myKwikPoints: _myKwikPoints),
+        );
+      });
+      _status = 'Ranks';
     }
   }
 
   Future<void> _case4() async {
     if (_status != 'Chat') {
-    debugPrint('Chat');
-    if (_status != '-9999') {
-      await _animationController!.reverse();
-    }
+      debugPrint('Chat');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
 
-    /// Resize animation
-    if (_drawerRightSize != _drawerRightSize1) {
-      _drawerRightSize = _drawerRightSize1;
-      _loadAnimation();
-    }
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
 
-    ///
-    _animationController!.forward();
-    setState(() {
-      _currentWidget = SizedBox(
-        width: _drawerRightSize,
-      );
-    });
-    _status = 'Chat';
+      ///
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = SizedBox(
+          width: _drawerRightSize,
+        );
+      });
+      _status = 'Chat';
     }
     // Navigator.of(context).pop();
     warningPopup(context, 'Coming Soon!!');
@@ -671,110 +809,118 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
   Future<void> _case5() async {
     if (_status != 'News') {
-    List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
-    int _colorCounter = 0;
-    List<NewsContainer> _newsContainerList = [];
 
-    ///New to Old//////////////////////////////////
-    _newsContainerList.add(NewsContainer(
-        text: 'New Courses are available.',
-        date: '28-05-2022 11:28',
-        color: _colorList[(_colorCounter++) % _colorList.length],
-        drawerRightSize: _drawerRightSize));
-    _newsContainerList.add(NewsContainer(
-        text:
-            'The app wil be closed from tomorrow \n(22/5/2022 12:30 UTC +2) \nuntil \n(22/5/2022 16:30 UTC +2).',
-        date: '21-0-2022 18:22',
-        color: _colorList[(_colorCounter++) % _colorList.length],
-        drawerRightSize: _drawerRightSize));
-    _newsContainerList.add(NewsContainer(
-      text: 'New Project is available.',
-      date: '17-05-2022 07:44',
-      color: _colorList[(_colorCounter++) % _colorList.length],
-      drawerRightSize: _drawerRightSize,
-    ));
+      debugPrint('News');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
 
-    /// ///////////////////////////////////////////
-    debugPrint('News');
-    if (_status != '-9999') {
-      await _animationController!.reverse();
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
+      _animationController!.forward();
+      _currentWidget = FutureBuilder(
+          future: _loadNews().whenComplete(() => _isLoadingFalse()),
+          builder: (context, AsyncSnapshot _snapShot) {
+            if (_snapShot.connectionState == ConnectionState.waiting) {
+              return _loadingWidget();
+            }
+            if (_snapShot.hasData) {
+              return SizedBox(
+                width: _drawerRightSize,
+                child: ScrollConfiguration(
+                  behavior:
+                  MyCustomScrollBehavior().copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    child: Column(children: _snapShot.data),
+                  ),
+                ),
+              );
+            }
+            return _loadingWidgetNews();
+          });
+    } else if (!_animationController!.isAnimating &&
+        _status == 'News' &&
+        _isLoading == false) {
+      _isLoadingTrue();
+      _currentWidget = FutureBuilder(
+          future: _loadNews().whenComplete(() => _isLoadingFalse()),
+          builder: (context, AsyncSnapshot _snapShot) {
+            if (_snapShot.connectionState == ConnectionState.waiting) {
+              return _loadingWidget();
+            }
+            if (_snapShot.hasData) {
+              return SizedBox(
+                width: _drawerRightSize,
+                child: ScrollConfiguration(
+                  behavior:
+                      MyCustomScrollBehavior().copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    child: Column(children: _snapShot.data),
+                  ),
+                ),
+              );
+            }
+            return _loadingWidgetNews();
+          });
     }
-
-    /// Resize animation
-    if (_drawerRightSize != _drawerRightSize1) {
-      _drawerRightSize = _drawerRightSize1;
-      _loadAnimation();
-    }
-
-    ///
-    _animationController!.forward();
-    setState(() {
-      _currentWidget = Container(
-        width: _drawerRightSize - 20,
-        margin: const EdgeInsets.all(8.0),
-        child: ScrollConfiguration(
-          behavior: MyCustomScrollBehavior(),
-          child: SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: _newsContainerList,
-            ),
-          ),
-        ),
-      );
-    });
     _status = 'News';
-    }
   }
 
   Future<void> _case6() async {
     if (_status != 'Updates') {
-    List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
-    int _colorCounter = 0;
-    List<NewsContainer> _updatesContainerList = [];
+      List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
+      int _colorCounter = 0;
+      List<NewsContainer> _updatesContainerList = [];
 
-    ///New to Old//////////////////////////////////
-    _updatesContainerList.add(NewsContainer(
-        text: 'Version 1.0.1 is available.',
-        date: '07-05-2022 18:58',
-        color: _colorList[(_colorCounter++) % _colorList.length],
-        drawerRightSize: _drawerRightSize));
-    _updatesContainerList.add(NewsContainer(
-        text: 'Version 1.0.0 is available.',
-        date: '02-05-2022 17:01',
-        color: _colorList[(_colorCounter++) % _colorList.length],
-        drawerRightSize: _drawerRightSize));
+      ///New to Old//////////////////////////////////
+      _updatesContainerList.add(NewsContainer(
+          text: 'Version 1.0.1 is available.',
+          date: '07-05-2022 18:58',
+          color: _colorList[(_colorCounter++) % _colorList.length],
+          drawerRightSize: _drawerRightSize));
+      _updatesContainerList.add(NewsContainer(
+          text: 'Version 1.0.0 is available.',
+          date: '02-05-2022 17:01',
+          color: _colorList[(_colorCounter++) % _colorList.length],
+          drawerRightSize: _drawerRightSize));
 
-    /// ///////////////////////////////////////////
-    debugPrint('Updates');
-    if (_status != '-9999') {
-      await _animationController!.reverse();
-    }
+      /// ///////////////////////////////////////////
+      debugPrint('Updates');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
 
-    /// Resize animation
-    if (_drawerRightSize != _drawerRightSize1) {
-      _drawerRightSize = _drawerRightSize1;
-      _loadAnimation();
-    }
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
 
-    ///
-    _animationController!.forward();
-    setState(() {
-      _currentWidget = Container(
-        width: _drawerRightSize - 20,
-        margin: const EdgeInsets.all(8.0),
-        child: ScrollConfiguration(
-          behavior: MyCustomScrollBehavior(),
-          child: SingleChildScrollView(
-            controller: ScrollController(),
-            child: Column(
-              children: _updatesContainerList,
+      ///
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = Container(
+          width: _drawerRightSize - 20,
+          margin: const EdgeInsets.all(8.0),
+          child: ScrollConfiguration(
+            behavior: MyCustomScrollBehavior(),
+            child: SingleChildScrollView(
+              controller: ScrollController(),
+              child: Column(
+                children: _updatesContainerList,
+              ),
             ),
           ),
-        ),
-      );
-    });
-    _status = 'Updates';
+        );
+      });
+      _status = 'Updates';
     }
   }
 
@@ -807,25 +953,25 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
   Future<void> _case8() async {
     if (_status != 'Settings') {
-    debugPrint('Settings');
-    if (_status != '-9999') {
-      await _animationController!.reverse();
-    }
+      debugPrint('Settings');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
 
-    /// Resize animation
-    if (_drawerRightSize != _drawerRightSize1) {
-      _drawerRightSize = _drawerRightSize1;
-      _loadAnimation();
-    }
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
 
-    ///
-    _animationController!.forward();
-    setState(() {
-      _currentWidget = SizedBox(
-        width: _drawerRightSize,
-      );
-    });
-    _status = 'Settings';
+      ///
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = SizedBox(
+          width: _drawerRightSize,
+        );
+      });
+      _status = 'Settings';
     }
     Navigator.of(context).pop();
     warningPopup(context, 'Coming Soon!!');
@@ -833,27 +979,27 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
   Future<void> _case9() async {
     if (_status != 'About') {
-    debugPrint('About');
-    if (_status != '-9999') {
-      await _animationController!.reverse();
-    }
+      debugPrint('About');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
 
-    /// Resize animation
-    if (_drawerRightSize != _drawerRightSize2) {
-      _drawerRightSize = _drawerRightSize2;
-      _loadAnimation();
-    }
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize2) {
+        _drawerRightSize = _drawerRightSize2;
+        _loadAnimation();
+      }
 
-    ///
-    _animationController!.forward();
-    setState(() {
-      _currentWidget = Container(
-        width: _drawerRightSize - 20,
-        margin: const EdgeInsets.all(8.0),
-        child: const StatusMap(),
-      );
-    });
-    _status = 'About';
+      ///
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = Container(
+          width: _drawerRightSize - 20,
+          margin: const EdgeInsets.all(8.0),
+          child: const StatusMap(),
+        );
+      });
+      _status = 'About';
     }
   }
 
@@ -867,14 +1013,10 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   Future<void> _loadIsLoggedIn() async {
     if (await SessionManager().containsKey('isLoggedIn')) {
       _isLoggedIn = await SessionManager().get('isLoggedIn');
-      setState(() {
         _isLoggedIn;
-      });
     } else {
-      setState(() {
         _isLoggedIn = false;
         _case10();
-      });
     }
   }
 
@@ -993,7 +1135,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
     try {
       debugPrint(
           '=========>>======================================================>>==================================================>>=========');
-      debugPrint('load tasks');
+      debugPrint('load bids');
 
       var data = {
         'version': globals.version,
@@ -1065,7 +1207,114 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       debugPrint(e.toString());
       errorPopup(context, globals.errorException);
     }
-    debugPrint('load tasks end!!!');
+    debugPrint('load bids end!!!');
+    debugPrint(
+        '=========<<======================================================<<==================================================<<=========');
+    return [];
+  }
+
+  Future<List<dynamic>> _loadMyWallet() async {
+    try {
+      debugPrint(
+          '=========>>======================================================>>==================================================>>=========');
+      debugPrint('load wallet');
+
+      var data = {
+        'version': globals.version,
+        'account_Id': await SessionManager().get('Id'),
+      };
+
+      var res = await CallApi()
+          .postData(data, '/Wallet/Control/(Control)loadMyWallet.php');
+      debugPrint(res.body);
+      List<dynamic> body = json.decode(res.body);
+
+      if (body[0] == 'Success') {
+        if (mounted) {
+          return [];
+        }
+      } else if (body[0] == "errorVersion") {
+        errorPopup(context, globals.errorVersion);
+      } else if (body[0] == "errorToken") {
+        errorPopup(context, globals.errorToken);
+      } else if (body[0] == "error4") {
+        warningPopup(context, globals.warning7);
+      } else {
+        errorPopup(context, globals.errorElse);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      errorPopup(context, globals.errorException);
+    }
+    debugPrint('load wallet end!!!');
+    debugPrint(
+        '=========<<======================================================<<==================================================<<=========');
+    return [];
+  }
+
+  Future<List<NewsContainer>> _loadNews() async {
+    try {
+      debugPrint(
+          '=========>>======================================================>>==================================================>>=========');
+      debugPrint('load news');
+
+      var data = {
+        'version': globals.version,
+        'account_Id': await SessionManager().get('Id'),
+      };
+
+      var res =
+          await CallApi().postData(data, '/News/Control/(Control)loadNews.php');
+      debugPrint(res.body);
+      List<dynamic> body = json.decode(res.body);
+
+      if (body[0] == 'Success') {
+        if (mounted) {
+          List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
+          int _colorCounter = 0;
+          List<NewsContainer> _newsContainerList = [];
+
+          for(var _element in body[1]){
+            _newsContainerList.add(NewsContainer(
+                key: ValueKey(_element[0]),
+                text: _element[1],
+                date: _element[2],
+                color: _colorList[(_colorCounter++) % _colorList.length],
+                drawerRightSize: _drawerRightSize));
+          }
+          // _newsContainerList.add(NewsContainer(
+          //     text: 'New Courses are available.',
+          //     date: '28-05-2022 11:28',
+          //     color: _colorList[(_colorCounter++) % _colorList.length],
+          //     drawerRightSize: _drawerRightSize));
+          // _newsContainerList.add(NewsContainer(
+          //     text:
+          //     'The app wil be closed from tomorrow \n(22/5/2022 12:30 UTC +2) \nuntil \n(22/5/2022 16:30 UTC +2).',
+          //     date: '21-0-2022 18:22',
+          //     color: _colorList[(_colorCounter++) % _colorList.length],
+          //     drawerRightSize: _drawerRightSize));
+          // _newsContainerList.add(NewsContainer(
+          //   text: 'New Project is available.',
+          //   date: '17-05-2022 07:44',
+          //   color: _colorList[(_colorCounter++) % _colorList.length],
+          //   drawerRightSize: _drawerRightSize,
+          // ));
+          return _newsContainerList;
+        }
+      } else if (body[0] == "errorVersion") {
+        errorPopup(context, globals.errorVersion);
+      } else if (body[0] == "errorToken") {
+        errorPopup(context, globals.errorToken);
+      } else if (body[0] == "error4") {
+        warningPopup(context, globals.warning7);
+      } else {
+        errorPopup(context, globals.errorElse);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      errorPopup(context, globals.errorException);
+    }
+    debugPrint('load news end!!!');
     debugPrint(
         '=========<<======================================================<<==================================================<<=========');
     return [];
@@ -1125,6 +1374,36 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _loadingWidgetWallet() {
+    return SizedBox(
+      width: _drawerRightSize,
+      child: ScrollConfiguration(
+        behavior: MyCustomScrollBehavior().copyWith(scrollbars: false),
+        child: SingleChildScrollView(
+          controller: ScrollController(),
+          child: Column(
+            children: [],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _loadingWidgetNews() {
+    return SizedBox(
+      width: _drawerRightSize,
+      child: ScrollConfiguration(
+        behavior: MyCustomScrollBehavior().copyWith(scrollbars: false),
+        child: SingleChildScrollView(
+          controller: ScrollController(),
+          child: Column(
+            children: [],
           ),
         ),
       ),
