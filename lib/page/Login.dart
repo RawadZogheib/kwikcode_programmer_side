@@ -307,6 +307,8 @@ class _LoginState extends State<Login> {
         }
       } else if (body[0] == "error4") {
         warningPopup(context, globals.error4);
+      } else if (body[0] == "error13") {
+        warningPopup(context, globals.error13);
       } else {
         if (mounted) {
           setState(() {

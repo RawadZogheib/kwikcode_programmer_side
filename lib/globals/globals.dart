@@ -69,6 +69,7 @@ const String error9 = "It's not a phoneNumber format, example: +961########";
 const String warning10 = "No data available";
 const String error11 = "This email is not Registered";
 const String error12 = "Incorrect Email sent";
+const String error13 = "Your account is not activated.";
 const String errorToken = "Token Error.";
 const String errorVersion = "New version available.";
 const String errorElse = "Failed to connect... Connection Problem.";
