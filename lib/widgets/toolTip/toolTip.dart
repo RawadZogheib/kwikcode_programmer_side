@@ -106,7 +106,7 @@ class _TargetWidgetState extends State<TargetWidget> {
         } else if (body[0] == "errorToken") {
           errorPopup(context, globals.errorToken);
         } else if (body[0] == "error4") {
-          warningPopup(context, globals.warning7);
+          warningPopup(context, globals.error4);
         } else {
           errorPopup(context, globals.errorElse);
         }

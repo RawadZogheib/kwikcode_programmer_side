@@ -809,7 +809,6 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
   Future<void> _case5() async {
     if (_status != 'News') {
-
       debugPrint('News');
       if (_status != '-9999') {
         await _animationController!.reverse();
@@ -834,7 +833,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                 width: _drawerRightSize,
                 child: ScrollConfiguration(
                   behavior:
-                  MyCustomScrollBehavior().copyWith(scrollbars: false),
+                      MyCustomScrollBehavior().copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     controller: ScrollController(),
                     child: Column(children: _snapShot.data),
@@ -875,23 +874,6 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
   Future<void> _case6() async {
     if (_status != 'Updates') {
-      List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
-      int _colorCounter = 0;
-      List<NewsContainer> _updatesContainerList = [];
-
-      ///New to Old//////////////////////////////////
-      _updatesContainerList.add(NewsContainer(
-          text: 'Version 1.0.1 is available.',
-          date: '07-05-2022 18:58',
-          color: _colorList[(_colorCounter++) % _colorList.length],
-          drawerRightSize: _drawerRightSize));
-      _updatesContainerList.add(NewsContainer(
-          text: 'Version 1.0.0 is available.',
-          date: '02-05-2022 17:01',
-          color: _colorList[(_colorCounter++) % _colorList.length],
-          drawerRightSize: _drawerRightSize));
-
-      /// ///////////////////////////////////////////
       debugPrint('Updates');
       if (_status != '-9999') {
         await _animationController!.reverse();
@@ -905,23 +887,54 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       ///
       _animationController!.forward();
-      setState(() {
-        _currentWidget = Container(
-          width: _drawerRightSize - 20,
-          margin: const EdgeInsets.all(8.0),
-          child: ScrollConfiguration(
-            behavior: MyCustomScrollBehavior(),
-            child: SingleChildScrollView(
-              controller: ScrollController(),
-              child: Column(
-                children: _updatesContainerList,
-              ),
-            ),
-          ),
-        );
-      });
-      _status = 'Updates';
+      _currentWidget = FutureBuilder(
+          future: _loadUpdates().whenComplete(() => _isLoadingFalse()),
+          builder: (context, AsyncSnapshot _snapShot) {
+            if (_snapShot.connectionState == ConnectionState.waiting) {
+              return _loadingWidget();
+            }
+            if (_snapShot.hasData) {
+              return SizedBox(
+                width: _drawerRightSize,
+                child: ScrollConfiguration(
+                  behavior:
+                      MyCustomScrollBehavior().copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    child: Column(children: _snapShot.data),
+                  ),
+                ),
+              );
+            }
+            return _loadingWidgetNews();
+          });
+    } else if (!_animationController!.isAnimating &&
+        _status == 'Updates' &&
+        _isLoading == false) {
+      _isLoadingTrue();
+      _currentWidget = FutureBuilder(
+          future: _loadUpdates().whenComplete(() => _isLoadingFalse()),
+          builder: (context, AsyncSnapshot _snapShot) {
+            if (_snapShot.connectionState == ConnectionState.waiting) {
+              return _loadingWidget();
+            }
+            if (_snapShot.hasData) {
+              return SizedBox(
+                width: _drawerRightSize,
+                child: ScrollConfiguration(
+                  behavior:
+                      MyCustomScrollBehavior().copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    child: Column(children: _snapShot.data),
+                  ),
+                ),
+              );
+            }
+            return _loadingWidgetNews();
+          });
     }
+    _status = 'Updates';
   }
 
   Future<void> _case7() async {
@@ -1013,10 +1026,10 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   Future<void> _loadIsLoggedIn() async {
     if (await SessionManager().containsKey('isLoggedIn')) {
       _isLoggedIn = await SessionManager().get('isLoggedIn');
-        _isLoggedIn;
+      _isLoggedIn;
     } else {
-        _isLoggedIn = false;
-        _case10();
+      _isLoggedIn = false;
+      _case10();
     }
   }
 
@@ -1117,7 +1130,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       } else if (body[0] == "errorToken") {
         errorPopup(context, globals.errorToken);
       } else if (body[0] == "error4") {
-        warningPopup(context, globals.warning7);
+        warningPopup(context, globals.error4);
       } else {
         errorPopup(context, globals.errorElse);
       }
@@ -1199,7 +1212,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       } else if (body[0] == "errorToken") {
         errorPopup(context, globals.errorToken);
       } else if (body[0] == "error4") {
-        warningPopup(context, globals.warning7);
+        warningPopup(context, globals.error4);
       } else {
         errorPopup(context, globals.errorElse);
       }
@@ -1238,7 +1251,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       } else if (body[0] == "errorToken") {
         errorPopup(context, globals.errorToken);
       } else if (body[0] == "error4") {
-        warningPopup(context, globals.warning7);
+        warningPopup(context, globals.error4);
       } else {
         errorPopup(context, globals.errorElse);
       }
@@ -1270,11 +1283,14 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       if (body[0] == 'Success') {
         if (mounted) {
-          List<Color> _colorList = [globals.logoColorPink, globals.logoColorBlue];
+          List<Color> _colorList = [
+            globals.logoColorPink,
+            globals.logoColorBlue
+          ];
           int _colorCounter = 0;
           List<NewsContainer> _newsContainerList = [];
 
-          for(var _element in body[1]){
+          for (var _element in body[1]) {
             _newsContainerList.add(NewsContainer(
                 key: ValueKey(_element[0]),
                 text: _element[1],
@@ -1306,7 +1322,72 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       } else if (body[0] == "errorToken") {
         errorPopup(context, globals.errorToken);
       } else if (body[0] == "error4") {
-        warningPopup(context, globals.warning7);
+        warningPopup(context, globals.error4);
+      } else {
+        errorPopup(context, globals.errorElse);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      errorPopup(context, globals.errorException);
+    }
+    debugPrint('load news end!!!');
+    debugPrint(
+        '=========<<======================================================<<==================================================<<=========');
+    return [];
+  }
+
+  Future<List<NewsContainer>> _loadUpdates() async {
+    try {
+      debugPrint(
+          '=========>>======================================================>>==================================================>>=========');
+      debugPrint('load news');
+
+      var data = {
+        'version': globals.version,
+        'account_Id': await SessionManager().get('Id'),
+      };
+
+      var res = await CallApi()
+          .postData(data, '/Updates/Control/(Control)loadUpdates.php');
+      debugPrint(res.body);
+      List<dynamic> body = json.decode(res.body);
+
+      if (body[0] == 'Success') {
+        if (mounted) {
+          List<Color> _colorList = [
+            globals.logoColorPink,
+            globals.logoColorBlue
+          ];
+          int _colorCounter = 0;
+          List<NewsContainer> _updatesContainerList = [];
+
+          for (var _element in body[1]) {
+            _updatesContainerList.add(NewsContainer(
+                key: ValueKey(_element[0]),
+                text: _element[1],
+                date: _element[2],
+                color: _colorList[(_colorCounter++) % _colorList.length],
+                drawerRightSize: _drawerRightSize));
+          }
+
+          // _updatesContainerList.add(NewsContainer(
+          //     text: 'Version 1.0.1 is available.',
+          //     date: '07-05-2022 18:58',
+          //     color: _colorList[(_colorCounter++) % _colorList.length],
+          //     drawerRightSize: _drawerRightSize));
+          // _updatesContainerList.add(NewsContainer(
+          //     text: 'Version 1.0.0 is available.',
+          //     date: '02-05-2022 17:01',
+          //     color: _colorList[(_colorCounter++) % _colorList.length],
+          //     drawerRightSize: _drawerRightSize));
+          return _updatesContainerList;
+        }
+      } else if (body[0] == "errorVersion") {
+        errorPopup(context, globals.errorVersion);
+      } else if (body[0] == "errorToken") {
+        errorPopup(context, globals.errorToken);
+      } else if (body[0] == "error4") {
+        warningPopup(context, globals.error4);
       } else {
         errorPopup(context, globals.errorElse);
       }

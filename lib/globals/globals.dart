@@ -59,8 +59,7 @@ const String warning2_5 = "It's not an email format.";
 //const String warning2_6 = "It's not a university email.";
 const String error2_7 = "phone Number already exists";
 const String error3 = "Please make sure your passwords match.";
-const String error4 =
-    "Cannot connect to the dataBase."; // error in insert or delete or update etc...
+const String error4 = "Cannot connect to the dataBase."; // error in insert or delete or update etc...
 const String warning5 = "UserName already exist.";
 const String warning6 = "Email already exist.";
 const String warning7 = "Field cannot be empty.";
