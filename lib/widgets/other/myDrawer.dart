@@ -26,7 +26,8 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   bool _isLoggedIn = false;
-  final int _myKwikPoints = 1420;
+
+  // final int _myKwikPoints = 1420;
 
   String _status = '-9999';
   bool _isLoading = false;
@@ -509,120 +510,134 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
               return _loadingWidgetWallet();
             }
             if (_snapShot.hasData) {
-              return Container(
-                width: _drawerRightSize - 20,
-                margin: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 70,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: globals.logoColorPink),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 70,
-                            width: 120,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              color: globals.logoColorPink,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            child: Text(
-                              'US Dollar: ',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: globals.darkBlue1,
-                                fontWeight: FontWeight.bold,
+              _currentWidget = FutureBuilder(
+                  future: _loadMyWallet().whenComplete(() => _isLoadingFalse()),
+                  builder: (context, AsyncSnapshot _snapShot) {
+                    if (_snapShot.connectionState == ConnectionState.waiting) {
+                      return _loadingWidgetWallet();
+                    }
+                    if (_snapShot.hasData) {
+                      return Container(
+                        width: _drawerRightSize - 20,
+                        margin: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 70,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: globals.logoColorPink),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(12.0)),
                               ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              '\$ 1740',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: globals.white2,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15.0),
-                    Container(
-                      height: 70,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: globals.logoColorBlue),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 70,
-                            width: 120,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              color: globals.logoColorBlue,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            child: Text(
-                              'KwikPoints: ',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: globals.darkBlue1,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                StrikeThroughWidget2(
-                                  color: globals.white2,
-                                  child: Text(
-                                    'KP',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      color: globals.white2,
-                                      fontWeight: FontWeight.bold,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 70,
+                                    width: 120,
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                      color: globals.logoColorPink,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(12.0)),
+                                    ),
+                                    child: Text(
+                                      'US Dollar: ',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: globals.darkBlue1,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Text(
-                                  ' $_myKwikPoints',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    color: globals.white2,
-                                    fontWeight: FontWeight.bold,
+                                  Expanded(
+                                    child: Text(
+                                      '\$ ${_snapShot.data[1]}',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        color: globals.white2,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
+                            const SizedBox(height: 15.0),
+                            Container(
+                              height: 70,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: globals.logoColorBlue),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(12.0)),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 70,
+                                    width: 120,
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                      color: globals.logoColorBlue,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(12.0)),
+                                    ),
+                                    child: Text(
+                                      'KwikPoints: ',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: globals.darkBlue1,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        StrikeThroughWidget2(
+                                          color: globals.white2,
+                                          child: Text(
+                                            'KP',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              color: globals.white2,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          '${_snapShot.data[2]}',
+                                          //$_myKwikPoints',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            color: globals.white2,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    return _loadingWidgetWallet();
+                  });
             }
             return _loadingWidgetWallet();
           });
@@ -734,7 +749,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Text(
-                                  '${_snapShot.data[2]}',//$_myKwikPoints',
+                                  '${_snapShot.data[2]}', //$_myKwikPoints',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 24,
@@ -752,7 +767,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                 ),
               );
             }
-              return _loadingWidgetWallet();
+            return _loadingWidgetWallet();
           });
     }
     _status = 'My Wallet';
@@ -784,7 +799,9 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
               return Container(
                 width: _drawerRightSize - 20,
                 margin: const EdgeInsets.all(8.0),
-                child: RankPage(myKwikPoints: _myKwikPoints),
+                child: RankPage(
+                    myKwikPoints: _snapShot.data[1],
+                    childrenRankItem: _snapShot.data[2]),
               );
             }
             return _loadingWidgetRank();
@@ -803,7 +820,9 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
               return Container(
                 width: _drawerRightSize - 20,
                 margin: const EdgeInsets.all(8.0),
-                child: RankPage(myKwikPoints: _myKwikPoints),
+                child: RankPage(
+                    myKwikPoints: _snapShot.data[1],
+                    childrenRankItem: _snapShot.data[2]),
               );
             }
             return _loadingWidgetRank();
@@ -1538,6 +1557,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       ),
     );
   }
+
   Widget _loadingWidgetUpdates() {
     return SizedBox(
       width: _drawerRightSize,

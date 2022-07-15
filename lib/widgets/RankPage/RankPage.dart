@@ -6,6 +6,9 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class RankPage extends StatelessWidget {
   int myKwikPoints;
+  List<RankItem> childrenRankItem;
+
+  ///
   final int _junior = 0;
   final int _semiSenior = 1400;
   final int _senior = 2000;
@@ -14,6 +17,7 @@ class RankPage extends StatelessWidget {
   RankPage({
     Key? key,
     required this.myKwikPoints,
+    required this.childrenRankItem,
   }) : super(key: key);
 
   @override
@@ -141,7 +145,8 @@ class RankPage extends StatelessWidget {
                                 ? 2
                                 : myKwikPoints < _semiSenior
                                     ? -1
-                                    : (myKwikPoints.toDouble() - _semiSenior) / (_senior - _semiSenior),
+                                    : (myKwikPoints.toDouble() - _semiSenior) /
+                                        (_senior - _semiSenior),
                             //(1500-1200)
                             valueColor:
                                 AlwaysStoppedAnimation(globals.logoColorBlue),
@@ -187,7 +192,8 @@ class RankPage extends StatelessWidget {
                                 ? 2
                                 : myKwikPoints < _senior
                                     ? -1
-                                    : (myKwikPoints.toDouble() - _senior) / (_expert - _senior),
+                                    : (myKwikPoints.toDouble() - _senior) /
+                                        (_expert - _senior),
                             //(2000-1500)
                             valueColor:
                                 AlwaysStoppedAnimation(globals.logoColorBlue),
@@ -261,7 +267,7 @@ class RankPage extends StatelessWidget {
                     SizedBox(
                       width: 54,
                       child: Text(
-                      _senior.toString(),
+                        _senior.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
