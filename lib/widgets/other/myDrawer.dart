@@ -368,6 +368,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       ///
       _animationController!.forward();
+      _isLoadingTrue();
       _currentWidget = FutureBuilder(
           future: _loadMyTasks().whenComplete(() => _isLoadingFalse()),
           builder: (context, AsyncSnapshot _snapShot) {
@@ -434,6 +435,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       ///
       _animationController!.forward();
+      _isLoadingTrue();
       _currentWidget = FutureBuilder(
           future: _loadMyBids().whenComplete(() => _isLoadingFalse()),
           builder: (context, AsyncSnapshot _snapShot) {
@@ -499,6 +501,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       ///
       _animationController!.forward();
+      _isLoadingTrue();
       _currentWidget = FutureBuilder(
           future: _loadMyWallet().whenComplete(() => _isLoadingFalse()),
           builder: (context, AsyncSnapshot _snapShot) {
@@ -671,7 +674,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                           ),
                           Expanded(
                             child: Text(
-                              '\$ 1740',
+                              '\$ ${_snapShot.data[1]}',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 24,
@@ -731,7 +734,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Text(
-                                  ' $_myKwikPoints',
+                                  '${_snapShot.data[2]}',//$_myKwikPoints',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 24,
@@ -749,7 +752,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                 ),
               );
             }
-            return _loadingWidgetWallet();
+              return _loadingWidgetWallet();
           });
     }
     _status = 'My Wallet';
@@ -770,15 +773,43 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       ///
       _animationController!.forward();
-      setState(() {
-        _currentWidget = Container(
-          width: _drawerRightSize - 20,
-          margin: const EdgeInsets.all(8.0),
-          child: RankPage(myKwikPoints: _myKwikPoints),
-        );
-      });
-      _status = 'Ranks';
+      _isLoadingTrue();
+      _currentWidget = FutureBuilder(
+          future: _loadMyWallet().whenComplete(() => _isLoadingFalse()),
+          builder: (context, AsyncSnapshot _snapShot) {
+            if (_snapShot.connectionState == ConnectionState.waiting) {
+              return _loadingWidgetRank();
+            }
+            if (_snapShot.hasData) {
+              return Container(
+                width: _drawerRightSize - 20,
+                margin: const EdgeInsets.all(8.0),
+                child: RankPage(myKwikPoints: _myKwikPoints),
+              );
+            }
+            return _loadingWidgetRank();
+          });
+    } else if (!_animationController!.isAnimating &&
+        _status == 'Ranks' &&
+        _isLoading == false) {
+      _isLoadingTrue();
+      _currentWidget = FutureBuilder(
+          future: _loadMyWallet().whenComplete(() => _isLoadingFalse()),
+          builder: (context, AsyncSnapshot _snapShot) {
+            if (_snapShot.connectionState == ConnectionState.waiting) {
+              return _loadingWidgetRank();
+            }
+            if (_snapShot.hasData) {
+              return Container(
+                width: _drawerRightSize - 20,
+                margin: const EdgeInsets.all(8.0),
+                child: RankPage(myKwikPoints: _myKwikPoints),
+              );
+            }
+            return _loadingWidgetRank();
+          });
     }
+    _status = 'Ranks';
   }
 
   Future<void> _case4() async {
@@ -822,11 +853,12 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       ///
       _animationController!.forward();
+      _isLoadingTrue();
       _currentWidget = FutureBuilder(
           future: _loadNews().whenComplete(() => _isLoadingFalse()),
           builder: (context, AsyncSnapshot _snapShot) {
             if (_snapShot.connectionState == ConnectionState.waiting) {
-              return _loadingWidget();
+              return _loadingWidgetNews();
             }
             if (_snapShot.hasData) {
               return SizedBox(
@@ -851,7 +883,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           future: _loadNews().whenComplete(() => _isLoadingFalse()),
           builder: (context, AsyncSnapshot _snapShot) {
             if (_snapShot.connectionState == ConnectionState.waiting) {
-              return _loadingWidget();
+              return _loadingWidgetNews();
             }
             if (_snapShot.hasData) {
               return SizedBox(
@@ -887,11 +919,12 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       ///
       _animationController!.forward();
+      _isLoadingTrue();
       _currentWidget = FutureBuilder(
           future: _loadUpdates().whenComplete(() => _isLoadingFalse()),
           builder: (context, AsyncSnapshot _snapShot) {
             if (_snapShot.connectionState == ConnectionState.waiting) {
-              return _loadingWidget();
+              return _loadingWidgetUpdates();
             }
             if (_snapShot.hasData) {
               return SizedBox(
@@ -906,7 +939,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                 ),
               );
             }
-            return _loadingWidgetNews();
+            return _loadingWidgetUpdates();
           });
     } else if (!_animationController!.isAnimating &&
         _status == 'Updates' &&
@@ -916,7 +949,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           future: _loadUpdates().whenComplete(() => _isLoadingFalse()),
           builder: (context, AsyncSnapshot _snapShot) {
             if (_snapShot.connectionState == ConnectionState.waiting) {
-              return _loadingWidget();
+              return _loadingWidgetUpdates();
             }
             if (_snapShot.hasData) {
               return SizedBox(
@@ -931,7 +964,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                 ),
               );
             }
-            return _loadingWidgetNews();
+            return _loadingWidgetUpdates();
           });
     }
     _status = 'Updates';
@@ -1244,7 +1277,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       if (body[0] == 'Success') {
         if (mounted) {
-          return [];
+          return body;
         }
       } else if (body[0] == "errorVersion") {
         errorPopup(context, globals.errorVersion);
@@ -1476,7 +1509,36 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
     );
   }
 
+  Widget _loadingWidgetRank() {
+    return SizedBox(
+      width: _drawerRightSize,
+      child: ScrollConfiguration(
+        behavior: MyCustomScrollBehavior().copyWith(scrollbars: false),
+        child: SingleChildScrollView(
+          controller: ScrollController(),
+          child: Column(
+            children: [],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _loadingWidgetNews() {
+    return SizedBox(
+      width: _drawerRightSize,
+      child: ScrollConfiguration(
+        behavior: MyCustomScrollBehavior().copyWith(scrollbars: false),
+        child: SingleChildScrollView(
+          controller: ScrollController(),
+          child: Column(
+            children: [],
+          ),
+        ),
+      ),
+    );
+  }
+  Widget _loadingWidgetUpdates() {
     return SizedBox(
       width: _drawerRightSize,
       child: ScrollConfiguration(
@@ -1530,6 +1592,7 @@ class SearchFieldDrawer extends StatelessWidget {
 
     return TextField(
       style: TextStyle(color: color, fontSize: 14),
+      cursorColor: globals.logoColorPink,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         hintText: 'Search',
