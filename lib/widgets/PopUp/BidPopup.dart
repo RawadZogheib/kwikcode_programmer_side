@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:kwikcode_programmer_side/api/my_api.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
@@ -231,18 +234,55 @@ class _BidPopupState extends State<BidPopup> {
       }
     }
     debugPrint('Make Bid');
-    widget.childrenBid.add(
-      BidItem(
-        bidName: _userName,
-        kwikPointsAmount: 2100, //await SessionManager().get('myKwikPoints')
-        color: globals.white2,
-      ),
-    );
-    widget.childrenBid.sort(
-        (BidItem a, BidItem b) => b.kwikPointsAmount - a.kwikPointsAmount);
 
-    setState(() {
-      widget.childrenBid;
-    });
+    try {
+      debugPrint(
+          '=========>>======================================================>>==================================================>>=========');
+      debugPrint('load ranks');
+
+      var data = {
+        'version': globals.version,
+        'account_Id': await SessionManager().get('Id'),
+        'task_Id': widget.childTaskIsActive.taskId,
+      };
+
+      var res = await CallApi()
+          .postData(data, '/Bids/Control/(Control)makeBid.php');
+      debugPrint(res.body);
+      List<dynamic> body = json.decode(res.body);
+
+      if (body[0] == 'Success') {
+        if (mounted) {
+          widget.childrenBid.add(
+            BidItem(
+              bidName: body[1],
+              kwikPointsAmount: body[2],
+              //await SessionManager().get('myKwikPoints')
+              color: globals.white2,
+            ),
+          );
+          widget.childrenBid.sort((BidItem a, BidItem b) =>
+              b.kwikPointsAmount - a.kwikPointsAmount);
+
+          setState(() {
+            widget.childrenBid;
+          });
+        }
+      } else if (body[0] == "errorVersion") {
+        errorPopup(context, globals.errorVersion);
+      } else if (body[0] == "errorToken") {
+        errorPopup(context, globals.errorToken);
+      } else if (body[0] == "error4") {
+        warningPopup(context, globals.error4);
+      } else {
+        errorPopup(context, globals.errorElse);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      errorPopup(context, globals.errorException);
+    }
+    debugPrint('load ranks end!!!');
+    debugPrint(
+        '=========<<======================================================<<==================================================<<=========');
   }
 }

@@ -96,21 +96,32 @@ class _TargetWidgetState extends State<TargetWidget> {
             _toolTipList;
             // });
             setState(() {
+              globals.isLoadingTooltip = true;
               _isClickedTooltip = false;
             });
             await Future.delayed(const Duration(milliseconds: 100));
             return true;
           }
         } else if (body[0] == "errorVersion") {
+          globals.isLoadingTooltip = false;
+          _isClickedTooltip = false;
           errorPopup(context, globals.errorVersion);
         } else if (body[0] == "errorToken") {
+          globals.isLoadingTooltip = false;
+          _isClickedTooltip = false;
           errorPopup(context, globals.errorToken);
         } else if (body[0] == "error4") {
+          globals.isLoadingTooltip = false;
+          _isClickedTooltip = false;
           warningPopup(context, globals.error4);
         } else {
+          globals.isLoadingTooltip = false;
+          _isClickedTooltip = false;
           errorPopup(context, globals.errorElse);
         }
       } catch (e) {
+        globals.isLoadingTooltip = false;
+        _isClickedTooltip = false;
         debugPrint(e.toString());
         errorPopup(context, globals.errorException);
       }
@@ -124,6 +135,7 @@ class _TargetWidgetState extends State<TargetWidget> {
       debugPrint('Loading toolTip end');
       return false;
     } else {
+      // await Future.delayed(const Duration(milliseconds: 200));
       setState(() {
         _isClickedTooltip = false;
       });

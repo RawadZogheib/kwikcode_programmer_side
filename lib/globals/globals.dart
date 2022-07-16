@@ -80,6 +80,7 @@ const String codeException =
 
 const String warning400 = "You must login first!"; ///////
 const String error401 = 'You have already bid.';
+const String error402 = 'You have reach your maximum bid.';
 
 
 final ScrollController controllerMiddlePage = ScrollController();

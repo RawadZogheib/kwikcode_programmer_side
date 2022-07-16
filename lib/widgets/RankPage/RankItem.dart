@@ -46,13 +46,16 @@ class RankItem extends StatelessWidget {
             ),
             const SizedBox(width: 37),
             SizedBox(height: 16, child: VerticalDivider(color: globals.white1, thickness: 3)),
-            const SizedBox(width: 95),
-            Text(
-              kwikPointsAmount,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                color: globals.white2,
+            // const SizedBox(width: 95),
+            SizedBox(
+              width: 240,
+              child: Text(
+                kwikPointsAmount,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: globals.white2,
+                ),
               ),
             ),
           ],

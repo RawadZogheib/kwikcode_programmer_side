@@ -7,6 +7,7 @@ import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/taskSquare.dart';
 import 'package:kwikcode_programmer_side/widgets/PopUp/errorWarningPopup.dart';
+import 'package:kwikcode_programmer_side/widgets/RankPage/RankItem.dart';
 import 'package:kwikcode_programmer_side/widgets/RankPage/RankPage.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 import 'package:kwikcode_programmer_side/widgets/other/NewsContainer.dart';
@@ -27,18 +28,15 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   bool _isLoggedIn = false;
 
-  // final int _myKwikPoints = 1420;
-
   String _status = '-9999';
   bool _isLoading = false;
 
   int _k = 0;
-  final List<TaskSquare> _childrenMyTasks = [];
   final Map<String, int> _indexMap = {
     'My Tasks': 0,
     'My Bids': 1,
     'My Wallet': 2,
-    'Rank': 3,
+    'Ranks': 3,
     'Chat': 4,
     'News': 5,
     'Updates': 6,
@@ -520,7 +518,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                       decoration: BoxDecoration(
                         border: Border.all(color: globals.logoColorPink),
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(12.0)),
+                            const BorderRadius.all(Radius.circular(12.0)),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -533,7 +531,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                             decoration: BoxDecoration(
                               color: globals.logoColorPink,
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(12.0)),
+                                  const BorderRadius.all(Radius.circular(12.0)),
                             ),
                             child: Text(
                               'US Dollar: ',
@@ -565,7 +563,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                       decoration: BoxDecoration(
                         border: Border.all(color: globals.logoColorBlue),
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(12.0)),
+                            const BorderRadius.all(Radius.circular(12.0)),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -578,7 +576,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                             decoration: BoxDecoration(
                               color: globals.logoColorBlue,
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(12.0)),
+                                  const BorderRadius.all(Radius.circular(12.0)),
                             ),
                             child: Text(
                               'KwikPoints: ',
@@ -776,39 +774,41 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       _animationController!.forward();
       _isLoadingTrue();
       _currentWidget = FutureBuilder(
-          future: _loadMyWallet().whenComplete(() => _isLoadingFalse()),
+          future: _loadRanks().whenComplete(() => _isLoadingFalse()),
           builder: (context, AsyncSnapshot _snapShot) {
             if (_snapShot.connectionState == ConnectionState.waiting) {
               return _loadingWidgetRank();
             }
             if (_snapShot.hasData) {
               return Container(
-                width: _drawerRightSize - 20,
+                width: _drawerRightSize, // - 20,
                 margin: const EdgeInsets.all(8.0),
                 child: RankPage(
-                    myKwikPoints: _snapShot.data[1],
-                    childrenRankItem: _snapShot.data[2]),
+                    myKwikPoints: int.parse(_snapShot.data[0]),
+                    childrenRankItem: _snapShot.data[1]),
               );
             }
-            return _loadingWidgetRank();
+            return RankPage(
+                myKwikPoints: _snapShot.data[1],
+                childrenRankItem: _snapShot.data[2]);
           });
     } else if (!_animationController!.isAnimating &&
         _status == 'Ranks' &&
         _isLoading == false) {
       _isLoadingTrue();
       _currentWidget = FutureBuilder(
-          future: _loadMyWallet().whenComplete(() => _isLoadingFalse()),
+          future: _loadRanks().whenComplete(() => _isLoadingFalse()),
           builder: (context, AsyncSnapshot _snapShot) {
             if (_snapShot.connectionState == ConnectionState.waiting) {
               return _loadingWidgetRank();
             }
             if (_snapShot.hasData) {
               return Container(
-                width: _drawerRightSize - 20,
+                width: _drawerRightSize, // - 20,
                 margin: const EdgeInsets.all(8.0),
                 child: RankPage(
-                    myKwikPoints: _snapShot.data[1],
-                    childrenRankItem: _snapShot.data[2]),
+                    myKwikPoints: int.parse(_snapShot.data[0]),
+                    childrenRankItem: _snapShot.data[1]),
               );
             }
             return _loadingWidgetRank();
@@ -1106,6 +1106,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   }
 
   Future<List<TaskSquare>> _loadMyTasks() async {
+    final List<TaskSquare> _childrenMyTasks = [];
     try {
       debugPrint(
           '=========>>======================================================>>==================================================>>=========');
@@ -1183,6 +1184,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   }
 
   Future<List<TaskSquare>> _loadMyBids() async {
+    final List<TaskSquare> _childrenMyBids = [];
     try {
       debugPrint(
           '=========>>======================================================>>==================================================>>=========');
@@ -1200,7 +1202,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       if (body[0] == 'Success') {
         if (mounted) {
-          _childrenMyTasks.clear();
+          _childrenMyBids.clear();
 
           for (List<dynamic> _element in body[1]) {
             List<TaskProgrammingItem> _listTaskProgrammingItem = [];
@@ -1220,7 +1222,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                           ),
               ));
             }
-            _childrenMyTasks.add(TaskSquare(
+            _childrenMyBids.add(TaskSquare(
               key: ValueKey(_k++),
               taskId: _element[0],
               taskName: _element[1],
@@ -1235,7 +1237,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
               iconList: _listTaskProgrammingItem,
               removeTask: (String taskId) => null,
               onBidTap: (String taskId) async {
-                await widget.onBid(_childrenMyTasks
+                await widget.onBid(_childrenMyBids
                     .firstWhere((_element2) => _element2.taskId == taskId));
                 if (mounted) {
                   Navigator.pop(context);
@@ -1243,7 +1245,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
               },
             ));
           }
-          return _childrenMyTasks;
+          return _childrenMyBids;
         }
       } else if (body[0] == "errorVersion") {
         errorPopup(context, globals.errorVersion);
@@ -1298,6 +1300,67 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       errorPopup(context, globals.errorException);
     }
     debugPrint('load wallet end!!!');
+    debugPrint(
+        '=========<<======================================================<<==================================================<<=========');
+    return [];
+  }
+
+  Future<List<dynamic>> _loadRanks() async {
+    final List<RankItem> _childrenRanks = [];
+    try {
+      debugPrint(
+          '=========>>======================================================>>==================================================>>=========');
+      debugPrint('load ranks');
+
+      var data = {
+        'version': globals.version,
+        'account_Id': await SessionManager().get('Id'),
+      };
+
+      var res = await CallApi()
+          .postData(data, '/Ranks/Control/(Control)loadRanks.php');
+      debugPrint(res.body);
+      List<dynamic> body = json.decode(res.body);
+
+      if (body[0] == 'Success') {
+        if (mounted) {
+          int _lastKPAmount = 0;
+          int _rankIndex = 0;
+          List<List<String>> _listTMP = [];
+
+          for (var _e in body[2]) {
+            _listTMP.add([_e[0], _e[1]]);
+          }
+          _listTMP.sort((List<String> a, List<String> b) =>
+              int.parse(b[1]) - int.parse(a[1]));
+          for (List<String> _element in _listTMP) {
+            _childrenRanks.add(
+              RankItem(
+                rank: int.parse(_element[1]) == _lastKPAmount
+                    ? _rankIndex
+                    : ++_rankIndex,
+                userName: _element[0],
+                kwikPointsAmount: _element[1],
+              ),
+            );
+            _lastKPAmount = int.parse(_element[1].toString());
+          }
+          return [body[1], _childrenRanks];
+        }
+      } else if (body[0] == "errorVersion") {
+        errorPopup(context, globals.errorVersion);
+      } else if (body[0] == "errorToken") {
+        errorPopup(context, globals.errorToken);
+      } else if (body[0] == "error4") {
+        warningPopup(context, globals.error4);
+      } else {
+        errorPopup(context, globals.errorElse);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      errorPopup(context, globals.errorException);
+    }
+    debugPrint('load ranks end!!!');
     debugPrint(
         '=========<<======================================================<<==================================================<<=========');
     return [];
