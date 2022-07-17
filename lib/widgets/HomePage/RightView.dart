@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kwikcode_programmer_side/NewIcons.dart';
 import 'package:kwikcode_programmer_side/api/my_session.dart';
 import 'package:kwikcode_programmer_side/globals/globals.dart' as globals;
 import 'package:kwikcode_programmer_side/widgets/HomePage/projectSquare.dart';
+import 'package:kwikcode_programmer_side/widgets/button/admin_pm_button.dart';
 import 'package:kwikcode_programmer_side/widgets/other/MyCustomScrollBehavior.dart';
 
 class RightView extends StatefulWidget {
@@ -126,7 +128,7 @@ class _RightViewState extends State<RightView> {
             height: 440,
             //475,
             width: 300,
-            margin: const EdgeInsets.all(12.0),
+            margin: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0.0),
             decoration: BoxDecoration(
               //color: Colors.transparent, //globals.darkBlue2,
               color: globals.darkBlue2,
@@ -187,6 +189,24 @@ class _RightViewState extends State<RightView> {
               ],
             ),
           ),
+          Flexible(
+              child: SizedBox(
+                height: 120,
+                child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+                AdminPMButton(
+                  text: 'Project Manager',
+                  icon: Icons.manage_accounts,
+                ),
+                AdminPMButton(
+                  text: 'Admin',
+                  icon: Icons.admin_panel_settings,
+                ),
+            ],
+          ),
+              )),
         ],
       ),
     );
