@@ -136,16 +136,17 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                         ),
                                         const SizedBox(height: 5),
                                         MenuItem(
-                                          text: 'My Wallet',
-                                          icon: NewIcons.wallet,
+                                          text: 'My Team',
+                                          // icon: NewIcons.user_friends,
+                                          icon: Icons.groups,
                                           color: globals.whiteBlue,
                                           onClicked: () =>
                                               selectedItem(context, 2),
                                         ),
                                         const SizedBox(height: 5),
                                         MenuItem(
-                                          text: 'Ranks',
-                                          icon: Icons.leaderboard,
+                                          text: 'My Wallet',
+                                          icon: NewIcons.wallet,
                                           color: globals.whiteBlue,
                                           onClicked: () =>
                                               selectedItem(context, 3),
@@ -160,8 +161,8 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                                         ),
                                         const SizedBox(height: 5),
                                         MenuItem(
-                                          text: 'News',
-                                          icon: NewIcons.newspaper,
+                                          text: 'Ranks',
+                                          icon: Icons.leaderboard,
                                           color: globals.whiteBlue,
                                           onClicked: () =>
                                               selectedItem(context, 5),
@@ -323,13 +324,13 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
         case 2: // My Wallet
           await _case2();
           break;
-        case 3: // Rank
+        case 3: // My Team
           await _case3();
           break;
         case 4: // Chat
           await _case4();
           break;
-        case 5: // News
+        case 5: // Rank
           await _case5();
           break;
         case 6: // Updates
@@ -486,6 +487,32 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
   }
 
   Future<void> _case2() async {
+    if (_status != 'My Team') {
+      debugPrint('My Team');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize2) {
+        _drawerRightSize = _drawerRightSize2;
+        _loadAnimation();
+      }
+
+      ///
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = SizedBox(
+          width: _drawerRightSize,
+        );
+      });
+      _status = 'My Team';
+    }
+    // Navigator.of(context).pop();
+    warningPopup(context, 'Coming Soon!!');
+  }
+
+  Future<void> _case3() async {
     if (_status != 'My Wallet') {
       debugPrint('My Wallet');
       if (_status != '-9999') {
@@ -757,7 +784,33 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
     _status = 'My Wallet';
   }
 
-  Future<void> _case3() async {
+  Future<void> _case4() async {
+    if (_status != 'Chat') {
+      debugPrint('Chat');
+      if (_status != '-9999') {
+        await _animationController!.reverse();
+      }
+
+      /// Resize animation
+      if (_drawerRightSize != _drawerRightSize1) {
+        _drawerRightSize = _drawerRightSize1;
+        _loadAnimation();
+      }
+
+      ///
+      _animationController!.forward();
+      setState(() {
+        _currentWidget = SizedBox(
+          width: _drawerRightSize,
+        );
+      });
+      _status = 'Chat';
+    }
+    // Navigator.of(context).pop();
+    warningPopup(context, 'Coming Soon!!');
+  }
+
+  Future<void> _case5() async {
     if (_status != 'Ranks') {
       debugPrint('Ranks');
       if (_status != '-9999') {
@@ -815,98 +868,6 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           });
     }
     _status = 'Ranks';
-  }
-
-  Future<void> _case4() async {
-    if (_status != 'Chat') {
-      debugPrint('Chat');
-      if (_status != '-9999') {
-        await _animationController!.reverse();
-      }
-
-      /// Resize animation
-      if (_drawerRightSize != _drawerRightSize1) {
-        _drawerRightSize = _drawerRightSize1;
-        _loadAnimation();
-      }
-
-      ///
-      _animationController!.forward();
-      setState(() {
-        _currentWidget = SizedBox(
-          width: _drawerRightSize,
-        );
-      });
-      _status = 'Chat';
-    }
-    // Navigator.of(context).pop();
-    warningPopup(context, 'Coming Soon!!');
-  }
-
-  Future<void> _case5() async {
-    if (_status != 'News') {
-      debugPrint('News');
-      if (_status != '-9999') {
-        await _animationController!.reverse();
-      }
-
-      /// Resize animation
-      if (_drawerRightSize != _drawerRightSize1) {
-        _drawerRightSize = _drawerRightSize1;
-        _loadAnimation();
-      }
-
-      ///
-      _animationController!.forward();
-      _isLoadingTrue();
-      _currentWidget = FutureBuilder(
-          future: _loadNews().whenComplete(() => _isLoadingFalse()),
-          builder: (context, AsyncSnapshot _snapShot) {
-            if (_snapShot.connectionState == ConnectionState.waiting) {
-              return _loadingWidgetNews();
-            }
-            if (_snapShot.hasData) {
-              return SizedBox(
-                width: _drawerRightSize,
-                child: ScrollConfiguration(
-                  behavior:
-                      MyCustomScrollBehavior().copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    child: Column(children: _snapShot.data),
-                  ),
-                ),
-              );
-            }
-            return _loadingWidgetNews();
-          });
-    } else if (!_animationController!.isAnimating &&
-        _status == 'News' &&
-        _isLoading == false) {
-      _isLoadingTrue();
-      _currentWidget = FutureBuilder(
-          future: _loadNews().whenComplete(() => _isLoadingFalse()),
-          builder: (context, AsyncSnapshot _snapShot) {
-            if (_snapShot.connectionState == ConnectionState.waiting) {
-              return _loadingWidgetNews();
-            }
-            if (_snapShot.hasData) {
-              return SizedBox(
-                width: _drawerRightSize,
-                child: ScrollConfiguration(
-                  behavior:
-                      MyCustomScrollBehavior().copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    child: Column(children: _snapShot.data),
-                  ),
-                ),
-              );
-            }
-            return _loadingWidgetNews();
-          });
-    }
-    _status = 'News';
   }
 
   Future<void> _case6() async {
@@ -990,16 +951,55 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
 
       ///
       _animationController!.forward();
-      setState(() {
-        _currentWidget = SizedBox(
-          width: _drawerRightSize,
-        );
-      });
-      _status = 'Notifications';
-      // }
-      Navigator.of(context).pop();
-      warningPopup(context, 'Coming Soon!!');
+      _isLoadingTrue();
+      _currentWidget = FutureBuilder(
+          future: _loadNotifications().whenComplete(() => _isLoadingFalse()),
+          builder: (context, AsyncSnapshot _snapShot) {
+            if (_snapShot.connectionState == ConnectionState.waiting) {
+              return _loadingWidgetNews();
+            }
+            if (_snapShot.hasData) {
+              return SizedBox(
+                width: _drawerRightSize,
+                child: ScrollConfiguration(
+                  behavior:
+                  MyCustomScrollBehavior().copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    child: Column(children: _snapShot.data),
+                  ),
+                ),
+              );
+            }
+            return _loadingWidgetNews();
+          });
+    } else if (!_animationController!.isAnimating &&
+        _status == 'Notifications' &&
+        _isLoading == false) {
+      _isLoadingTrue();
+      _currentWidget = FutureBuilder(
+          future: _loadNotifications().whenComplete(() => _isLoadingFalse()),
+          builder: (context, AsyncSnapshot _snapShot) {
+            if (_snapShot.connectionState == ConnectionState.waiting) {
+              return _loadingWidgetNews();
+            }
+            if (_snapShot.hasData) {
+              return SizedBox(
+                width: _drawerRightSize,
+                child: ScrollConfiguration(
+                  behavior:
+                  MyCustomScrollBehavior().copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    child: Column(children: _snapShot.data),
+                  ),
+                ),
+              );
+            }
+            return _loadingWidgetNews();
+          });
     }
+    _status = 'Notifications';
   }
 
   Future<void> _case8() async {
@@ -1375,11 +1375,11 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
     return [];
   }
 
-  Future<List<NewsContainer>> _loadNews() async {
+  Future<List<NewsContainer>> _loadNotifications() async {
     try {
       debugPrint(
           '=========>>======================================================>>==================================================>>=========');
-      debugPrint('load news');
+      debugPrint('load Notifications');
 
       var data = {
         'version': globals.version,
@@ -1440,7 +1440,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
       debugPrint(e.toString());
       errorPopup(context, globals.errorException);
     }
-    debugPrint('load news end!!!');
+    debugPrint('load Notifications end!!!');
     debugPrint(
         '=========<<======================================================<<==================================================<<=========');
     return [];
