@@ -90,7 +90,8 @@ class _HomePageState extends State<HomePage>
           return WillPopScope(
             onWillPop: () async => _back(),
             child: Scaffold(
-              endDrawer: MyDrawer(onBid: (taskSquare) => _startAnimation2(taskSquare)),
+              endDrawer:
+                  MyDrawer(onBid: (taskSquare) => _startAnimation2(taskSquare)),
               backgroundColor: globals.darkBlue1,
               body: Stack(
                 alignment: Alignment.center,
@@ -222,22 +223,27 @@ class _HomePageState extends State<HomePage>
                             ),
                 ));
               }
-              _childrenTaskListNoFilter.add(TaskSquare(
-                key: ValueKey(_k++),
-                taskId: _element[0],
-                taskName: _element[1],
-                //_element[2] project id
-                projectName: _projectName,
-                projectManager: '@${_element[3]}',
-                description: _element[4],
-                timeLeft: DateTime.parse(_element[6]).add(Duration(seconds: int.parse(_element[5]))),
-                status: int.parse(_element[7]),
-                //_element[8] task date
-                //_element[9] bid list
-                iconList: _listTaskProgrammingItem,
-                removeTask: (String taskId) => _removeTask(taskId),
-                onBidTap: (String taskId) => _startAnimation(taskId),
-              ));
+              DateTime _timeLeftTMP = DateTime.parse(_element[6])
+                  .add(Duration(seconds: int.parse(_element[5])));
+              if (_timeLeftTMP.isAfter(DateTime.now())) {
+                _childrenTaskListNoFilter.add(TaskSquare(
+                  key: ValueKey(_k++),
+                  taskId: _element[0],
+                  taskName: _element[1],
+                  //_element[2] project id
+                  projectName: _projectName,
+                  projectManager: '@${_element[3]}',
+                  description: _element[4],
+                  timeLeft: DateTime.parse(_element[6])
+                      .add(Duration(seconds: int.parse(_element[5]))),
+                  status: int.parse(_element[7]),
+                  //_element[8] task date
+                  //_element[9] bid list
+                  iconList: _listTaskProgrammingItem,
+                  removeTask: (String taskId) => _removeTask(taskId),
+                  onBidTap: (String taskId) => _startAnimation(taskId),
+                ));
+              }
             }
 
             for (List<dynamic> _element3 in body[2]) {
@@ -316,7 +322,7 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _startAnimation(String taskId) async {
     if (_animationIsActive == false) {
-      if(await _loadBid(taskId) == false){
+      if (await _loadBid(taskId) == false) {
         globals.isLoadingBid = false;
         return;
       }
@@ -329,7 +335,7 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _startAnimation2(TaskSquare taskSquare) async {
     if (_animationIsActive == false) {
-      if(await _loadBid(taskSquare.taskId) == false){
+      if (await _loadBid(taskSquare.taskId) == false) {
         globals.isLoadingBid = false;
         return;
       }
@@ -513,13 +519,13 @@ class _HomePageState extends State<HomePage>
         break;
       case 'numDown':
         // 1 -> 9
-        _childrenTaskList
-            .sort((TaskSquare a, TaskSquare b) => a.timeLeft.compareTo(b.timeLeft));
+        _childrenTaskList.sort(
+            (TaskSquare a, TaskSquare b) => a.timeLeft.compareTo(b.timeLeft));
         break;
       case 'numUp':
         // 9 -> 1
-        _childrenTaskList
-            .sort((TaskSquare a, TaskSquare b) => b.timeLeft.compareTo(a.timeLeft));
+        _childrenTaskList.sort(
+            (TaskSquare a, TaskSquare b) => b.timeLeft.compareTo(a.timeLeft));
         break;
     }
 
@@ -549,12 +555,11 @@ class _HomePageState extends State<HomePage>
 
       if (body[0] == 'Success') {
         if (mounted) {
-
           for (List<dynamic> _element in body[1]) {
             int _amount = 0;
-            try{
+            try {
               _amount = int.parse(_element[1]);
-            }catch(e){
+            } catch (e) {
               _amount = 0;
               debugPrint('The amount on KwikPoints is empty.');
             }
@@ -566,11 +571,11 @@ class _HomePageState extends State<HomePage>
             ));
           }
 
-          _bidChildrenTMP.sort(
-                  (BidItem a, BidItem b) => b.kwikPointsAmount - a.kwikPointsAmount);
+          _bidChildrenTMP.sort((BidItem a, BidItem b) =>
+              b.kwikPointsAmount - a.kwikPointsAmount);
           _bidChildrenTMP[0].color = globals.gold;
 
-          setState((){
+          setState(() {
             _bidChildren = _bidChildrenTMP;
           });
         }
@@ -608,12 +613,12 @@ class _HomePageState extends State<HomePage>
     if (await SessionManager().containsKey('isLoggedIn')) {
       _isLoggedIn = await SessionManager().get('isLoggedIn');
       debugPrint('isLoggedIn');
-        _isLoggedIn;
+      _isLoggedIn;
     } else {
       await SessionManager().destroy();
-        _isLoggedIn = false;
-        Navigator.of(context).pop();
-        Navigator.of(context).pushNamedAndRemoveUntil('/Login', (route) => false);
+      _isLoggedIn = false;
+      Navigator.of(context).pop();
+      Navigator.of(context).pushNamedAndRemoveUntil('/Login', (route) => false);
     }
   }
 

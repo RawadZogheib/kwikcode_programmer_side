@@ -379,17 +379,16 @@ class _TaskSquareState extends State<TaskSquare> {
   }
 
   void _timeLeftChrono() {
-    print(widget.timeLeft);
-    if(widget.timeLeft.isBefore(DateTime.now())){
-      Future.delayed(Duration.zero, () async {
-        widget.removeTask(widget.taskId);
-      });
-    }
+    // if(widget.timeLeft.isBefore(DateTime.now())){
+    //   Future.delayed(Duration.zero, () async {
+    //     widget.removeTask(widget.taskId);
+    //   });
+    // }
     _timeLeft = widget.timeLeft.difference(DateTime.now()).inSeconds;
     if(widget.timeLeft == DateTime.parse('0000-00-00 00:00:00')){
       _timeLeft = 1000;
     }
-    if (widget.status == 1 || widget.status == 2) {
+    if ((widget.status == 1 || widget.status == 2) && widget.isVisible == true) {
       _timer1 = Timer.periodic(const Duration(seconds: 1), (Timer t) {
         //  print("1sec gone!!");
         if (_timeLeft > 0 && widget.timeLeft.isAfter(DateTime.now())) {

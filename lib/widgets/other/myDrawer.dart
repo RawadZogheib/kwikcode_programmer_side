@@ -1145,22 +1145,26 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                           ),
               ));
             }
-            _childrenMyTasks.add(TaskSquare(
-              key: ValueKey(_k++),
-              taskId: _element[0],
-              taskName: _element[1],
-              //_element[2] project id
-              projectName: '_projectName',
-              projectManager: '@${_element[3]}',
-              description: _element[4],
-              timeLeft: DateTime.parse(_element[6]).add(Duration(seconds: int.parse(_element[5]))),
-              status: int.parse(_element[7]),
-              //_element[8] task date
-              //_element[9] bid list
-              iconList: _listTaskProgrammingItem,
-              removeTask: (String taskId) => null,
-              onBidTap: (String taskId) => null,
-            ));
+            DateTime _timeLeftTMP = DateTime.parse(_element[6])
+                .add(Duration(seconds: int.parse(_element[5])));
+            if (_timeLeftTMP.isAfter(DateTime.now())) {
+              _childrenMyTasks.add(TaskSquare(
+                key: ValueKey(_k++),
+                taskId: _element[0],
+                taskName: _element[1],
+                //_element[2] project id
+                projectName: '_projectName',
+                projectManager: '@${_element[3]}',
+                description: _element[4],
+                timeLeft: _timeLeftTMP,
+                status: int.parse(_element[7]),
+                //_element[8] task date
+                //_element[9] bid list
+                iconList: _listTaskProgrammingItem,
+                removeTask: (String taskId) => null,
+                onBidTap: (String taskId) => null,
+              ));
+            }
           }
           return _childrenMyTasks;
         }
@@ -1222,28 +1226,33 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
                           ),
               ));
             }
-            _childrenMyBids.add(TaskSquare(
-              key: ValueKey(_k++),
-              taskId: _element[0],
-              taskName: _element[1],
-              //_element[2] project id
-              projectName: '_projectName',
-              projectManager: '@${_element[3]}',
-              description: _element[4],
-              timeLeft: DateTime.parse(_element[6]).add(Duration(seconds: int.parse(_element[5]))),
-              status: int.parse(_element[7]),
-              //_element[8] task date
-              //_element[9] bid list
-              iconList: _listTaskProgrammingItem,
-              removeTask: (String taskId) => null,
-              onBidTap: (String taskId) async {
-                await widget.onBid(_childrenMyBids
-                    .firstWhere((_element2) => _element2.taskId == taskId));
-                if (mounted) {
-                  Navigator.pop(context);
-                }
-              },
-            ));
+            DateTime _timeLeftTMP = DateTime.parse(_element[6])
+                .add(Duration(seconds: int.parse(_element[5])));
+            if (_timeLeftTMP.isAfter(DateTime.now())) {
+              _childrenMyBids.add(TaskSquare(
+                key: ValueKey(_k++),
+                taskId: _element[0],
+                taskName: _element[1],
+                //_element[2] project id
+                projectName: '_projectName',
+                projectManager: '@${_element[3]}',
+                description: _element[4],
+                timeLeft: DateTime.parse(_element[6])
+                    .add(Duration(seconds: int.parse(_element[5]))),
+                status: int.parse(_element[7]),
+                //_element[8] task date
+                //_element[9] bid list
+                iconList: _listTaskProgrammingItem,
+                removeTask: (String taskId) => null,
+                onBidTap: (String taskId) async {
+                  await widget.onBid(_childrenMyBids
+                      .firstWhere((_element2) => _element2.taskId == taskId));
+                  if (mounted) {
+                    Navigator.pop(context);
+                  }
+                },
+              ));
+            }
           }
           return _childrenMyBids;
         }
