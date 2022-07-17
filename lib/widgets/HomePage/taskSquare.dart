@@ -14,7 +14,7 @@ class TaskSquare extends StatefulWidget {
   String projectManager;
   String projectName;
   String description;
-  int timeLeft;
+  DateTime timeLeft;
   List<TaskProgrammingItem> iconList;
   int status;
   bool animate;
@@ -49,6 +49,8 @@ class _TaskSquareState extends State<TaskSquare> {
   Timer? _timer2;
   bool _isClickedTooltip = false;
   bool _isLoadingBid = false;
+
+  int _timeLeft = 0;
 
   late Widget _childTargetWidget;
 
@@ -168,7 +170,7 @@ class _TaskSquareState extends State<TaskSquare> {
                               const SizedBox(width: 5),
                               Text(
                                 _printDuration(
-                                    Duration(seconds: widget.timeLeft)),
+                                    Duration(seconds: _timeLeft)),
                                 style: TextStyle(
                                     fontSize: 12, color: globals.white2),
                               ),
@@ -377,13 +379,23 @@ class _TaskSquareState extends State<TaskSquare> {
   }
 
   void _timeLeftChrono() {
+    print(widget.timeLeft);
+    if(widget.timeLeft.isBefore(DateTime.now())){
+      Future.delayed(Duration.zero, () async {
+        widget.removeTask(widget.taskId);
+      });
+    }
+    _timeLeft = widget.timeLeft.difference(DateTime.now()).inSeconds;
+    if(widget.timeLeft == DateTime.parse('0000-00-00 00:00:00')){
+      _timeLeft = 1000;
+    }
     if (widget.status == 1 || widget.status == 2) {
       _timer1 = Timer.periodic(const Duration(seconds: 1), (Timer t) {
         //  print("1sec gone!!");
-        if (widget.timeLeft > 0) {
+        if (_timeLeft > 0 && widget.timeLeft.isAfter(DateTime.now())) {
           if (mounted) {
             setState(() {
-              widget.timeLeft--;
+              _timeLeft--;
             });
           }
         } else {

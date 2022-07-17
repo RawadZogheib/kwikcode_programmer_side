@@ -1130,7 +1130,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           for (List<dynamic> _element in body[1]) {
             List<TaskProgrammingItem> _listTaskProgrammingItem = [];
 
-            for (List<dynamic> _element3 in _element[8]) {
+            for (List<dynamic> _element3 in _element[9]) {
               _listTaskProgrammingItem.add(TaskProgrammingItem(
                 name: _element3[0],
                 icon: _element3[1] == ''
@@ -1153,10 +1153,10 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
               projectName: '_projectName',
               projectManager: '@${_element[3]}',
               description: _element[4],
-              timeLeft: int.parse(_element[5]),
-              status: int.parse(_element[6]),
-              //_element[7] task date
-              //_element[8] bid list
+              timeLeft: DateTime.parse(_element[6]).add(Duration(seconds: int.parse(_element[5]))),
+              status: int.parse(_element[7]),
+              //_element[8] task date
+              //_element[9] bid list
               iconList: _listTaskProgrammingItem,
               removeTask: (String taskId) => null,
               onBidTap: (String taskId) => null,
@@ -1207,7 +1207,7 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
           for (List<dynamic> _element in body[1]) {
             List<TaskProgrammingItem> _listTaskProgrammingItem = [];
 
-            for (List<dynamic> _element3 in _element[8]) {
+            for (List<dynamic> _element3 in _element[9]) {
               _listTaskProgrammingItem.add(TaskProgrammingItem(
                 name: _element3[0],
                 icon: _element3[1] == ''
@@ -1230,10 +1230,10 @@ class _MyDrawerState extends State<MyDrawer> with TickerProviderStateMixin {
               projectName: '_projectName',
               projectManager: '@${_element[3]}',
               description: _element[4],
-              timeLeft: int.parse(_element[5]),
-              status: int.parse(_element[6]),
-              //_element[7] task date
-              //_element[8] bid list
+              timeLeft: DateTime.parse(_element[6]).add(Duration(seconds: int.parse(_element[5]))),
+              status: int.parse(_element[7]),
+              //_element[8] task date
+              //_element[9] bid list
               iconList: _listTaskProgrammingItem,
               removeTask: (String taskId) => null,
               onBidTap: (String taskId) async {

@@ -167,7 +167,7 @@ class StatusMap extends StatelessWidget {
               projectName: '',
               description:
                   'Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description Some description ',
-              timeLeft: 6000,
+              timeLeft: DateTime.parse('0000-00-00 00:00:00'),
               iconList: [
                 TaskProgrammingItem(name: 'Flutter', icon: 'Flutter'),
                 TaskProgrammingItem(name: 'PHP', icon: NewIcons.php),

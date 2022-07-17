@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage>
     projectManager: '@null',
     projectName: '',
     description: 'null',
-    timeLeft: 0,
+    timeLeft: DateTime.parse('0000-00-00 00:00:00'),
     iconList: const [],
     status: 0,
     removeTask: (String taskId) => debugPrint('null'),
@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage>
                   // _projectMangerName = _element2[2];
                 }
               }
-              for (List<dynamic> _element3 in _element[8]) {
+              for (List<dynamic> _element3 in _element[9]) {
                 _listTaskProgrammingItem.add(TaskProgrammingItem(
                   name: _element3[0],
                   icon: _element3[1] == ''
@@ -230,10 +230,10 @@ class _HomePageState extends State<HomePage>
                 projectName: _projectName,
                 projectManager: '@${_element[3]}',
                 description: _element[4],
-                timeLeft: int.parse(_element[5]),
-                status: int.parse(_element[6]),
-                //_element[7] task date
-                //_element[8] bid list
+                timeLeft: DateTime.parse(_element[6]).add(Duration(seconds: int.parse(_element[5]))),
+                status: int.parse(_element[7]),
+                //_element[8] task date
+                //_element[9] bid list
                 iconList: _listTaskProgrammingItem,
                 removeTask: (String taskId) => _removeTask(taskId),
                 onBidTap: (String taskId) => _startAnimation(taskId),
@@ -351,7 +351,7 @@ class _HomePageState extends State<HomePage>
                 projectManager: '@null',
                 projectName: '',
                 description: 'null',
-                timeLeft: 0,
+                timeLeft: DateTime.parse('0000-00-00 00:00:00'),
                 iconList: const [],
                 status: 0,
                 removeTask: (String taskId) => debugPrint('null'),
@@ -514,12 +514,12 @@ class _HomePageState extends State<HomePage>
       case 'numDown':
         // 1 -> 9
         _childrenTaskList
-            .sort((TaskSquare a, TaskSquare b) => a.timeLeft - b.timeLeft);
+            .sort((TaskSquare a, TaskSquare b) => a.timeLeft.compareTo(b.timeLeft));
         break;
       case 'numUp':
         // 9 -> 1
         _childrenTaskList
-            .sort((TaskSquare a, TaskSquare b) => b.timeLeft - a.timeLeft);
+            .sort((TaskSquare a, TaskSquare b) => b.timeLeft.compareTo(a.timeLeft));
         break;
     }
 
