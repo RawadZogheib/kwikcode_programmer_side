@@ -16,7 +16,7 @@ class AdminPMButton extends StatefulWidget {
 }
 
 class _AdminPMButtonState extends State<AdminPMButton> {
-  double _height = 30;
+  double _height = 35;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _AdminPMButtonState extends State<AdminPMButton> {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       hoverColor: Colors.transparent,
-      onTap: ()  => _onTap(),
+      onTap: () => _onTap(),
       onHover: (val) => _onHover(val),
       child: Container(
         height: _height,
@@ -41,13 +41,13 @@ class _AdminPMButtonState extends State<AdminPMButton> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            _height == 100
-                ? const SizedBox(height: 8.0)
+            _height == 105
+                ? const SizedBox(height: 10.0)
                 : const SizedBox.shrink(),
             Expanded(
               child: RotatedBox(
                 quarterTurns: -1,
-                child: _height == 100
+                child: _height == 105
                     ? Text(
                         widget.text,
                         textAlign: TextAlign.center,
@@ -59,10 +59,13 @@ class _AdminPMButtonState extends State<AdminPMButton> {
                     : null,
               ),
             ),
-            _height == 100
-                ? const SizedBox(height: 2.0)
-                : const SizedBox.shrink(),
-            Icon(widget.icon, color: globals.darkBlue1)
+            // _height == 105
+            //     ? const SizedBox(height: 0.0)
+            //     : const SizedBox.shrink(),
+            SizedBox(
+                height: 35,
+                width: 35,
+                child: Icon(widget.icon, color: globals.darkBlue1))
           ],
         ),
       ),
@@ -71,7 +74,7 @@ class _AdminPMButtonState extends State<AdminPMButton> {
 
   _onHover(bool val) {
     setState(() {
-      _height = val == true ? 100 : 30;
+      _height = val == true ? 105 : 35;
     });
   }
 
