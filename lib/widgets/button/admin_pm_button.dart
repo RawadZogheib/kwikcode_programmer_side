@@ -31,7 +31,7 @@ class _AdminPMButtonState extends State<AdminPMButton> {
         width: 50,
         margin: const EdgeInsets.only(bottom: 12.0),
         decoration: BoxDecoration(
-          color: globals.logoColorPink,
+          color: globals.logoColorBlue,
           borderRadius: const BorderRadius.only(
             bottomRight: Radius.circular(12.0),
             bottomLeft: Radius.circular(12.0),
@@ -52,7 +52,7 @@ class _AdminPMButtonState extends State<AdminPMButton> {
                         widget.text,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: globals.darkBlue1,
+                          color: globals.white2,
                           fontWeight: FontWeight.bold,
                         ),
                       )
@@ -65,7 +65,7 @@ class _AdminPMButtonState extends State<AdminPMButton> {
             SizedBox(
                 height: 35,
                 width: 35,
-                child: Icon(widget.icon, color: globals.darkBlue1))
+                child: Icon(widget.icon, color: globals.white2,))
           ],
         ),
       ),
