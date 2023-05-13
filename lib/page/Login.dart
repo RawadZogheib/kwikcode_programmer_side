@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bitsdojo_window/bitsdojo_window.dart';
+// import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:kwikcode_programmer_side/api/my_api.dart';
@@ -62,28 +62,28 @@ class _LoginState extends State<Login> {
         backgroundColor: globals.darkBlue1,
         body: Column(
           children: [
-            WindowTitleBarBox(
-              child: Row(
-                children: [
-                  const SizedBox(width: 5.0),
-                  Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Image.asset(
-                      'Assets/Other/KwikCodeLogo.png',
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Text(
-                      'KwikCode',
-                      style: TextStyle(fontSize: 14, color: globals.white2),
-                    ),
-                  ),
-                  Expanded(child: MoveWindow()),
-                  const WindowButtons()
-                ],
-              ),
-            ),
+            // WindowTitleBarBox(
+            //   child: Row(
+            //     children: [
+            //       const SizedBox(width: 5.0),
+            //       Padding(
+            //         padding: const EdgeInsets.all(3.0),
+            //         child: Image.asset(
+            //           'Assets/Other/KwikCodeLogo.png',
+            //         ),
+            //       ),
+            //       Padding(
+            //         padding: const EdgeInsets.all(3.0),
+            //         child: Text(
+            //           'KwikCode',
+            //           style: TextStyle(fontSize: 14, color: globals.white2),
+            //         ),
+            //       ),
+            //       Expanded(child: MoveWindow()),
+            //       const WindowButtons()
+            //     ],
+            //   ),
+            // ),
             Expanded(
               child: Center(
                 child: Container(
@@ -365,38 +365,38 @@ class _LoginState extends State<Login> {
   }
 }
 
-final buttonColors = WindowButtonColors(
-    iconNormal: globals.white1,
-    mouseOver: globals.white2,
-    mouseDown: globals.white2,
-    iconMouseOver: globals.white1,
-    iconMouseDown: globals.white1);
-
-final closeButtonColors = WindowButtonColors(
-    iconNormal: Colors.red,
-    mouseOver: Colors.red,
-    mouseDown: Colors.red,
-    iconMouseOver: globals.white);
-
-class WindowButtons extends StatelessWidget {
-  const WindowButtons({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        MinimizeWindowButton(colors: buttonColors),
-        MaximizeWindowButton(colors: buttonColors),
-        CloseWindowButton(
-          colors: closeButtonColors,
-          onPressed: () => _onClose(),
-        ),
-      ],
-    );
-  }
-
-  _onClose() {
-    debugPrint('bye');
-    appWindow.close();
-  }
-}
+// final buttonColors = WindowButtonColors(
+//     iconNormal: globals.white1,
+//     mouseOver: globals.white2,
+//     mouseDown: globals.white2,
+//     iconMouseOver: globals.white1,
+//     iconMouseDown: globals.white1);
+//
+// final closeButtonColors = WindowButtonColors(
+//     iconNormal: Colors.red,
+//     mouseOver: Colors.red,
+//     mouseDown: Colors.red,
+//     iconMouseOver: globals.white);
+//
+// class WindowButtons extends StatelessWidget {
+//   const WindowButtons({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         MinimizeWindowButton(colors: buttonColors),
+//         MaximizeWindowButton(colors: buttonColors),
+//         CloseWindowButton(
+//           colors: closeButtonColors,
+//           onPressed: () => _onClose(),
+//         ),
+//       ],
+//     );
+//   }
+//
+//   _onClose() {
+//     debugPrint('bye');
+//     appWindow.close();
+//   }
+// }
